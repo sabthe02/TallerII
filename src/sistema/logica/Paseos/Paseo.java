@@ -22,6 +22,7 @@ public Paseo(String codigo, String horaPartida, String horaRegreso, int cantVend
 			this.cantMaxBoletos = cantMaxBoletos;
 			this.precioBase = precioBase;
 			this.destino = destino;
+			this.boletos = new Boletos (this.getCantMaxBoletos());
 }
 public String getCodigo () {
 	return this.codigo;
@@ -52,23 +53,29 @@ public void setCantMaxBoletos(int cantMaxBoletos) {
 	this.cantMaxBoletos = cantMaxBoletos;
 }
 public double getPrecioBase() {
-	return precioBase;
+	return this.precioBase;
 }
 public void setPrecioBase(double precioBase) {
 	this.precioBase = precioBase;
 }
 public String getDestino() {
-	return destino;
+	return this.destino;
 }
 public void setDestino(String destino) {
 	this.destino = destino;
+}
+
+public Boletos getBoletos() {
+	return this.boletos;
+}
+public void setBoletos(Boletos boletos) {
+	this.boletos = boletos;
 }
 
 public static void main (String args[]) {
 	
 	Paseo p1 = new Paseo ("PDP1", "09:00", "13:00", 5, 7, 15.0, "Punta del Este");
 	
-	p1.boletos = new Boletos (p1.getCantVendidos());
 	System.out.println(p1.getCodigo());
 	System.out.println(p1.getHoraPartida());
 	System.out.println(p1.getHoraRegreso());

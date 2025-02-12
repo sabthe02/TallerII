@@ -1,5 +1,7 @@
 package sistema.logica.Minivanes;
+import java.util.Iterator;
 import java.util.TreeMap;
+
 import sistema.logica.Paseos.Paseo;
 
 public class Minivan {
@@ -8,23 +10,23 @@ private
 	String marca;
 	String modelo;
 	int cantAsientos;
-	TreeMap<String,Paseo> Paseos;
+	TreeMap<String,Paseo> paseos;
 
 	
-public Minivan(String matricula, String marca, String modelo, int cantAsientos, TreeMap<String, Paseo> paseos) {
+public Minivan(String matricula, String marca, String modelo, int cantAsientos) {
 		this.matricula = matricula;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.cantAsientos = cantAsientos;
-		Paseos = paseos;
+		this.paseos = new TreeMap <String, Paseo> ();
 	}
 
 public String getMatricula() {
-	return matricula;
+	return this.matricula;
 }
 
 public String getMarca() {
-	return marca;
+	return this.marca;
 }
 public void setMarca(String marca) {
 	this.marca = marca;
@@ -36,23 +38,41 @@ public void setModelo(String modelo) {
 	this.modelo = modelo;
 }
 public int getCantAsientos() {
-	return cantAsientos;
+	return this.cantAsientos;
 }
 public void setCantAsientos(int cantAsientos) {
 	this.cantAsientos = cantAsientos;
 }
 public TreeMap<String, Paseo> getPaseos() {
-	return Paseos;
+	return this.paseos;
 }
 public void setPaseos(TreeMap<String, Paseo> Paseos) {
-	this.Paseos = Paseos;
+	this.paseos = Paseos;
 }
 
-public void main (String args[]) {
+public static void main (String args[]) {
 	
-//	Paseo p1 = new Paseo ("PDE1",)
-//	TreeMap <String, Paseo> m1 = new Treemap (p1.getCodigo(), p1);
-//	Minivan m1 = new Minivan ("A1", "Volvo", "Modelo1", 6, m1);
+	Paseo p1 = new Paseo ("PDP1", "09:00", "13:00", 5, 7, 15.0, "Punta del Este");
+	Minivan m1 = new Minivan ("A1", "Volvo", "Modelo1", 6);
+	m1.getPaseos().put(p1.getCodigo(), p1);
+	
+	System.out.println(m1.getMatricula());
+	System.out.println(m1.getCantAsientos());
+	System.out.println(m1.getMarca());
+	System.out.println(m1.getModelo());
+	
+	Iterator<Paseo> iter= m1.getPaseos().values().iterator();
+	while(iter.hasNext())
+	{ 
+		Paseo paseo = iter.next();
+		System.out.println(paseo.getCodigo());
+		System.out.println(paseo.getHoraPartida());
+		System.out.println(paseo.getHoraRegreso());
+		System.out.println(paseo.getCantVendidos());
+		System.out.println(paseo.getCantMaxBoletos());
+		System.out.println(paseo.getPrecioBase());
+		System.out.println(paseo.getDestino());
+	}
 }
 
 
