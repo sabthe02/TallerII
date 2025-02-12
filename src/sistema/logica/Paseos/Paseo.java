@@ -103,13 +103,13 @@ public void setBoletos(Boletos boletos) {
 //	}
 //}
 
-
-public VOListadoBoletos[] listadoBoleto(String codigo, boolean esEsp) {
-	
-ArrayList<VOListadoBoletos> VOListadoBoletosL = new ArrayList<VOListadoBoletos>();
-
-
-}
+//
+//public VOListadoBoletos[] listadoBoleto(String codigo, boolean esEsp) {
+//	
+//ArrayList<VOListadoBoletos> VOListadoBoletosL = new ArrayList<VOListadoBoletos>();
+//
+//
+//}
 
 
 public static void main (String args[]) {
