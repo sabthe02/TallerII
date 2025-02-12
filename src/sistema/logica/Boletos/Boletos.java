@@ -93,6 +93,8 @@ public class Boletos {
 //		}
 //	}
 //	
+
+	
 	public static void main (String args[]) {
 		Boletos B = new Boletos(13);
 		Boleto b1 = new Boleto(1, "Persona1", 17, "099000000", 15.0, 0.75);

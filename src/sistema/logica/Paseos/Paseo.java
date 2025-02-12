@@ -1,6 +1,11 @@
 package sistema.logica.Paseos;
 
+import java.util.ArrayList;
+
 import sistema.logica.Boletos.*;
+//import sistema.logica.Minivanes.*;
+//import sistema.logica.VO.*;
+//import java.util.ArrayList;
 
 public class Paseo {
 	
@@ -65,12 +70,47 @@ public void setDestino(String destino) {
 	this.destino = destino;
 }
 
-public Boletos getBoletos() {
+public Boletos getBoletosP() {
 	return this.boletos;
 }
 public void setBoletos(Boletos boletos) {
 	this.boletos = boletos;
 }
+
+//public void compraBoleto (VOCompraBoleto VO)  { // Cómo hacer en caso de los errores?
+// Acá le tengo que agregar algo si recién los quiero lanzar en la fachada?
+//
+//	if (this.getCantMaxBoletos() - this.getCantVendidos() > 0) {
+//		if (VO.getDescuento() >0) {
+//			if (VO.getEdad <= 18) {
+//				Boleto b1 = new BoletoEsp (this.getCantVendidos()+1, VO.getNombre(), VO.getEdad(), VO.getCelular(),  VO.getPrecio(), 0.75, VO.getDescuento());
+//			}
+//			else {
+//				Boleto b1 = new BoletoEsp (this.getCantVendidos()+1, VO.getNombre(), VO.getEdad(), VO.getCelular(),  VO.getPrecio(), 1, VO.getDescuento());
+//			}		
+//		}
+//		else  {
+//			if (VO.getEdad <= 18) {
+//			Boleto b1 = new Boleto(this.getCantVendidos()+1, VO.getNombre(), VO.getEdad(), VO.getCelular(),  VO.getPrecio(), 0.75);
+//			}
+//			else {
+//				Boleto b1 = new Boleto(this.getCantVendidos()+1, VO.getNombre(), VO.getEdad(), VO.getCelular(),  VO.getPrecio(), 1);
+//			}
+//		}
+//	this.getBoletosP().insBack(b1); // por qué no reconoce a b1 acá, porque hay if-else? Cómo hacer?
+//	this.setCantVendidos(this.cantVendidos+1);
+//	
+//	}
+//}
+
+
+public VOListadoBoletos[] listadoBoleto(String codigo, boolean esEsp) {
+	
+ArrayList<VOListadoBoletos> VOListadoBoletosL = new ArrayList<VOListadoBoletos>();
+
+
+}
+
 
 public static void main (String args[]) {
 	
