@@ -26,12 +26,13 @@ public abstract class Diccionario <K,T> {
 		arbol.remove(clave);
 	}
 	
+	public int size ()
+	{
+		return arbol.size();
+	}
+	
 	public boolean empty() {
-		boolean es = false;
-		if (arbol.isEmpty()) {
-			es = true;
-		}
-		return es;
+		return arbol.isEmpty();
 	}
 	
 }

@@ -51,6 +51,12 @@ public void setPaseos(Paseos pas) {
 	this.paseos = pas;
 }
 
+public int getCantidadPaseos()
+{
+	return this.paseos.size();
+
+}
+
 public static void main (String args[]) {
 	
 	/*Paseo p1 = new Paseo ("PDP1", "09:00", "13:00", 5, 7, 15.0, "Punta del Este");
