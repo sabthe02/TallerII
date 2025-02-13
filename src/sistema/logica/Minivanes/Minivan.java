@@ -3,6 +3,7 @@ import java.util.Iterator;
 import java.util.TreeMap;
 
 import sistema.logica.Paseos.Paseo;
+import sistema.logica.Paseos.Paseos;
 
 public class Minivan {
 private 
@@ -10,7 +11,7 @@ private
 	String marca;
 	String modelo;
 	int cantAsientos;
-	TreeMap<String,Paseo> paseos;
+	Paseos paseos;
 
 	
 public Minivan(String matricula, String marca, String modelo, int cantAsientos) {
@@ -18,7 +19,7 @@ public Minivan(String matricula, String marca, String modelo, int cantAsientos) 
 		this.marca = marca;
 		this.modelo = modelo;
 		this.cantAsientos = cantAsientos;
-		this.paseos = new TreeMap <String, Paseo> ();
+		this.paseos = new Paseos ();
 	}
 
 public String getMatricula() {
@@ -43,16 +44,16 @@ public int getCantAsientos() {
 public void setCantAsientos(int cantAsientos) {
 	this.cantAsientos = cantAsientos;
 }
-public TreeMap<String, Paseo> getPaseos() {
+public Paseos getPaseos() {
 	return this.paseos;
 }
-public void setPaseos(TreeMap<String, Paseo> Paseos) {
-	this.paseos = Paseos;
+public void setPaseos(Paseos pas) {
+	this.paseos = pas;
 }
 
 public static void main (String args[]) {
 	
-	Paseo p1 = new Paseo ("PDP1", "09:00", "13:00", 5, 7, 15.0, "Punta del Este");
+	/*Paseo p1 = new Paseo ("PDP1", "09:00", "13:00", 5, 7, 15.0, "Punta del Este");
 	Minivan m1 = new Minivan ("A1", "Volvo", "Modelo1", 6);
 	m1.getPaseos().put(p1.getCodigo(), p1);
 	
@@ -72,7 +73,7 @@ public static void main (String args[]) {
 		System.out.println(paseo.getCantMaxBoletos());
 		System.out.println(paseo.getPrecioBase());
 		System.out.println(paseo.getDestino());
-	}
+	}*/
 }
 
 

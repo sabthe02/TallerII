@@ -13,7 +13,7 @@ public class VOListadoBoletos extends VOBoletoPasajero{
 	
 	
 
-	public VOListadoBoletos(String nombre, int edad, int celular, boolean esEspecial, Double descuento,
+	public VOListadoBoletos(String nombre, int edad, String celular, boolean esEspecial, Double descuento,
 			int numeroBoleto) {
 		super(nombre, edad, celular, esEspecial, descuento);
 		NumeroBoleto = numeroBoleto;

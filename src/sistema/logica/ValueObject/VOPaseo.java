@@ -1,25 +1,25 @@
 package sistema.logica.ValueObject;
 
-import java.sql.Time;
+import java.time.LocalDateTime;
 
 public class VOPaseo {
 
 	private String Codigo;
-	private Time HoraPartida;
-	private Time HoraRegreso;
+	private LocalDateTime HoraPartida;
+	private LocalDateTime HoraRegreso;
 	private Double PrecioBase;
 	private String Destino;
 	
 	public VOPaseo() {
 		// TODO Auto-generated constructor stub
 		this.Codigo = "";
-		this.HoraPartida = new Time(1);
-		this.HoraRegreso = new Time(1);
+		this.HoraPartida = LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),1,0);
+		this.HoraRegreso = LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),1,0);
 		this.PrecioBase = 0.0;
 		this.Destino = "";
 	}
 
-	public VOPaseo(String codigo, Time horaPartida, Time horaRegreso, Double precioBase, String destino) {
+	public VOPaseo(String codigo, LocalDateTime horaPartida, LocalDateTime horaRegreso, Double precioBase, String destino) {
 		super();
 		Codigo = codigo;
 		HoraPartida = horaPartida;
@@ -36,19 +36,19 @@ public class VOPaseo {
 		Codigo = codigo;
 	}
 
-	public Time getHoraPartida() {
+	public LocalDateTime getHoraPartida() {
 		return HoraPartida;
 	}
 
-	public void setHoraPartida(Time horaPartida) {
+	public void setHoraPartida(LocalDateTime horaPartida) {
 		HoraPartida = horaPartida;
 	}
 
-	public Time getHoraRegreso() {
+	public LocalDateTime getHoraRegreso() {
 		return HoraRegreso;
 	}
 
-	public void setHoraRegreso(Time horaRegreso) {
+	public void setHoraRegreso(LocalDateTime horaRegreso) {
 		HoraRegreso = horaRegreso;
 	}
 

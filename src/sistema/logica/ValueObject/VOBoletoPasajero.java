@@ -4,7 +4,7 @@ public class VOBoletoPasajero {
 
 	private String Nombre;
 	private int Edad;
-	private int Celular;
+	private String Celular;
 	private boolean EsEspecial;
 	private Double Descuento;
 	
@@ -20,7 +20,7 @@ public class VOBoletoPasajero {
 	
 
 
-	public VOBoletoPasajero(String nombre, int edad, int celular, boolean esEspecial, Double descuento) {
+	public VOBoletoPasajero(String nombre, int edad, String celular, boolean esEspecial, Double descuento) {
 		super();
 		Nombre = nombre;
 		Edad = edad;
@@ -53,12 +53,12 @@ public class VOBoletoPasajero {
 	}
 
 
-	public int getCelular() {
+	public String getCelular() {
 		return Celular;
 	}
 
 
-	public void setCelular(int celular) {
+	public void setCelular(String celular) {
 		Celular = celular;
 	}
 	

@@ -1,6 +1,6 @@
 package sistema.logica.ValueObject;
 
-import java.sql.Time;
+import java.time.LocalDateTime;
 
 public class VOPaseosListado extends VOPaseo{
 
@@ -16,7 +16,7 @@ public class VOPaseosListado extends VOPaseo{
 	}
 
 
-	public VOPaseosListado(String codigo, Time horaPartida, Time horaRegreso, Double precioBase, String destino,
+	public VOPaseosListado(String codigo, LocalDateTime horaPartida, LocalDateTime horaRegreso, Double precioBase, String destino,
 			int cantidadMaximaBoletosVendibles, int cantidadBoletosDisponibles) {
 		super(codigo, horaPartida, horaRegreso, precioBase, destino);
 		CantidadMaximaBoletosVendibles = cantidadMaximaBoletosVendibles;
