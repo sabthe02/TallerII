@@ -7,18 +7,22 @@ public class Boleto {
 		int edad;
 		String numeroCel;
 		double precio;
-		double descuento;
 		
 		
-	public Boleto(int numeroBoleto, String nombrePasajero, int edad, String numeroCel, double precio,
-				double descuento) {
+	public Boleto(int numeroBoleto, String nombrePasajero, int edad, String numeroCel, double precio) {
 			this.numeroBoleto = numeroBoleto;
 			this.nombrePasajero = nombrePasajero;
 			this.edad = edad;
 			this.numeroCel = numeroCel;
 			this.precio = precio;
-			this.descuento = descuento;
 	}
+	
+	public Boleto() {
+		this.numeroBoleto = 0;
+		this.nombrePasajero = "";
+		this.numeroCel = "";
+		this.precio = 0;
+}
 
 	public int getNumeroBoleto() {
 		return numeroBoleto;
@@ -54,23 +58,15 @@ public class Boleto {
 			this.precio = precio;
 	}
 	
-	public double getDescuento() {
-			return descuento;
-	}
-	
-	public void setDescuento(double descuento) {
-			this.descuento = descuento;
-	}
 	
 		
 	public static void main (String args[]) {
-		Boleto b1 = new Boleto(1, "Persona1", 17, "099000000", 15.0, 0.75);
+		Boleto b1 = new Boleto(1, "Persona1", 17, "099000000", 15.0);
 		System.out.println(b1.getNumeroBoleto());
 		System.out.println(b1.getNombrePasajero());
 		System.out.println(b1.getEdad());
 		System.out.println(b1.getNumeroCel());
 		System.out.println(b1.getPrecio());
-		System.out.print(b1.getDescuento());
 	}
 			
 	

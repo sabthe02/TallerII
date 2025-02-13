@@ -10,7 +10,7 @@ private
 	String marca;
 	String modelo;
 	int cantAsientos;
-	TreeMap<String,Paseo> paseos;
+	Paseos paseos;
 
 	
 public Minivan(String matricula, String marca, String modelo, int cantAsientos) {
@@ -18,7 +18,7 @@ public Minivan(String matricula, String marca, String modelo, int cantAsientos) 
 		this.marca = marca;
 		this.modelo = modelo;
 		this.cantAsientos = cantAsientos;
-		this.paseos = new TreeMap <String, Paseo> ();
+		this.paseos = new Paseos ();
 	}
 
 public String getMatricula() {
@@ -43,11 +43,11 @@ public int getCantAsientos() {
 public void setCantAsientos(int cantAsientos) {
 	this.cantAsientos = cantAsientos;
 }
-public TreeMap<String, Paseo> getPaseos() {
+public Paseos getPaseos() {
 	return this.paseos;
 }
-public void setPaseos(TreeMap<String, Paseo> Paseos) {
-	this.paseos = Paseos;
+public void setPaseos(Paseos pas) {
+	this.paseos = pas;
 }
 
 public static void main (String args[]) {
