@@ -34,6 +34,7 @@ public abstract class Diccionario <K,T> {
 	
 	public boolean empty() {
 		return arbol.isEmpty();
+	}
 
 	
 }
