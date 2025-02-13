@@ -26,6 +26,7 @@ public abstract class Diccionario <K,T> {
 		arbol.remove(clave);
 	}
 	
+
 	public int size ()
 	{
 		return arbol.size();
@@ -33,6 +34,6 @@ public abstract class Diccionario <K,T> {
 	
 	public boolean empty() {
 		return arbol.isEmpty();
-	}
+
 	
 }

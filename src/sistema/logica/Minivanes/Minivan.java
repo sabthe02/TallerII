@@ -49,12 +49,12 @@ public Paseos getPaseos() {
 }
 public void setPaseos(Paseos pas) {
 	this.paseos = pas;
+
 }
 
 public int getCantidadPaseos()
 {
 	return this.paseos.size();
-
 }
 
 public static void main (String args[]) {
