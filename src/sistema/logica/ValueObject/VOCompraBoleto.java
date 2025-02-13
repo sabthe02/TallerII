@@ -13,7 +13,7 @@ public class VOCompraBoleto extends VOBoletoPasajero {
 
 	
 
-	public VOCompraBoleto(String nombre, int edad, int celular, boolean esEspecial, Double descuento,
+	public VOCompraBoleto(String nombre, int edad, String celular, boolean esEspecial, Double descuento,
 			String codigoPaseo) {
 		super(nombre, edad, celular, esEspecial, descuento);
 		CodigoPaseo = codigoPaseo;

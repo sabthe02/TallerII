@@ -1,7 +1,7 @@
 package sistema.logica.Boletos;
 
-//import sistema.logica.VO.*;
-//import java.util.ArrayList;
+import sistema.logica.ValueObject.*;
+import java.util.ArrayList;
 
 public class Boletos {
 
@@ -17,6 +17,11 @@ public class Boletos {
 	public Boletos(int largo) {
 		this.tope = 0;
 		this.boletos = new Boleto [largo];
+	}
+	
+	public Boletos() {
+		this.tope = 0;
+		this.boletos = new Boleto [80];
 	}
 	
 	public int getTope() {
@@ -68,7 +73,10 @@ public class Boletos {
 	public double montoRecaudado () {
 		double Monto = 0;
 		for (int i =0; i <this.tope;i++) {
-			double MontoBoleto = boletos[i].getPrecio()*boletos[i].getDescuento();
+			double MontoBoleto = boletos[i].getPrecio();
+				if (boletos[i].getEdad()<=18) {
+					MontoBoleto = MontoBoleto*0.75;
+				}
 			if (boletos[i] instanceof BoletoEsp) {
 				MontoBoleto = MontoBoleto*((BoletoEsp)boletos[i]).getDescuentoEsp();
 			}
@@ -77,27 +85,31 @@ public class Boletos {
 		return Monto;
 	}
 	
-//	public VOListadoBoletosL listadoBoleto(String codigo, boolean esEsp) {
-//		ArrayList<VOListadoBoletos> VOListadoBoletosL = new ArrayList<VOListadoBoletos>();
-//		
-//		for (int i = 0; i < B.getTope(); i++) {
-//			Boleto bol = boletos[i];
-//			if ((bol instanceof BoletoEsp) && (esEsp == true)) {
-//				VOListadoBoletos VO = new VOListadoBoletos(bol.getNombrePasajero(), bol.getEdad(), bol.getNumeroCel(), bol.getNumeroBoleto(), esEsp, ((BoletoEsp)bol).getDescuento());
-//			}
-//			else {
-//				VOListadoBoletos VO = new VOListadoBoletos(bol.getNombrePasajero(), bol.getEdad(), bol.getNumeroCel(), bol.getNumeroBoleto(), esEsp);
-//			}
-//			VOListadoBoletosL.add(VO);
-//			}
-//		}
-//	}
-//	
+	public ArrayList<VOListadoBoletos> listadoBoleto(boolean esEsp) {
+		ArrayList<VOListadoBoletos> VOListadoBoletosL = new ArrayList<VOListadoBoletos>();
+		
+		for (int i = 0; i < this.tope; i++) {
+			VOListadoBoletos VO;
+			Boleto bol = boletos[i];
+			if ((bol instanceof BoletoEsp) && (esEsp == true)) {
+				VO = new VOListadoBoletos(bol.getNombrePasajero(), bol.getEdad(), bol.getNumeroCel(), true, ((BoletoEsp)bol).getDescuentoEsp(), bol.getNumeroBoleto());
+				VOListadoBoletosL.add(VO);
+			}
+			else {
+				if (esEsp == false &&  !(bol instanceof BoletoEsp)) {		
+					VO = new VOListadoBoletos(bol.getNombrePasajero(), bol.getEdad(), bol.getNumeroCel(), false, 0.0, bol.getNumeroBoleto());
+					VOListadoBoletosL.add(VO);
+				}
+			}
+		}
+		return VOListadoBoletosL;
+	}
+	
 
 	
 	public static void main (String args[]) {
 		Boletos B = new Boletos(13);
-		Boleto b1 = new Boleto(1, "Persona1", 17, "099000000", 15.0, 0.75);
+		Boleto b1 = new Boleto(1, "Persona1", 17, "099000000", 15.0);
 		B.insBack(b1);
 		if (!(B.esVacia())) {
 			System.out.println("NO es vacia");
@@ -106,7 +118,7 @@ public class Boletos {
 			System.out.println("Es vacia");
 		}
 		
-		Boleto b2 = new BoletoEsp(2, "Persona2", 34, "099000001", 20.0, 1, 0.8);
+		Boleto b2 = new BoletoEsp(2, "Persona2", 34, "099000001", 20.0, 0.8);
 		B.insBack(b2);
 		
 		for (int i =0; i<(B.getTope()); i++) {
@@ -126,7 +138,16 @@ public class Boletos {
 		double m = B.montoRecaudado();
 		System.out.println("Monto recaudado: " + m);
 		
+		B.listadoBoleto(true).forEach((VOListadoBoletos)-> { 
+			System.out.println(VOListadoBoletos.getNombre());
+			System.out.println(VOListadoBoletos.getEdad());
+			System.out.println(VOListadoBoletos.getCelular());
+			System.out.println(VOListadoBoletos.isEsEspecial());
+			System.out.println(VOListadoBoletos.getNumeroBoleto());
+			System.out.println(VOListadoBoletos.getDescuento());
+		}
+		);
 		
-	}
 
+	}
 }

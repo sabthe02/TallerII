@@ -5,20 +5,22 @@ import java.util.ArrayList;
 import sistema.logica.Boletos.*;
 //import sistema.logica.Minivanes.*;
 //import sistema.logica.VO.*;
-//import java.util.ArrayList;
+import sistema.logica.ValueObject.VOListadoBoletos;
+
+import java.time.LocalDateTime;
 
 public class Paseo {
 	
 private String codigo;
-		String horaPartida; // Tratar de ver cómo se pondría en Hora, trate con Simpledate, pero a la hora de asignarla no sé cómo hacer :-(
-		String horaRegreso; // Tratar de ver cómo se pondría en Hora, trate con Simpledate, pero a la hora de asignarla no sé cómo hacer :-(
+		LocalDateTime horaPartida; 
+		LocalDateTime horaRegreso;
 		int cantVendidos;
 		int cantMaxBoletos;
 		double precioBase;
 		String destino;
 		Boletos boletos;
 		
-public Paseo(String codigo, String horaPartida, String horaRegreso, int cantVendidos,
+public Paseo(String codigo, LocalDateTime horaPartida, LocalDateTime horaRegreso, int cantVendidos,
 				int cantMaxBoletos, double precioBase, String destino) {
 			this.codigo = codigo;
 			this.horaPartida = horaPartida;
@@ -29,43 +31,66 @@ public Paseo(String codigo, String horaPartida, String horaRegreso, int cantVend
 			this.destino = destino;
 			this.boletos = new Boletos (this.getCantMaxBoletos());
 }
+
+public Paseo() {
+	this.codigo = "A0";
+	this.horaPartida = LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),1,0);
+	this.horaRegreso = LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),1,0);
+	this.cantVendidos = 0;
+	this.cantMaxBoletos = 0;
+	this.precioBase = 0.0;
+	this.destino = "";
+	this.boletos = new Boletos (this.getCantMaxBoletos());
+}
+
 public String getCodigo () {
 	return this.codigo;
 }
 
-public String getHoraPartida() {
+public LocalDateTime getHoraPartida() {
 	return horaPartida;
 }
-public void setHoraPartida(String horaPartida) {
+
+public void setHoraPartida(LocalDateTime horaPartida) {
 	this.horaPartida = horaPartida;
 }
-public String getHoraRegreso() {
+
+public LocalDateTime getHoraRegreso() {
 	return horaRegreso;
 }
-public void setHoraRegreso(String horaRegreso) {
+
+public void setHoraRegreso(LocalDateTime horaRegreso) {
 	this.horaRegreso = horaRegreso;
 }
+
 public int getCantVendidos() {
 	return cantVendidos;
 }
+
 public void setCantVendidos(int cantVendidos) {
 	this.cantVendidos = cantVendidos;
 }
+
 public int getCantMaxBoletos() {
 	return cantMaxBoletos;
 }
+
 public void setCantMaxBoletos(int cantMaxBoletos) {
 	this.cantMaxBoletos = cantMaxBoletos;
 }
+
 public double getPrecioBase() {
 	return this.precioBase;
 }
+
 public void setPrecioBase(double precioBase) {
 	this.precioBase = precioBase;
 }
+
 public String getDestino() {
 	return this.destino;
 }
+
 public void setDestino(String destino) {
 	this.destino = destino;
 }
@@ -73,48 +98,47 @@ public void setDestino(String destino) {
 public Boletos getBoletosP() {
 	return this.boletos;
 }
+
 public void setBoletos(Boletos boletos) {
 	this.boletos = boletos;
 }
 
-//public void compraBoleto (VOCompraBoleto VO)  { // Cómo hacer en caso de los errores?
-// Acá le tengo que agregar algo si recién los quiero lanzar en la fachada?
-//
-//	if (this.getCantMaxBoletos() - this.getCantVendidos() > 0) {
-//		if (VO.getDescuento() >0) {
-//			if (VO.getEdad <= 18) {
-//				Boleto b1 = new BoletoEsp (this.getCantVendidos()+1, VO.getNombre(), VO.getEdad(), VO.getCelular(),  VO.getPrecio(), 0.75, VO.getDescuento());
-//			}
-//			else {
-//				Boleto b1 = new BoletoEsp (this.getCantVendidos()+1, VO.getNombre(), VO.getEdad(), VO.getCelular(),  VO.getPrecio(), 1, VO.getDescuento());
-//			}		
-//		}
-//		else  {
-//			if (VO.getEdad <= 18) {
-//			Boleto b1 = new Boleto(this.getCantVendidos()+1, VO.getNombre(), VO.getEdad(), VO.getCelular(),  VO.getPrecio(), 0.75);
-//			}
-//			else {
-//				Boleto b1 = new Boleto(this.getCantVendidos()+1, VO.getNombre(), VO.getEdad(), VO.getCelular(),  VO.getPrecio(), 1);
-//			}
-//		}
-//	this.getBoletosP().insBack(b1); // por qué no reconoce a b1 acá, porque hay if-else? Cómo hacer?
-//	this.setCantVendidos(this.cantVendidos+1);
-//	
-//	}
-//}
+public void compraBoleto (Boleto bol)  {
 
-//
-//public VOListadoBoletos[] listadoBoleto(String codigo, boolean esEsp) {
-//	
-//ArrayList<VOListadoBoletos> VOListadoBoletosL = new ArrayList<VOListadoBoletos>();
-//
-//
-//}
+<<<<<<< Updated upstream
+
+public VOListadoBoletos[] listadoBoleto(String codigo, boolean esEsp) {
+	
+ArrayList<VOListadoBoletos> VOListadoBoletosL = new ArrayList<VOListadoBoletos>();
+=======
+Boleto b1;
+
+if (bol instanceof BoletoEsp) {
+	b1 = new BoletoEsp (this.getCantVendidos()+1, bol.getNombrePasajero(), bol.getEdad(), bol.getNumeroCel(),  bol.getPrecio(), ((BoletoEsp)bol).getDescuentoEsp());
+}
+
+else  {
+	b1 = new Boleto(this.getCantVendidos()+1, bol.getNombrePasajero(), bol.getEdad(), bol.getNumeroCel(), bol.getPrecio());
+}
+
+	this.getBoletosP().insBack(b1);
+	this.setCantVendidos(this.cantVendidos+1);
+	
+}
+
+
+public ArrayList<VOListadoBoletos> listadoBoletosPaseo(boolean esEsp) {
+	
+return (this.getBoletosP().listadoBoleto(esEsp));
+>>>>>>> Stashed changes
+
+
+}
 
 
 public static void main (String args[]) {
 	
-	Paseo p1 = new Paseo ("PDP1", "09:00", "13:00", 5, 7, 15.0, "Punta del Este");
+	Paseo p1 = new Paseo ("PDP1", LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),9,0), LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),13,0), 5, 7, 15.0, "Punta del Este");
 	
 	System.out.println(p1.getCodigo());
 	System.out.println(p1.getHoraPartida());

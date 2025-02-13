@@ -6,9 +6,9 @@ private
 	double descuentoEsp;
 
 
-public BoletoEsp(int numeroBoleto, String nombrePasajero, int edad, String numeroCel, double precio, double descuento,
+public BoletoEsp(int numeroBoleto, String nombrePasajero, int edad, String numeroCel, double precio,
 		double descuentoEsp) {
-	super(numeroBoleto, nombrePasajero, edad, numeroCel, precio, descuento);
+	super(numeroBoleto, nombrePasajero, edad, numeroCel, precio);
 	this.descuentoEsp = descuentoEsp;
 }
 
