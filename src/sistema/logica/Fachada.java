@@ -1,6 +1,7 @@
 package sistema.logica;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -81,16 +82,29 @@ public class Fachada {
 					agregar = true;	
 				}
 			if (agregar) {
-				m.setPaseos().
+				Paseo paseo = new Paseo (VO.getCodigo(),
+										VO.getHoraPartida(),
+										VO.getHoraRegreso(),
+										0,
+										m.getCantAsientos(),
+										VO.getPrecioBase(),
+										VO.getDestino());
+				
+				m.getPaseos().registroPaseo(paseo);
+				colPaseos.insert(VO.getCodigo(), paseo);
+				colMinivan.insert(VO.getCodigo(), m);
 			}
 	
 		
+			}
+			if (!agregar) {
+				// Throw Exception No hay minivanes disponibles.
 			}
 	
 		}
 		else {
 		
-			// Throw Exception Precio tiene que ser mayor que 0
+			// Throw Exception Precio tiene que ser mayor que 0.
 		}
 		
 	}
@@ -162,17 +176,29 @@ public class Fachada {
 		
 		//funciona
 		
+		VOPaseo v = new VOPaseo ("PDE01", LocalDateTime.of(LocalDateTime.now().
+				getYear(),LocalDateTime.now().
+				getMonth(),LocalDateTime.now().
+				getDayOfMonth(),
+				13,0), 
+				LocalDateTime.of(LocalDateTime.now().
+				getYear(),LocalDateTime.now().
+				getMonth(),LocalDateTime.now().
+				getDayOfMonth(),
+				20,0),15.0,"Punta del Este");
 
-	
+		
+		f.RegistroPaseo(v);
+		
 		VOCompraBoleto vo = new VOCompraBoleto("Santiago", 30, "099099010", true, 20.5, "PDE01");
-		f.ComprarBoleto(vo); // No lo compra al momento porque no está el Paseo
+		f.ComprarBoleto(vo);
 		
 		f.ListadoBoleto("PDE01", true).forEach((VOListadoBoletos) -> {
 			System.out.println(VOListadoBoletos.getNombre());
 			System.out.println(VOListadoBoletos.getEdad());
 			System.out.println(VOListadoBoletos.getCelular());
 			System.out.println(VOListadoBoletos.getDescuento());
-			System.out.println(VOListadoBoletos.getNumeroBoleto());
+			System.out.println(VOListadoBoletos.getNumeroBoleto()); // Ver por qué tira 0 por defecto
 	}
 	);
 
