@@ -4,4 +4,8 @@
 		<section name="ImportExportWizard.dialogBounds">
 		</section>
 	</section>
+	<section name="FileSystemImportWizard">
+	</section>
+	<section name="NewWizardAction">
+	</section>
 </section>
