@@ -64,8 +64,45 @@ public class Paseos extends Diccionario <String, Paseo> {
 	} 
 	
 		
-}
 	
 
+	public ArrayList <VOListadoBoletos> listadoBoletoTipo (String codigo, boolean tipo) {
+		Iterator<Paseo>iter = arbol.values().iterator();
+		ArrayList<VOListadoBoletos> VOListadoBoletoL = new ArrayList<VOListadoBoletos>();
+		boolean encontre = false;
+		
+		while (iter.hasNext() && (!encontre)) {
+			Paseo p = iter.next();
+			if (p.getCodigo() == codigo) {
+				encontre = true;
+				VOListadoBoletoL = p.listadoBoletosPaseo(tipo);
+			}
+		}
+		return VOListadoBoletoL;
+	}
+
 	
+	public double montoRecaudado (String codigo) {
+		Iterator<Paseo>iter = arbol.values().iterator();
+		boolean encontre = false;
+		double Monto = 0;
+		
+		while (iter.hasNext() && (!encontre)) {
+			Paseo p = iter.next();
+			if (p.getCodigo() == codigo) {
+				encontre = true;
+				Monto = p.montoRecaudadoPaseo();
+			}
+		}
+		return Monto;
+	}
+	
+	
+	
+//	public static void main (String args[]) {
+//		
+//	}
+
+	
+}
 	

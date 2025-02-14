@@ -23,6 +23,7 @@ public class Fachada {
 	{
 		if(voBoleto.getEdad() > 18)
 		{
+			
 			if(Integer.parseInt(voBoleto.getCelular()) > 10000000) // verificar si el celular no deberia ser un int
 			{
 				if(colPaseos.member(voBoleto.getCodigoPaseo()))
