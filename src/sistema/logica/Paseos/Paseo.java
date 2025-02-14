@@ -3,6 +3,7 @@ package sistema.logica.Paseos;
 import java.util.ArrayList;
 
 import sistema.logica.Boletos.*;
+import sistema.logica.ValueObject.VOCompraBoleto;
 //import sistema.logica.Minivanes.*;
 //import sistema.logica.VO.*;
 import sistema.logica.ValueObject.VOListadoBoletos;
@@ -103,7 +104,26 @@ public void setBoletos(Boletos boletos) {
 	this.boletos = boletos;
 }
 
-public void compraBoleto (Boleto bol)  {
+public int getCantidadBoletosDisponibles()
+{
+	return this.cantMaxBoletos - this.cantVendidos;
+}
+
+public void compraBoleto (VOCompraBoleto bol)  {
+	
+	Boleto k;
+	if(bol.isEsEspecial())
+	{
+		k = new BoletoEsp(this.cantVendidos, bol.getNombre(), bol.getEdad(), bol.getCelular(), this.getPrecioBase(), bol.getDescuento());
+	}else {
+		k = new Boleto(this.cantVendidos, bol.getNombre(), bol.getEdad(), bol.getCelular(), this.getPrecioBase());
+	}
+	
+	this.boletos.insBack(k);
+	this.cantVendidos++;
+	
+}
+/*
 
 <<<<<<< Updated upstream
 
@@ -133,7 +153,7 @@ return (this.getBoletosP().listadoBoleto(esEsp));
 >>>>>>> Stashed changes
 
 
-}
+}*/
 
 
 public static void main (String args[]) {
