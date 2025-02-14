@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import sistema.logica.Diccionario;
-import sistema.logica.Paseos.Paseo;
 import sistema.logica.ValueObject.VOMinivanListado;
 import sistema.logica.ValueObject.VOPaseosListado;
 
@@ -32,6 +31,12 @@ public class Minivanes extends Diccionario<String, Minivan> {
 		}
 		return VOMinivanListadoL;
 
+	}
+	
+	//No se controlan errores, se deja para la fachada
+	public ArrayList <VOPaseosListado> ListadoPaseosEnMinivan(String Matricula)
+	{
+		return super.find(Matricula).paseos.listadoPaseos();
 	}
 
 }
