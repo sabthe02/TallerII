@@ -1,5 +1,6 @@
 package sistema.logica.Paseos;
 import sistema.logica.Diccionario;
+import sistema.logica.ValueObject.VOCompraBoleto;
 import sistema.logica.ValueObject.VOListadoBoletos;
 import sistema.logica.ValueObject.VOPaseosListado;
 import sistema.logica.Boletos.*;
@@ -58,8 +59,8 @@ public class Paseos extends Diccionario <String, Paseo> {
 		return VOPaseosListadoL;
 	}
 	
-	public void compraBoleto (Boleto bol) {
-		
+	public void compraBoleto (VOCompraBoleto voCompra) {
+		super.find(voCompra.getCodigoPaseo()).compraBoleto(voCompra);
 	} 
 	
 		
