@@ -2,6 +2,7 @@ package sistema.logica;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import sistema.logica.Minivanes.*;
 import sistema.logica.Paseos.*;
@@ -43,16 +44,68 @@ public class Fachada {
 		return colMinivan.ListadoMinivanes();
 	}
 	
+	public void RegistroPaseo (VOPaseo VO) {
+		boolean agregar;
+		boolean vanDisponible;
+		if (VO.getPrecioBase() > 0) {
+			agregar = false;
+			
+			Iterator<Minivan>iterm = colMinivan.arbol.values().iterator();
+			
+			while (iterm.hasNext() && !agregar) {
+				vanDisponible = true;
+				Minivan m = iterm.next();
+				Iterator<Paseo>iterp = m.getPaseos().arbol.values().iterator();
+				
+				
+				while (iterp.hasNext() && vanDisponible) {
+					Paseo p = iterp.next();
+					if (p.getHoraPartida().isAfter(VO.getHoraPartida())) {
+						if (p.getHoraPartida().isBefore(VO.getHoraRegreso())) {
+							vanDisponible = false;
+						}
+					}
+					else {
+						if (p.getHoraPartida().isBefore(VO.getHoraPartida())) {
+							if (p.getHoraRegreso().isAfter(VO.getHoraPartida())) {
+								vanDisponible = false;
+								
+							}
+						}
+						else {
+							vanDisponible = false;
+						}
+					}
+				}
+				if (vanDisponible) {
+					agregar = true;	
+				}
+			if (agregar) {
+				m.setPaseos().
+			}
+	
+		
+			}
+	
+		}
+		else {
+		
+			// Throw Exception Precio tiene que ser mayor que 0
+		}
+		
+	}
+	
 	
 	public void ComprarBoleto(VOCompraBoleto voBoleto)
 	{
 		if(voBoleto.getEdad() > 18)
 		{
 			
-			if(Integer.parseInt(voBoleto.getCelular()) > 10000000) // verificar si el celular no deberia ser un int
+			if(Integer.parseInt(voBoleto.getCelular()) > 0) // verificar si el celular no deberia ser un int
 			{/// Pregunta, acá no puede verificar si es >0 (lo que dice la letra)?
 				if(colPaseos.member(voBoleto.getCodigoPaseo()))
-				{
+					
+				{ 
 					if(colPaseos.find(voBoleto.getCodigoPaseo()).getCantidadBoletosDisponibles()>0)
 					{
 						colPaseos.compraBoleto(voBoleto);
@@ -62,8 +115,8 @@ public class Fachada {
 						//throw Exepcion No hay boletos disponibles
 					}
 				}else {
-					
 					//throw Exepcion El paseo no existe
+					//Al momento entra acá porque no existe el Paso todavía.
 				}
 				
 			}else
@@ -112,7 +165,7 @@ public class Fachada {
 
 	
 		VOCompraBoleto vo = new VOCompraBoleto("Santiago", 30, "099099010", true, 20.5, "PDE01");
-		f.ComprarBoleto(vo);
+		f.ComprarBoleto(vo); // No lo compra al momento porque no está el Paseo
 		
 		f.ListadoBoleto("PDE01", true).forEach((VOListadoBoletos) -> {
 			System.out.println(VOListadoBoletos.getNombre());
