@@ -6,7 +6,6 @@ import java.util.Iterator;
 import sistema.logica.Diccionario;
 import sistema.logica.ValueObject.VOMinivanListado;
 import sistema.logica.ValueObject.VOPaseosListado;
-import sistema.logica.Excepciones.Excepcion;
 
 public class Minivanes extends Diccionario<String, Minivan> {
 
@@ -34,18 +33,10 @@ public class Minivanes extends Diccionario<String, Minivan> {
 
 	}
 	
-	//No se controlan errores, se deja para la fachada
 	// REQUERIMIENTO 4
-	public ArrayList<VOPaseosListado> ListadoPaseosEnMinivan(String Matricula) throws Excepcion.MinivanNoEncontradaException {
+	public ArrayList<VOPaseosListado> ListadoPaseosEnMinivan(String Matricula) {
 	    
 	    var minivan = super.find(Matricula);
-	    
-	    if (minivan == null) {
-	    	String mensajeError = String.format("No se encontro una minivan con la matrícula: %s", Matricula);
-	    	throw new Excepcion.MinivanNoEncontradaException(mensajeError);
-	
-	    }
-
 	    return minivan.paseos.listadoPaseos();
 	}
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import sistema.logica.Minivanes.*;
 import sistema.logica.Paseos.*;
 import sistema.logica.ValueObject.*;
+import sistema.logica.Excepciones.Excepcion;
 
 public class Fachada {
 	
@@ -20,7 +21,7 @@ public class Fachada {
 		
 	}
 	
-	public void RegistroMinivanes (VOMinivan VO) {
+	public void RegistroMinivanes (VOMinivan VO) throws Excepcion.MinivanYaExisteException,Excepcion.CantAsientosMayorCeroException {
 		if (VO.getCantidadAsientos() > 0) {
 			if (!colMinivan.member(VO.getMatricula())) {
 				Minivan m = new Minivan (VO.getMatricula(), 
@@ -31,11 +32,14 @@ public class Fachada {
 				colMinivan.insert(m.getMatricula(), m);
 			}
 			else {
-				// throw Exception Minivan ya existe
+		    	String mensajeError = String.format("Ya existe una minivan con la matrícula: %s", VO.getMatricula());
+		    	throw new Excepcion.MinivanYaExisteException(mensajeError);
 			}
 		}
 		else {
-			// throw Exeption Cantidad de asientos tiene que ser mayor a 0.
+			
+	    	String mensajeError = "La cantidad de asientos tiene que ser mayor que cero";
+	    	throw new Excepcion.CantAsientosMayorCeroException(mensajeError);
 		}
 	}
 	
@@ -44,7 +48,7 @@ public class Fachada {
 	}
 	
 	
-	public void ComprarBoleto(VOCompraBoleto voBoleto)
+	public void ComprarBoleto(VOCompraBoleto voBoleto) throws Excepcion.BoletosNoDisponibles,Excepcion.PaseoNoExiste,Excepcion.CelularMayorQue1000,Excepcion.MenorDe18
 	{
 		if(voBoleto.getEdad() > 18)
 		{
@@ -59,28 +63,32 @@ public class Fachada {
 						
 					}else {
 						
-						//throw Exepcion No hay boletos disponibles
+				    	String mensajeError = "No hay boletos disponibles.";
+				    	throw new Excepcion.BoletosNoDisponibles(mensajeError);
 					}
 				}else {
 					
-					//throw Exepcion El paseo no existe
+			    	String mensajeError = String.format("El paseo con código: %s no existe.", voBoleto.getCodigoPaseo());
+			    	throw new Excepcion.PaseoNoExiste(mensajeError);
 				}
 				
 			}else
 			{
-				
-				//throw Exepcion Celular > 10000000
+		
+		    	String mensajeError = "Ingreso un número de celular como string, vuelva a intentarlo.";
+		    	throw new Excepcion.CelularMayorQue1000(mensajeError);
 			}
 			
 		}else
 		{
-			//throw Exepcion Edad > 18
+	    	String mensajeError = String.format("Su edad: %d es menor que 18", voBoleto.getEdad());
+	    	throw new Excepcion.MenorDe18(mensajeError);
 			
 		}
 		
 	}
 	
-	public ArrayList<VOListadoBoletos> ListadoBoleto(String codigo, boolean esEsp) {
+	public ArrayList<VOListadoBoletos> ListadoBoleto(String codigo, boolean esEsp) throws Excepcion.PaseoNoExisteConCodigo {
 			
 		if (colPaseos.member(codigo)) {
 			if (colPaseos.find(codigo).getCantVendidos()!=0) {
@@ -88,7 +96,8 @@ public class Fachada {
 			}
 		}
 		else {		
-			// throw Exception No existe el Paseo con ese codigo
+	    	String mensajeError = String.format("No existe ningún Paseo con el código: %s" + codigo);
+	    	throw new Excepcion.PaseoNoExisteConCodigo(mensajeError);
 		}
 		return null;
 	}
