@@ -22,6 +22,14 @@ public Minivan(String matricula, String marca, String modelo, int cantAsientos) 
 		this.paseos = new Paseos ();
 	}
 
+public Minivan() {
+	this.matricula = "";
+	this.marca = "";
+	this.modelo = "";
+	this.cantAsientos = 0;
+	this.paseos = new Paseos ();
+}
+
 public String getMatricula() {
 	return this.matricula;
 }

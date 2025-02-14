@@ -123,37 +123,18 @@ public void compraBoleto (VOCompraBoleto bol)  {
 	this.cantVendidos++;
 	
 }
-/*
-
-<<<<<<< Updated upstream
-
-public VOListadoBoletos[] listadoBoleto(String codigo, boolean esEsp) {
-	
-ArrayList<VOListadoBoletos> VOListadoBoletosL = new ArrayList<VOListadoBoletos>();
-=======
-Boleto b1;
-
-if (bol instanceof BoletoEsp) {
-	b1 = new BoletoEsp (this.getCantVendidos()+1, bol.getNombrePasajero(), bol.getEdad(), bol.getNumeroCel(),  bol.getPrecio(), ((BoletoEsp)bol).getDescuentoEsp());
-}
-
-else  {
-	b1 = new Boleto(this.getCantVendidos()+1, bol.getNombrePasajero(), bol.getEdad(), bol.getNumeroCel(), bol.getPrecio());
-}
-
-	this.getBoletosP().insBack(b1);
-	this.setCantVendidos(this.cantVendidos+1);
-	
-}
 
 
 public ArrayList<VOListadoBoletos> listadoBoletosPaseo(boolean esEsp) {
 	
 return (this.getBoletosP().listadoBoleto(esEsp));
->>>>>>> Stashed changes
 
 
-}*/
+}
+
+public double montoRecaudadoPaseo () {
+	return boletos.montoRecaudado();
+}
 
 
 public static void main (String args[]) {
