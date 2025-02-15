@@ -1,11 +1,12 @@
 package sistema.logica.Paseos;
+
+
 import sistema.logica.Diccionario;
+
 import sistema.logica.ValueObject.VOCompraBoleto;
 import sistema.logica.ValueObject.VOListadoBoletos;
 import sistema.logica.ValueObject.VOPaseosListado;
-import sistema.logica.Boletos.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -29,6 +30,7 @@ public class Paseos extends Diccionario <String, Paseo> {
 		return VOPaseosListadoL;
 	}
 	
+	// REQUERIMIENTO 5
 	public ArrayList <VOPaseosListado> listadoPaseosDestino (String destino) {
 		Iterator<Paseo>iter = arbol.values().iterator();
 		ArrayList<VOPaseosListado> VOPaseosListadoL = new ArrayList<VOPaseosListado>();
@@ -43,19 +45,21 @@ public class Paseos extends Diccionario <String, Paseo> {
 		}
 		return VOPaseosListadoL;
 	}
-	
-	public ArrayList <VOPaseosListado> listadoPaseosDisponible (int cantidad) {
+	// REQUERIMIENTO 6
+	public ArrayList<VOPaseosListado> listadoPaseosDisponible (int cantidad) {
+		
 		Iterator<Paseo>iter = arbol.values().iterator();
 		ArrayList<VOPaseosListado> VOPaseosListadoL = new ArrayList<VOPaseosListado>();
 		
 		VOPaseosListado VO;
 		while (iter.hasNext()) {
 			Paseo p = iter.next();
-			if ((p.getCantMaxBoletos() - p.getCantVendidos()) >= cantidad) {
+			if ((p.getCantidadBoletosDisponibles()) >= cantidad) {
 				VO = new VOPaseosListado (p.getCodigo(), p.getHoraPartida(), p.getHoraRegreso(), p.getPrecioBase(), p.getDestino(), p.getCantMaxBoletos(), (p.getCantMaxBoletos()-p.getCantVendidos()));
 				VOPaseosListadoL.add(VO);
 			}
 		}
+
 		return VOPaseosListadoL;
 	}
 	
@@ -63,9 +67,29 @@ public class Paseos extends Diccionario <String, Paseo> {
 		super.find(voCompra.getCodigoPaseo()).compraBoleto(voCompra);
 	} 
 	
-		
-}
-	
+	public ArrayList <VOListadoBoletos> listadoBoletoTipo (String codigo, boolean tipo) {
+		return super.find(codigo).listadoBoletosPaseo(tipo);
+	}
 
 	
+	public int CantidadBoletosVendidos(String codigo)
+	{
+		return super.find(codigo).getCantVendidos();
+		
+	}
+	
+    public double montoRecaudado (String codigo) {
+		
+		return super.find(codigo).montoRecaudadoPaseo();
+	}
+	
+
+
+	public void registroPaseo (Paseo paseo) {
+		
+		arbol.put(paseo.getCodigo(), paseo);
+		
+	}
+	
+}
 	
