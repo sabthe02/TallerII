@@ -58,7 +58,7 @@ public class Boleto {
 			this.precio = precio;
 	}
 	
-	
+
 		
 	public static void main (String args[]) {
 		Boleto b1 = new Boleto(1, "Persona1", 17, "099000000", 15.0);

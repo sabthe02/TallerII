@@ -13,7 +13,11 @@ public class VOPaseo {
 	public VOPaseo() {
 		// TODO Auto-generated constructor stub
 		this.Codigo = "";
-		this.HoraPartida = LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),1,0);
+		this.HoraPartida = LocalDateTime.of(LocalDateTime.now().
+							getYear(),LocalDateTime.now().
+							getMonth(),LocalDateTime.now().
+							getDayOfMonth(),
+							1,0);
 		this.HoraRegreso = LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),1,0);
 		this.PrecioBase = 0.0;
 		this.Destino = "";
