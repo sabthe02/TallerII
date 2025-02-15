@@ -1,12 +1,13 @@
 package sistema.logica;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import sistema.logica.Minivanes.*;
 import sistema.logica.Paseos.*;
 import sistema.logica.ValueObject.*;
-import sistema.logica.Excepciones.Excepcion;
 
 public class Fachada {
 	
@@ -21,7 +22,7 @@ public class Fachada {
 		
 	}
 	
-	public void RegistroMinivanes (VOMinivan VO) throws Excepcion.MinivanYaExisteException,Excepcion.CantAsientosMayorCeroException {
+	public void RegistroMinivanes (VOMinivan VO) {
 		if (VO.getCantidadAsientos() > 0) {
 			if (!colMinivan.member(VO.getMatricula())) {
 				Minivan m = new Minivan (VO.getMatricula(), 
@@ -32,14 +33,11 @@ public class Fachada {
 				colMinivan.insert(m.getMatricula(), m);
 			}
 			else {
-		    	String mensajeError = String.format("Ya existe una minivan con la matrícula: %s", VO.getMatricula());
-		    	throw new Excepcion.MinivanYaExisteException(mensajeError);
+				// throw Exception Minivan ya existe
 			}
 		}
 		else {
-			
-	    	String mensajeError = "La cantidad de asientos tiene que ser mayor que cero";
-	    	throw new Excepcion.CantAsientosMayorCeroException(mensajeError);
+			// throw Exeption Cantidad de asientos tiene que ser mayor a 0.
 		}
 	}
 	
@@ -47,48 +45,109 @@ public class Fachada {
 		return colMinivan.ListadoMinivanes();
 	}
 	
+	public void RegistroPaseo (VOPaseo VO) {
+		boolean agregar;
+		boolean vanDisponible;
+		if (VO.getPrecioBase() > 0) {
+			agregar = false;
+			
+			Iterator<Minivan>iterm = colMinivan.arbol.values().iterator();
+			
+			while (iterm.hasNext() && !agregar) {
+				vanDisponible = true;
+				Minivan m = iterm.next();
+				Iterator<Paseo>iterp = m.getPaseos().arbol.values().iterator();
+				
+				
+				while (iterp.hasNext() && vanDisponible) {
+					Paseo p = iterp.next();
+					if (p.getHoraPartida().isAfter(VO.getHoraPartida())) {
+						if (p.getHoraPartida().isBefore(VO.getHoraRegreso())) {
+							vanDisponible = false;
+						}
+					}
+					else {
+						if (p.getHoraPartida().isBefore(VO.getHoraPartida())) {
+							if (p.getHoraRegreso().isAfter(VO.getHoraPartida())) {
+								vanDisponible = false;
+								
+							}
+						}
+						else {
+							vanDisponible = false;
+						}
+					}
+				}
+				if (vanDisponible) {
+					agregar = true;	
+				}
+			if (agregar) {
+				Paseo paseo = new Paseo (VO.getCodigo(),
+										VO.getHoraPartida(),
+										VO.getHoraRegreso(),
+										0,
+										m.getCantAsientos(),
+										VO.getPrecioBase(),
+										VO.getDestino());
+				
+				m.getPaseos().registroPaseo(paseo);
+				colPaseos.insert(VO.getCodigo(), paseo);
+				colMinivan.insert(VO.getCodigo(), m);
+			}
 	
-	public void ComprarBoleto(VOCompraBoleto voBoleto) throws Excepcion.BoletosNoDisponibles,Excepcion.PaseoNoExiste,Excepcion.CelularMayorQue1000,Excepcion.MenorDe18
+		
+			}
+			if (!agregar) {
+				// Throw Exception No hay minivanes disponibles.
+			}
+	
+		}
+		else {
+		
+			// Throw Exception Precio tiene que ser mayor que 0.
+		}
+		
+	}
+	
+	
+	public void ComprarBoleto(VOCompraBoleto voBoleto)
 	{
 		if(voBoleto.getEdad() > 18)
 		{
 			
-			if(Integer.parseInt(voBoleto.getCelular()) > 10000000) // verificar si el celular no deberia ser un int
+			if(Integer.parseInt(voBoleto.getCelular()) > 0) // verificar si el celular no deberia ser un int
 			{/// Pregunta, acá no puede verificar si es >0 (lo que dice la letra)?
 				if(colPaseos.member(voBoleto.getCodigoPaseo()))
-				{
+					
+				{ 
 					if(colPaseos.find(voBoleto.getCodigoPaseo()).getCantidadBoletosDisponibles()>0)
 					{
 						colPaseos.compraBoleto(voBoleto);
 						
 					}else {
 						
-				    	String mensajeError = "No hay boletos disponibles.";
-				    	throw new Excepcion.BoletosNoDisponibles(mensajeError);
+						//throw Exepcion No hay boletos disponibles
 					}
 				}else {
-					
-			    	String mensajeError = String.format("El paseo con código: %s no existe.", voBoleto.getCodigoPaseo());
-			    	throw new Excepcion.PaseoNoExiste(mensajeError);
+					//throw Exepcion El paseo no existe
+					//Al momento entra acá porque no existe el Paso todavía.
 				}
 				
 			}else
 			{
-		
-		    	String mensajeError = "Ingreso un número de celular como string, vuelva a intentarlo.";
-		    	throw new Excepcion.CelularMayorQue1000(mensajeError);
+				
+				//throw Exepcion Celular > 10000000
 			}
 			
 		}else
 		{
-	    	String mensajeError = String.format("Su edad: %d es menor que 18", voBoleto.getEdad());
-	    	throw new Excepcion.MenorDe18(mensajeError);
+			//throw Exepcion Edad > 18
 			
 		}
 		
 	}
 	
-	public ArrayList<VOListadoBoletos> ListadoBoleto(String codigo, boolean esEsp) throws Excepcion.PaseoNoExisteConCodigo {
+	public ArrayList<VOListadoBoletos> ListadoBoleto(String codigo, boolean esEsp) {
 			
 		if (colPaseos.member(codigo)) {
 			if (colPaseos.find(codigo).getCantVendidos()!=0) {
@@ -96,8 +155,7 @@ public class Fachada {
 			}
 		}
 		else {		
-	    	String mensajeError = String.format("No existe ningún Paseo con el código: %s" + codigo);
-	    	throw new Excepcion.PaseoNoExisteConCodigo(mensajeError);
+			// throw Exception No existe el Paseo con ese codigo
 		}
 		return null;
 	}
@@ -118,8 +176,20 @@ public class Fachada {
 		
 		//funciona
 		
+		VOPaseo v = new VOPaseo ("PDE01", LocalDateTime.of(LocalDateTime.now().
+				getYear(),LocalDateTime.now().
+				getMonth(),LocalDateTime.now().
+				getDayOfMonth(),
+				13,0), 
+				LocalDateTime.of(LocalDateTime.now().
+				getYear(),LocalDateTime.now().
+				getMonth(),LocalDateTime.now().
+				getDayOfMonth(),
+				20,0),15.0,"Punta del Este");
 
-	
+		
+		f.RegistroPaseo(v);
+		
 		VOCompraBoleto vo = new VOCompraBoleto("Santiago", 30, "099099010", true, 20.5, "PDE01");
 		f.ComprarBoleto(vo);
 		
@@ -128,7 +198,7 @@ public class Fachada {
 			System.out.println(VOListadoBoletos.getEdad());
 			System.out.println(VOListadoBoletos.getCelular());
 			System.out.println(VOListadoBoletos.getDescuento());
-			System.out.println(VOListadoBoletos.getNumeroBoleto());
+			System.out.println(VOListadoBoletos.getNumeroBoleto()); // Ver por qué tira 0 por defecto
 	}
 	);
 

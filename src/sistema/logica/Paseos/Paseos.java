@@ -98,6 +98,12 @@ public class Paseos extends Diccionario <String, Paseo> {
 		return Monto;
 	}
 	
+	public void registroPaseo (Paseo paseo) {
+		
+		arbol.put(paseo.getCodigo(), paseo);
+		
+	}
+	
 	
 	
 	
