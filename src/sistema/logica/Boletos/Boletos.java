@@ -68,7 +68,7 @@ public class Boletos {
 	
 	public int largo () {
 		return tope;
-	}
+	} 
 	
 	public double montoRecaudado () {
 		double Monto = 0;
