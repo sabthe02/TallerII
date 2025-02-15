@@ -153,16 +153,11 @@ public ArrayList<VOPaseosListado> ListadoPaseosDestino (String destino) throws D
 		}
 	}
 	
-//public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) throws PaseoNoExiste {
-//	
-//	if ()
-//	
-//	return colPaseos.listadoPaseosDisponible(disponibles);
-//	
-//	else {
-//		
-//	}
-//}
+public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
+	
+	return colPaseos.listadoPaseosDisponible(disponibles);
+	
+}
 
 	public void ComprarBoleto(VOCompraBoleto voBoleto) throws BoletosNoDisponibles, PaseoNoExiste, CelularMayorQue1000, MenorDe0
 	{
