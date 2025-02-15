@@ -68,7 +68,7 @@ public class Boletos {
 	
 	public int largo () {
 		return tope;
-	}
+	} 
 	
 	public double montoRecaudado () {
 		double Monto = 0;
@@ -78,7 +78,7 @@ public class Boletos {
 					MontoBoleto = MontoBoleto*0.75;
 				}
 			if (boletos[i] instanceof BoletoEsp) {
-				MontoBoleto = MontoBoleto*((BoletoEsp)boletos[i]).getDescuentoEsp();
+				MontoBoleto = MontoBoleto * ((100 - ((BoletoEsp)boletos[i]).getDescuentoEsp())/100);
 			}
 			Monto = Monto + MontoBoleto;
 		}
