@@ -33,9 +33,11 @@ public class Minivanes extends Diccionario<String, Minivan> {
 
 	}
 	
+// REQUERIMIENTO 4
 	public ArrayList <VOPaseosListado> ListadoPaseosEnMinivan(String Matricula)
 	{
 		return super.find(Matricula).paseos.listadoPaseos();
 	}
+
 
 }

@@ -2,8 +2,7 @@ package sistema.logica.Minivanes;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-import sistema.logica.Paseos.Paseo;
-import sistema.logica.Paseos.Paseos;
+import sistema.logica.Paseos.*;
 
 public class Minivan {
 private 
@@ -21,6 +20,14 @@ public Minivan(String matricula, String marca, String modelo, int cantAsientos) 
 		this.cantAsientos = cantAsientos;
 		this.paseos = new Paseos ();
 	}
+
+public Minivan() {
+	this.matricula = "";
+	this.marca = "";
+	this.modelo = "";
+	this.cantAsientos = 0;
+	this.paseos = new Paseos ();
+}
 
 public String getMatricula() {
 	return this.matricula;
@@ -49,7 +56,6 @@ public Paseos getPaseos() {
 }
 public void setPaseos(Paseos pas) {
 	this.paseos = pas;
-
 }
 
 public int getCantidadPaseos()

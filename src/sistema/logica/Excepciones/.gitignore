@@ -1,0 +1,13 @@
+/excepcion.class
+/Excepciones.class
+/Excepcion.class
+/Excepcion$ListaPaseosVaciaException.class
+/Excepcion$MinivanNoEncontradaException.class
+/Excepcion$DestinoNoPerteneceException.class
+/Excepcion$MinivanYaExisteException.class
+/Excepcion$CantAsientosMayorCeroException.class
+/Excepcion$BoletosNoDisponibles.class
+/Excepcion$CelularMayorQue1000.class
+/Excepcion$MenorDe18.class
+/Excepcion$PaseoNoExiste.class
+/Excepcion$PaseoNoExisteConCodigo.class
