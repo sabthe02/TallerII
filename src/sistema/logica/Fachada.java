@@ -5,8 +5,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import sistema.logica.Excepciones.*;
 import sistema.logica.Minivanes.*;
-import sistema.logica.Paseos.*;
+import sistema.logica.Paseos.Paseos;
+import sistema.logica.Paseos.Paseo;
 import sistema.logica.ValueObject.*;
 
 public class Fachada {
@@ -22,7 +24,7 @@ public class Fachada {
 		
 	}
 	
-	public void RegistroMinivanes (VOMinivan VO) {
+	public void RegistroMinivanes (VOMinivan VO) throws MinivanYaExisteException, CantAsientosMayorCeroException {
 		if (VO.getCantidadAsientos() > 0) {
 			if (!colMinivan.member(VO.getMatricula())) {
 				Minivan m = new Minivan (VO.getMatricula(), 
@@ -33,19 +35,21 @@ public class Fachada {
 				colMinivan.insert(m.getMatricula(), m);
 			}
 			else {
-				// throw Exception Minivan ya existe
+				String mensajeError = String.format("Ya existe una minivan con la matrícula: %s", VO.getMatricula());
+		    	throw new MinivanYaExisteException(mensajeError);
 			}
 		}
 		else {
-			// throw Exeption Cantidad de asientos tiene que ser mayor a 0.
+			String mensajeError = "La cantidad de asientos tiene que ser mayor que cero";
+	    	throw new CantAsientosMayorCeroException(mensajeError);
 		}
-	}
+}
 	
 	public ArrayList<VOMinivanListado> ListadoGeneralMinivanes () {
 		return colMinivan.ListadoMinivanes();
 	}
 	
-	public void RegistroPaseo (VOPaseo VO) {
+	public void RegistroPaseo (VOPaseo VO) throws MinivanNoExiste, PrecioMenorCero {
 		boolean agregar;
 		boolean vanDisponible;
 		if (VO.getPrecioBase() > 0) {
@@ -93,26 +97,76 @@ public class Fachada {
 				m.getPaseos().registroPaseo(paseo);
 				colPaseos.insert(VO.getCodigo(), paseo);
 				colMinivan.insert(VO.getCodigo(), m);
+				
 			}
 	
 		
 			}
 			if (!agregar) {
-				// Throw Exception No hay minivanes disponibles.
+				String mensajeError = String.format ("La minivan con codigo %s no existe",VO.getCodigo());
+				throw new MinivanNoExiste (mensajeError);
 			}
 	
 		}
 		else {
 		
-			// Throw Exception Precio tiene que ser mayor que 0.
+			String mensajeError = "Por favor ingresar un precio mayor a cero";
+			throw new PrecioMenorCero (mensajeError);
 		}
 		
 	}
 	
+	public ArrayList<VOPaseosListado> ListadoPaseosMinivan (String matricula) throws MinivanNoExiste {
+		
+		if (colMinivan.member(matricula)) {
+			
+			return colMinivan.ListadoPaseosEnMinivan(matricula);
+		}
+		else {
+			String mensajeError = String.format ("La minivan con codigo %s no existe",matricula);
+			throw new MinivanNoExiste (mensajeError);
+		}
+	}
 	
-	public void ComprarBoleto(VOCompraBoleto voBoleto)
+public ArrayList<VOPaseosListado> ListadoPaseosDestino (String destino) throws DestinoNoPerteneceException {
+		
+	boolean existe;
+		switch(destino) {
+		
+				case "Punta del Este": 								
+				case "Piriapolis":					
+				case "Canelones":
+				case "Maldonado":
+				case "Rocha":
+				existe = true;
+				break;
+				
+				default: 
+					existe = false;
+		}
+		if (existe) {		
+			return colPaseos.listadoPaseosDestino(destino);
+		}
+		else {
+			String mensajeError = String.format ("El destino %s no partenece a la lista de posibles destinos",destino);
+			throw new DestinoNoPerteneceException (mensajeError);
+		}
+	}
+	
+//public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) throws PaseoNoExiste {
+//	
+//	if ()
+//	
+//	return colPaseos.listadoPaseosDisponible(disponibles);
+//	
+//	else {
+//		
+//	}
+//}
+
+	public void ComprarBoleto(VOCompraBoleto voBoleto) throws BoletosNoDisponibles, PaseoNoExiste, CelularMayorQue1000, MenorDe0
 	{
-		if(voBoleto.getEdad() > 18)
+		if(voBoleto.getEdad() > 0)
 		{
 			
 			if(Integer.parseInt(voBoleto.getCelular()) > 0) // verificar si el celular no deberia ser un int
@@ -126,28 +180,31 @@ public class Fachada {
 						
 					}else {
 						
-						//throw Exepcion No hay boletos disponibles
+						String mensajeError = "No hay boletos disponibles.";
+						throw new BoletosNoDisponibles (mensajeError);
 					}
 				}else {
-					//throw Exepcion El paseo no existe
-					//Al momento entra acá porque no existe el Paso todavía.
+					String mensajeError = String.format("El paseo con código: %s no existe.", voBoleto.getCodigoPaseo());
+			    	throw new PaseoNoExiste(mensajeError);
 				}
 				
 			}else
 			{
 				
-				//throw Exepcion Celular > 10000000
+				String mensajeError = "Ingresar un numero de celular mayor que 0";
+		    	throw new CelularMayorQue1000(mensajeError);
 			}
 			
 		}else
 		{
-			//throw Exepcion Edad > 18
+			String mensajeError = String.format("Edad: %d es menor que 0, ingresar edad valida", voBoleto.getEdad());
+	    	throw new MenorDe0(mensajeError);
 			
 		}
 		
 	}
 	
-	public ArrayList<VOListadoBoletos> ListadoBoleto(String codigo, boolean esEsp) {
+	public ArrayList<VOListadoBoletos> ListadoBoleto(String codigo, boolean esEsp) throws PaseoNoExiste {
 			
 		if (colPaseos.member(codigo)) {
 			if (colPaseos.find(codigo).getCantVendidos()!=0) {
@@ -155,17 +212,26 @@ public class Fachada {
 			}
 		}
 		else {		
-			// throw Exception No existe el Paseo con ese codigo
+			String mensajeError = String.format("El paseo con código: %s no existe.", codigo);
+	    	throw new PaseoNoExiste(mensajeError);
 		}
 		return null;
 	}
+	
+
 	
 	public static void main (String args[]) {
 	
 		
 		Fachada f = new Fachada();
 		VOMinivan VOm = new VOMinivan("A1", "Volvo", "Modelo1", 8);
-		f.RegistroMinivanes(VOm);
+		try {
+			f.RegistroMinivanes(VOm);
+		} catch (MinivanYaExisteException | CantAsientosMayorCeroException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		f.ListadoGeneralMinivanes().forEach((VOMinivanListado) -> { 
 			System.out.println(VOMinivanListado.getMatricula());
 			System.out.println(VOMinivanListado.getMarca());
@@ -187,20 +253,88 @@ public class Fachada {
 				getDayOfMonth(),
 				20,0),15.0,"Punta del Este");
 
+	
+		try {
+			f.RegistroPaseo(v);
+		} catch (MinivanNoExiste e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PrecioMenorCero e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		f.RegistroPaseo(v);
+		try {
+			f.ListadoPaseosMinivan("A1").forEach((VOPaseosListado) -> { 
+				System.out.println(VOPaseosListado.getCodigo());
+				System.out.println(VOPaseosListado.getHoraPartida());
+				System.out.println(VOPaseosListado.getHoraRegreso());
+				System.out.println(VOPaseosListado.getCantidadBoletosDisponibles());
+				System.out.println(VOPaseosListado.getCantidadMaximaBoletosVendibles());
+				System.out.println(VOPaseosListado.getDestino());
+			}
+			);
+			}
+		catch (MinivanNoExiste e) {
+			e.printStackTrace();
+		}
+		catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		
+		// funciona
+		
+		try {
+			f.ListadoPaseosDestino("Punta del Este").forEach((VOPaseosListado) -> { 
+				System.out.println(VOPaseosListado.getCodigo());
+				System.out.println(VOPaseosListado.getHoraPartida());
+				System.out.println(VOPaseosListado.getHoraRegreso());
+				System.out.println(VOPaseosListado.getCantidadBoletosDisponibles());
+				System.out.println(VOPaseosListado.getCantidadMaximaBoletosVendibles());
+				System.out.println(VOPaseosListado.getDestino());
+			}
+			);
+			}
+		catch (DestinoNoPerteneceException e) {
+			e.printStackTrace();
+		}
+		catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+		
+		// funciona
+		
 		
 		VOCompraBoleto vo = new VOCompraBoleto("Santiago", 30, "099099010", true, 20.5, "PDE01");
-		f.ComprarBoleto(vo);
+		try {
+			f.ComprarBoleto(vo);
+		} catch (BoletosNoDisponibles e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PaseoNoExiste e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CelularMayorQue1000 e) {
+			// TODO Auto-generated catch block
+				
+		} catch (MenorDe0 e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		f.ListadoBoleto("PDE01", true).forEach((VOListadoBoletos) -> {
-			System.out.println(VOListadoBoletos.getNombre());
-			System.out.println(VOListadoBoletos.getEdad());
-			System.out.println(VOListadoBoletos.getCelular());
-			System.out.println(VOListadoBoletos.getDescuento());
-			System.out.println(VOListadoBoletos.getNumeroBoleto()); // Ver por qué tira 0 por defecto
-	}
-	);
+		try {
+			f.ListadoBoleto("PDE01", true).forEach((VOListadoBoletos) -> {
+				System.out.println(VOListadoBoletos.getNombre());
+				System.out.println(VOListadoBoletos.getEdad());
+				System.out.println(VOListadoBoletos.getCelular());
+				System.out.println(VOListadoBoletos.getDescuento());
+				System.out.println(VOListadoBoletos.getNumeroBoleto()); // Ver por qué tira 0 por defecto
+}
+);
+		} catch (PaseoNoExiste e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 }
 }
