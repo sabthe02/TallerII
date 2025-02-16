@@ -251,6 +251,7 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 			e.printStackTrace();
 		}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		
 		f.ListadoGeneralMinivanes().forEach((VOMinivanListado) -> { 
 			System.out.println(VOMinivanListado.getMatricula());
@@ -275,6 +276,8 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 
 	
 =======
+=======
+>>>>>>> Stashed changes
 		catch (CantAsientosMayorCeroException d) {
 			d.printStackTrace();
 		}
@@ -328,6 +331,12 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 			e.printStackTrace();
 		} catch (PrecioMenorCero d) {
 			d.printStackTrace();
+<<<<<<< Updated upstream
+=======
+		}
+		catch (RuntimeException g) {
+			g.printStackTrace();
+>>>>>>> Stashed changes
 		}
 		catch (RuntimeException g) {
 			g.printStackTrace();
@@ -349,6 +358,7 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 =======
 			f.RegistroPaseo(v1);
 		} catch (MinivanNoExiste e) {
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 			e.printStackTrace();
 		} catch (PrecioMenorCero d) {
@@ -359,7 +369,14 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 		}
 <<<<<<< Updated upstream
 		catch (RuntimeException e) {
+=======
+>>>>>>> Stashed changes
 			e.printStackTrace();
+		} catch (PrecioMenorCero d) {
+			d.printStackTrace();
+		}
+		catch (RuntimeException g) {
+			g.printStackTrace();
 		}
 		
 		// funciona
@@ -477,6 +494,7 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 			f.ComprarBoleto(vo);
 		} catch (BoletosNoDisponibles e) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (PaseoNoExiste e) {
@@ -487,6 +505,8 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 				
 		} catch (MenorDe0 e) {
 			// TODO Auto-generated catch block
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 			e.printStackTrace();
@@ -501,6 +521,7 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 		}
 		
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		try {
 			f.ListadoBoleto("PDE01", true).forEach((VOListadoBoletos) -> {
 				System.out.println(VOListadoBoletos.getNombre());
@@ -511,6 +532,8 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 }
 );
 =======
+=======
+>>>>>>> Stashed changes
 
 		VOCompraBoleto vo1 = new VOCompraBoleto("Maria", 10, "099099010", false, 20.5, "PDE02");
 		try {
