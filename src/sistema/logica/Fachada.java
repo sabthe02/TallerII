@@ -2,15 +2,19 @@ package sistema.logica;
 
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 import sistema.logica.Minivanes.*;
 import sistema.logica.Paseos.*;
 import sistema.logica.ValueObject.*;
 import sistema.logica.Excepciones.Excepcion;
 
-public class Fachada {
+
+
+
+public class Fachada implements Serializable {
 	
-	
+	private static final long serialVersionUID = 1L; 
 	private Minivanes colMinivan;
 	private Paseos colPaseos;
 	

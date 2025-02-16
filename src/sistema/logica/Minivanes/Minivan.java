@@ -5,7 +5,12 @@ import java.util.TreeMap;
 import sistema.logica.Paseos.Paseo;
 import sistema.logica.Paseos.Paseos;
 
-public class Minivan {
+import java.io.Serializable;
+
+public class Minivan implements Serializable {
+	
+private static final long serialVersionUID = 1L; 
+
 private 
 	String matricula;
 	String marca;

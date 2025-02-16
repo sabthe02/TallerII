@@ -107,9 +107,22 @@ public class Excepcion {
 
         public String darMensaje() {
             return mensaje;
-        }
+        } 
+        
     }
     
     
+    public static class PersistenciaException extends Exception {
+        private String mensaje;
+
+        public PersistenciaException(String mensaje) {
+            this.mensaje = mensaje;
+        }
+
+        public String darMensaje() {
+            return mensaje;
+        }
+    
+    }
     
 }
