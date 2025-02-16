@@ -11,3 +11,4 @@
 /Excepcion$MenorDe18.class
 /Excepcion$PaseoNoExiste.class
 /Excepcion$PaseoNoExisteConCodigo.class
+/Excepcion$PersistenciaException.class

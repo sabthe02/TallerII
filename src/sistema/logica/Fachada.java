@@ -2,7 +2,9 @@ package sistema.logica;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Iterator;
+
 
 import sistema.logica.Excepciones.*;
 import sistema.logica.Minivanes.*;
@@ -10,7 +12,11 @@ import sistema.logica.Paseos.Paseos;
 import sistema.logica.Paseos.Paseo;
 import sistema.logica.ValueObject.*;
 
-public class Fachada {
+
+public class Fachada implements Serializable {
+	
+	private static final long serialVersionUID = 1L; 
+
 
 	private Minivanes colMinivan;
 	private Paseos colPaseos;
