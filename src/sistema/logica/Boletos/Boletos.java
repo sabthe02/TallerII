@@ -78,7 +78,7 @@ public class Boletos {
 					MontoBoleto = MontoBoleto*0.75;
 				}
 			if (boletos[i] instanceof BoletoEsp) {
-				MontoBoleto = MontoBoleto*((BoletoEsp)boletos[i]).getDescuentoEsp();
+				MontoBoleto =  (MontoBoleto*(((BoletoEsp)boletos[i]).getDescuentoEsp()/100));
 			}
 			Monto = Monto + MontoBoleto;
 		}
