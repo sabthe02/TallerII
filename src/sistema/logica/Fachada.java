@@ -252,6 +252,7 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 		}
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		
 		f.ListadoGeneralMinivanes().forEach((VOMinivanListado) -> { 
 			System.out.println(VOMinivanListado.getMatricula());
@@ -276,6 +277,8 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 
 	
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 		catch (CantAsientosMayorCeroException d) {
@@ -332,7 +335,13 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 		} catch (PrecioMenorCero d) {
 			d.printStackTrace();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+		}
+		catch (RuntimeException g) {
+			g.printStackTrace();
+>>>>>>> Stashed changes
 		}
 		catch (RuntimeException g) {
 			g.printStackTrace();
@@ -358,6 +367,7 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 =======
 			f.RegistroPaseo(v1);
 		} catch (MinivanNoExiste e) {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 >>>>>>> Stashed changes
 			e.printStackTrace();
@@ -393,7 +403,14 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 			);
 			}
 		catch (DestinoNoPerteneceException e) {
+=======
+>>>>>>> Stashed changes
 			e.printStackTrace();
+		} catch (PrecioMenorCero d) {
+			d.printStackTrace();
+		}
+		catch (RuntimeException g) {
+			g.printStackTrace();
 		}
 		catch (RuntimeException e) {
 			e.printStackTrace();
@@ -495,6 +512,7 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 		} catch (BoletosNoDisponibles e) {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (PaseoNoExiste e) {
@@ -505,6 +523,8 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 				
 		} catch (MenorDe0 e) {
 			// TODO Auto-generated catch block
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -522,6 +542,7 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 		
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		try {
 			f.ListadoBoleto("PDE01", true).forEach((VOListadoBoletos) -> {
 				System.out.println(VOListadoBoletos.getNombre());
@@ -532,6 +553,8 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 }
 );
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
