@@ -13,7 +13,7 @@ public class VOBoletoPasajero {
 		// TODO Auto-generated constructor stub
 		this.Nombre = "";
 		this.Edad = 18;
-		this.Celular = 0;
+		this.Celular = "";
 	}
 
 

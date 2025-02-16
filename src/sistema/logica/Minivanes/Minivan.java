@@ -2,8 +2,7 @@ package sistema.logica.Minivanes;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-import sistema.logica.Paseos.Paseo;
-import sistema.logica.Paseos.Paseos;
+import sistema.logica.Paseos.*;
 
 import java.io.Serializable;
 
@@ -62,7 +61,6 @@ public Paseos getPaseos() {
 }
 public void setPaseos(Paseos pas) {
 	this.paseos = pas;
-
 }
 
 public int getCantidadPaseos()

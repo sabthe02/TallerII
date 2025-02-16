@@ -63,7 +63,11 @@ public class Boleto implements Serializable {
 			this.precio = precio;
 	}
 	
-	//public double montoRecaudadoPaseo ()
+
+	public double montoRecaudadoPaseo ()
+
+
+
 		
 	public static void main (String args[]) {
 		Boleto b1 = new Boleto(1, "Persona1", 17, "099000000", 15.0);
