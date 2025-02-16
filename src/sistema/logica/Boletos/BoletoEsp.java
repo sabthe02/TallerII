@@ -1,6 +1,9 @@
 package sistema.logica.Boletos;
+import java.io.Serializable;
 
-public class BoletoEsp extends Boleto {
+public class BoletoEsp extends Boleto implements Serializable {
+	
+private static final long serialVersionUID = 1L; 
 
 private 
 	double descuentoEsp;

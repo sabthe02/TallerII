@@ -33,10 +33,11 @@ public class Minivanes extends Diccionario<String, Minivan> {
 
 	}
 	
-	//No se controlan errores, se deja para la fachada
+// REQUERIMIENTO 4
 	public ArrayList <VOPaseosListado> ListadoPaseosEnMinivan(String Matricula)
 	{
 		return super.find(Matricula).paseos.listadoPaseos();
 	}
+
 
 }

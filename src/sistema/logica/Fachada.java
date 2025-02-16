@@ -1,10 +1,11 @@
 package sistema.logica;
 
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Iterator;
+
 
 import sistema.logica.Excepciones.*;
 import sistema.logica.Minivanes.*;
@@ -12,162 +13,133 @@ import sistema.logica.Paseos.Paseos;
 import sistema.logica.Paseos.Paseo;
 import sistema.logica.ValueObject.*;
 
-public class Fachada {
+
+public class Fachada implements Serializable {
 	
-	
+	private static final long serialVersionUID = 1L; 
+
+
 	private Minivanes colMinivan;
 	private Paseos colPaseos;
-	
-	public Fachada ()
-	{
+
+	public Fachada() {
 		colMinivan = new Minivanes();
 		colPaseos = new Paseos();
-		
+
 	}
-	
-	public void RegistroMinivanes (VOMinivan VO) throws MinivanYaExisteException, CantAsientosMayorCeroException {
+
+	public void RegistroMinivanes(VOMinivan VO) throws MinivanYaExisteException, CantAsientosMayorCeroException {
 		if (VO.getCantidadAsientos() > 0) {
 			if (!colMinivan.member(VO.getMatricula())) {
-				Minivan m = new Minivan (VO.getMatricula(), 
-										VO.getMarca(), 
-										VO.getModelo(), 
-										VO.getCantidadAsientos());
-				
+				Minivan m = new Minivan(VO.getMatricula(), VO.getMarca(), VO.getModelo(), VO.getCantidadAsientos());
+
 				colMinivan.insert(m.getMatricula(), m);
-			}
-			else {
+			} else {
 				String mensajeError = String.format("Ya existe una minivan con la matrícula: %s", VO.getMatricula());
-		    	throw new MinivanYaExisteException(mensajeError);
+				throw new MinivanYaExisteException(mensajeError);
 			}
-		}
-		else {
+		} else {
 			String mensajeError = "La cantidad de asientos tiene que ser mayor que cero";
-	    	throw new CantAsientosMayorCeroException(mensajeError);
+			throw new CantAsientosMayorCeroException(mensajeError);
 		}
-}
-	
-	public ArrayList<VOMinivanListado> ListadoGeneralMinivanes () {
+	}
+
+	public ArrayList<VOMinivanListado> ListadoGeneralMinivanes() {
 		return colMinivan.ListadoMinivanes();
 	}
-	
-	public void RegistroPaseo (VOPaseo VO) throws MinivanNoExiste, PrecioMenorCero {
+
+	public void RegistroPaseo(VOPaseo VO) throws MinivanNoExiste, PrecioMenorCero {
 		boolean agregar;
 		boolean vanDisponible;
 		if (VO.getPrecioBase() > 0) {
 			agregar = false;
-			
-			Iterator<Minivan>iterm = colMinivan.arbol.values().iterator();
-			
+
+			Iterator<Minivan> iterm = colMinivan.arbol.values().iterator();
+
 			while (iterm.hasNext() && !agregar) {
 				vanDisponible = true;
 				Minivan m = iterm.next();
-				Iterator<Paseo>iterp = m.getPaseos().arbol.values().iterator();
-				
-				
+				Iterator<Paseo> iterp = m.getPaseos().arbol.values().iterator();
+
 				while (iterp.hasNext() && vanDisponible) {
 					Paseo p = iterp.next();
 					if (p.getHoraPartida().isAfter(VO.getHoraPartida())) {
 						if (p.getHoraPartida().isBefore(VO.getHoraRegreso())) {
 							vanDisponible = false;
 						}
-					}
-					else {
+					} else {
 						if (p.getHoraPartida().isBefore(VO.getHoraPartida())) {
 							if (p.getHoraRegreso().isAfter(VO.getHoraPartida())) {
 								vanDisponible = false;
-								
+
 							}
-						}
-						else {
+						} else {
 							vanDisponible = false;
 						}
 					}
 				}
 				if (vanDisponible) {
-					agregar = true;	
+					agregar = true;
 				}
-			if (agregar) {
-				Paseo paseo = new Paseo (VO.getCodigo(),
-										VO.getHoraPartida(),
-										VO.getHoraRegreso(),
-										0,
-										m.getCantAsientos(),
-										VO.getPrecioBase(),
-										VO.getDestino());
-				
-				m.getPaseos().registroPaseo(paseo);
-				colPaseos.insert(VO.getCodigo(), paseo);
-				colMinivan.insert(VO.getCodigo(), m);
-				
-			}
-	
-		
+				if (agregar) {
+					Paseo paseo = new Paseo(VO.getCodigo(), VO.getHoraPartida(), VO.getHoraRegreso(), 0,
+							m.getCantAsientos(), VO.getPrecioBase(), VO.getDestino());
+
+					m.getPaseos().registroPaseo(paseo);
+					colPaseos.insert(VO.getCodigo(), paseo);
+					colMinivan.insert(VO.getCodigo(), m);
+
+				}
+
 			}
 			if (!agregar) {
-				String mensajeError = String.format ("La minivan con codigo %s no existe",VO.getCodigo());
-				throw new MinivanNoExiste (mensajeError);
+				String mensajeError = String.format("La minivan con codigo %s no existe", VO.getCodigo());
+				throw new MinivanNoExiste(mensajeError);
 			}
-	
-		}
-		else {
-		
-			String mensajeError = "Por favor ingresar un precio mayor a cero";
-			throw new PrecioMenorCero (mensajeError);
-		}
-		
-	}
-	
-	public ArrayList<VOPaseosListado> ListadoPaseosMinivan (String matricula) throws MinivanNoExiste {
-		
-		if (colMinivan.member(matricula)) {
-			
-			return colMinivan.ListadoPaseosEnMinivan(matricula);
-		}
-		else {
-			String mensajeError = String.format ("La minivan con codigo %s no existe",matricula);
-			throw new MinivanNoExiste (mensajeError);
-		}
-	}
-	
-public ArrayList<VOPaseosListado> ListadoPaseosDestino (String destino) throws DestinoNoPerteneceException {
-		
-	boolean existe;
-		switch(destino) {
-		
-				case "Punta del Este": 								
-				case "Piriapolis":					
-				case "Canelones":
-				case "Maldonado":
-				case "Rocha":
-				existe = true;
-				break;
-				
-				default: 
-					existe = false;
-		}
-		if (existe) {		
-			return colPaseos.listadoPaseosDestino(destino);
-		}
-		else {
-			String mensajeError = String.format ("El destino %s no partenece a la lista de posibles destinos",destino);
-			throw new DestinoNoPerteneceException (mensajeError);
-		}
-	}
-	
-public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
-	
-	return colPaseos.listadoPaseosDisponible(disponibles);
-	
-}
 
-<<<<<<< Updated upstream
-	public void ComprarBoleto(VOCompraBoleto voBoleto) throws BoletosNoDisponibles, PaseoNoExiste, CelularMayorQue1000, MenorDe0
-	{
-		if(voBoleto.getEdad() > 0)
-		{
-			
-			if(Integer.parseInt(voBoleto.getCelular()) > 0) // verificar si el celular no deberia ser un int
-=======
+		} else {
+
+			String mensajeError = "Por favor ingresar un precio mayor a cero";
+			throw new PrecioMenorCero(mensajeError);
+		}
+
+	}
+
+	public ArrayList<VOPaseosListado> ListadoPaseosMinivan(String matricula) throws MinivanNoExiste {
+
+		if (colMinivan.member(matricula)) {
+
+			return colMinivan.ListadoPaseosEnMinivan(matricula);
+		} else {
+			String mensajeError = String.format("La minivan con codigo %s no existe", matricula);
+			throw new MinivanNoExiste(mensajeError);
+		}
+	}
+
+	public ArrayList<VOPaseosListado> ListadoPaseosDestino(String destino) throws DestinoNoPerteneceException {
+
+		boolean existe;
+		switch (destino) {
+
+		case "Punta del Este":
+		case "Piriapolis":
+		case "Canelones":
+		case "Maldonado":
+		case "Rocha":
+			existe = true;
+			break;
+
+		default:
+			existe = false;
+		}
+		if (existe) {
+			return colPaseos.listadoPaseosDestino(destino);
+		} else {
+			String mensajeError = String.format("El destino %s no partenece a la lista de posibles destinos", destino);
+			throw new DestinoNoPerteneceException(mensajeError);
+		}
+	}
+
 	public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos(int cantBoletos) throws CantidadMayorCero {
 
 		ArrayList<VOPaseosListado> resp = new ArrayList<>();
@@ -176,8 +148,7 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 			resp = colPaseos.listadoPaseosDisponible(cantBoletos);
 
 		} else {
-			String mensajeError = "La cantidad de Boletos debe ser mayor que cero";
-			throw new CantidadMayorCero(mensajeError);
+			throw new CantidadMayorCero("La cantidad de Boletos debe ser mayor que cero");
 
 		}
 
@@ -189,120 +160,86 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 		if (voBoleto.getEdad() > 0) {
 
 			if (Integer.parseInt(voBoleto.getCelular()) > 0) // verificar si el celular no deberia ser un int
->>>>>>> Stashed changes
 			{/// Pregunta, acá no puede verificar si es >0 (lo que dice la letra)?
-				if(colPaseos.member(voBoleto.getCodigoPaseo()))
-					
-				{ 
-					if(colPaseos.find(voBoleto.getCodigoPaseo()).getCantidadBoletosDisponibles()>0)
-					{
+				if (colPaseos.member(voBoleto.getCodigoPaseo()))
+
+				{
+					if (colPaseos.find(voBoleto.getCodigoPaseo()).getCantidadBoletosDisponibles() > 0) {
 						colPaseos.compraBoleto(voBoleto);
-						
-					}else {
-						
+
+					} else {
+
 						String mensajeError = "No hay boletos disponibles.";
-						throw new BoletosNoDisponibles (mensajeError);
+						throw new BoletosNoDisponibles(mensajeError);
 					}
-				}else {
-					String mensajeError = String.format("El paseo con código: %s no existe.", voBoleto.getCodigoPaseo());
-			    	throw new PaseoNoExiste(mensajeError);
+				} else {
+					String mensajeError = String.format("El paseo con código: %s no existe.",
+							voBoleto.getCodigoPaseo());
+					throw new PaseoNoExiste(mensajeError);
 				}
-				
-			}else
-			{
-				
+
+			} else {
+
 				String mensajeError = "Ingresar un numero de celular mayor que 0";
-		    	throw new CelularMayorQue1000(mensajeError);
+				throw new CelularMayorQue1000(mensajeError);
 			}
-			
-		}else
-		{
+
+		} else {
 			String mensajeError = String.format("Edad: %d es menor que 0, ingresar edad valida", voBoleto.getEdad());
-	    	throw new MenorDe0(mensajeError);
-			
+			throw new MenorDe0(mensajeError);
+
 		}
-		
+
 	}
-	
+
 	public ArrayList<VOListadoBoletos> ListadoBoleto(String codigo, boolean esEsp) throws PaseoNoExiste {
-			
+
 		if (colPaseos.member(codigo)) {
-			if (colPaseos.find(codigo).getCantVendidos()!=0) {
+			if (colPaseos.CantidadBoletosVendidos(codigo) > 0) {
 				return colPaseos.listadoBoletoTipo(codigo, esEsp);
 			}
-		}
-		else {		
+		} else {
 			String mensajeError = String.format("El paseo con código: %s no existe.", codigo);
-	    	throw new PaseoNoExiste(mensajeError);
+			throw new PaseoNoExiste(mensajeError);
 		}
 		return null;
 	}
-	
 
-	
-	public static void main (String args[]) {
-	
-		
+	public Double MontoRecaudadoPorPaseo(String codigoPaseo) throws PaseoNoExiste {
+		Double resp = -1.0;
+
+		if (colPaseos.member(codigoPaseo)) {
+			resp = colPaseos.find(codigoPaseo).montoRecaudadoPaseo();
+
+		} else {
+			throw new PaseoNoExiste("El Codigo de paseo indicado no existe.");
+
+		}
+
+		return resp;
+
+	}
+
+	public static void main(String args[]) {
+
 		Fachada f = new Fachada();
+
+		System.out.println("INICIO // (Req 1) Prueba funcion Registro Minivan: ");
 		VOMinivan VOm = new VOMinivan("A1", "Volvo", "Modelo1", 8);
+
 		try {
 			f.RegistroMinivanes(VOm);
 		} catch (MinivanYaExisteException e) {
 			e.printStackTrace();
-		}
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-		
-		f.ListadoGeneralMinivanes().forEach((VOMinivanListado) -> { 
-			System.out.println(VOMinivanListado.getMatricula());
-			System.out.println(VOMinivanListado.getMarca());
-			System.out.println(VOMinivanListado.getModelo());
-			System.out.println(VOMinivanListado.getCantidadAsientos());
-		}
-		);
-		
-		//funciona
-		
-		VOPaseo v = new VOPaseo ("PDE01", LocalDateTime.of(LocalDateTime.now().
-				getYear(),LocalDateTime.now().
-				getMonth(),LocalDateTime.now().
-				getDayOfMonth(),
-				13,0), 
-				LocalDateTime.of(LocalDateTime.now().
-				getYear(),LocalDateTime.now().
-				getMonth(),LocalDateTime.now().
-				getDayOfMonth(),
-				20,0),15.0,"Punta del Este");
-
-	
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-		catch (CantAsientosMayorCeroException d) {
-			d.printStackTrace();
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
 		}
 
 		VOMinivan VOm1 = new VOMinivan("A2", "Mercedes", "Modelo3", 3);
 
 		try {
 			f.RegistroMinivanes(VOm1);
-		} catch (MinivanYaExisteException e) {
+		} catch (MinivanYaExisteException | CantAsientosMayorCeroException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		catch (CantAsientosMayorCeroException d) {
-			d.printStackTrace();
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
 		}
 
 		System.out.println("FIN // Prueba funcion Registro Minivan: ");
@@ -321,6 +258,8 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 
 		System.out.println("FIN // Prueba funcion Listado General Minivanes. ");
 
+		// funciona
+
 		System.out.println("");
 		System.out.println("INICIO //  (Req 3)  Prueba registro Paseos ");
 		VOPaseo v = new VOPaseo("PDE01",
@@ -330,7 +269,6 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 						LocalDateTime.now().getDayOfMonth(), 20, 0),
 				15.0, "Punta del Este");
 
->>>>>>> Stashed changes
 		try {
 			f.RegistroPaseo(v);
 		} catch (MinivanNoExiste e) {
@@ -359,27 +297,21 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 		catch (RuntimeException g) {
 			g.printStackTrace();
 		}
-		
+
+		VOPaseo v1 = new VOPaseo("PDE02",
+				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
+						LocalDateTime.now().getDayOfMonth(), 13, 0),
+				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
+						LocalDateTime.now().getDayOfMonth(), 20, 0),
+				15.0, "Punta del Este");
+
 		try {
-<<<<<<< Updated upstream
-			f.ListadoPaseosMinivan("A1").forEach((VOPaseosListado) -> { 
-				System.out.println(VOPaseosListado.getCodigo());
-				System.out.println(VOPaseosListado.getHoraPartida());
-				System.out.println(VOPaseosListado.getHoraRegreso());
-				System.out.println(VOPaseosListado.getCantidadBoletosDisponibles());
-				System.out.println(VOPaseosListado.getCantidadMaximaBoletosVendibles());
-				System.out.println(VOPaseosListado.getDestino());
-			}
-			);
-			}
-		catch (MinivanNoExiste e) {
-=======
 			f.RegistroPaseo(v1);
 		} catch (MinivanNoExiste e) {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PrecioMenorCero e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (PrecioMenorCero d) {
 			d.printStackTrace();
@@ -387,56 +319,6 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 		catch (RuntimeException g) {
 			g.printStackTrace();
 		}
-<<<<<<< Updated upstream
-		catch (RuntimeException e) {
-=======
->>>>>>> Stashed changes
-			e.printStackTrace();
-		} catch (PrecioMenorCero d) {
-			d.printStackTrace();
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
-		}
-		
-		// funciona
-		
-		try {
-			f.ListadoPaseosDestino("Punta del Este").forEach((VOPaseosListado) -> { 
-				System.out.println(VOPaseosListado.getCodigo());
-				System.out.println(VOPaseosListado.getHoraPartida());
-				System.out.println(VOPaseosListado.getHoraRegreso());
-				System.out.println(VOPaseosListado.getCantidadBoletosDisponibles());
-				System.out.println(VOPaseosListado.getCantidadMaximaBoletosVendibles());
-				System.out.println(VOPaseosListado.getDestino());
-			}
-			);
-			}
-		catch (DestinoNoPerteneceException e) {
-=======
->>>>>>> Stashed changes
-			e.printStackTrace();
-		} catch (PrecioMenorCero d) {
-			d.printStackTrace();
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
-		}
-		catch (RuntimeException e) {
-=======
->>>>>>> Stashed changes
-			e.printStackTrace();
-		} catch (PrecioMenorCero d) {
-			d.printStackTrace();
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
-		}
-		
-		// funciona
-		
-		
-=======
 
 		System.out.println("FIN // Prueba registro Paseos ");
 
@@ -448,10 +330,8 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 			f.ListadoPaseosMinivan("A1").forEach((VOPaseosListado) -> {
 				System.out.println("Codigo: " + VOPaseosListado.getCodigo());
 				System.out.println("Destino: " + VOPaseosListado.getDestino());
-				 DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");			 
-				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
-				 DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));
+				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida());
+				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso());
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -459,12 +339,18 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 			});
 		} catch (MinivanNoExiste e) {
 			e.printStackTrace();
-		} catch (RuntimeException d) {
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		} catch (PrecioMenorCero d) {
 			d.printStackTrace();
+		}
+		catch (RuntimeException g) {
+			g.printStackTrace();
 		}
 
 		System.out.println("FIN // Prueba Listado Paseos Minivanes");
 
+		// funciona
 
 		System.out.println("");
 		System.out.println("INICIO //  (Req 5)  Prueba Listado Paseos por Destino");
@@ -475,10 +361,8 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 			f.ListadoPaseosDestino("Punta del Este").forEach((VOPaseosListado) -> {
 				System.out.println("Codigo: " + VOPaseosListado.getCodigo());
 				System.out.println("Destino: " + VOPaseosListado.getDestino());
-				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");			 
-				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
-				 DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));
+				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida());
+				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso());
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -486,8 +370,13 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 			});
 		} catch (DestinoNoPerteneceException e) {
 			e.printStackTrace();
-		} catch (RuntimeException d) {
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		} catch (PrecioMenorCero d) {
 			d.printStackTrace();
+		}
+		catch (RuntimeException g) {
+			g.printStackTrace();
 		}
 
 		System.out.println();
@@ -501,11 +390,8 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 			f.ListadoPaseosDispBoletos(3).forEach((VOPaseosListado) -> {
 				System.out.println("Codigo: " + VOPaseosListado.getCodigo());
 				System.out.println("Destino: " + VOPaseosListado.getDestino());
-				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");			 
-				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
-				 DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));
-				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
+				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida());
+				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso());
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -513,16 +399,22 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 			});
 		} catch (CantidadMayorCero e) {
 			e.printStackTrace();
-		} catch (RuntimeException d) {
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		} catch (PrecioMenorCero d) {
 			d.printStackTrace();
 		}
+		catch (RuntimeException g) {
+			g.printStackTrace();
+		}
+
 		System.out.println("FIN // Prueba Listado Paseos por Destino");
 
+		// funciona
 
 		System.out.println("");
 		System.out.println("INICIO //  (Req 7) Prueba Compra Boleto");
 
->>>>>>> Stashed changes
 		VOCompraBoleto vo = new VOCompraBoleto("Santiago", 30, "099099010", true, 20.5, "PDE01");
 		try {
 			f.ComprarBoleto(vo);
@@ -538,7 +430,7 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 			e.printStackTrace();
 		} catch (CelularMayorQue1000 e) {
 			// TODO Auto-generated catch block
-				
+
 		} catch (MenorDe0 e) {
 			// TODO Auto-generated catch block
 =======
@@ -550,50 +442,23 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 =======
 >>>>>>> Stashed changes
 			e.printStackTrace();
-		} catch (PaseoNoExiste d) {
-			d.printStackTrace();
-		} catch (CelularMayorQue1000 g) {
-			g.printStackTrace();
-		} catch (MenorDe0 h) {
-			h.printStackTrace();
-		} catch (RuntimeException j) {
-			j.printStackTrace();
 		}
-		
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-		try {
-			f.ListadoBoleto("PDE01", true).forEach((VOListadoBoletos) -> {
-				System.out.println(VOListadoBoletos.getNombre());
-				System.out.println(VOListadoBoletos.getEdad());
-				System.out.println(VOListadoBoletos.getCelular());
-				System.out.println(VOListadoBoletos.getDescuento());
-				System.out.println(VOListadoBoletos.getNumeroBoleto()); // Ver por qué tira 0 por defecto
-}
-);
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 		VOCompraBoleto vo1 = new VOCompraBoleto("Maria", 10, "099099010", false, 20.5, "PDE02");
 		try {
 			f.ComprarBoleto(vo1);
 		} catch (BoletosNoDisponibles e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (PaseoNoExiste d) {
-			d.printStackTrace();
-		} catch (CelularMayorQue1000 g) {
-			g.printStackTrace();
-		} catch (MenorDe0 j) {
-			j.printStackTrace();
-		}catch (RuntimeException l) {
-			l.printStackTrace();
+		} catch (PaseoNoExiste e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CelularMayorQue1000 e) {
+			// TODO Auto-generated catch block
+
+		} catch (MenorDe0 e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		System.out.println("FIN // Prueba Compra Boleto");
@@ -606,19 +471,13 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 				System.out.println("Edad: " + VOListadoBoletos.getEdad());
 				System.out.println("Celular: " + VOListadoBoletos.getCelular());
 				System.out.println("Descuento: " + VOListadoBoletos.getDescuento());
-				System.out.println("Numero de Boleto: " + VOListadoBoletos.getNumeroBoleto());
+				System.out.println("Numero de Boleto: " + VOListadoBoletos.getNumeroBoleto()); // Ver por qué tira 0 por
+																								// defecto
 			});
->>>>>>> Stashed changes
 		} catch (PaseoNoExiste e) {
 			e.printStackTrace();
 		}
-		catch (RuntimeException d) {
-			d.printStackTrace();
-		}
 
-<<<<<<< Updated upstream
-}
-=======
 		System.out.println("FIN // Prueba Listado Boleto");
 
 		System.out.println("");
@@ -629,13 +488,10 @@ public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos (int disponibles) {
 					"El monto recaudado para el paseo: PDE02 es: " + f.MontoRecaudadoPorPaseo("PDE01").toString());
 		} catch (PaseoNoExiste e) {
 			e.printStackTrace();
-		}catch (RuntimeException d) {
-			d.printStackTrace();
 		}
 
 		System.out.println("FIN //  (Req 9) Monto Recaudado en un Paseo");
 
 	}
 
->>>>>>> Stashed changes
 }

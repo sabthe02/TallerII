@@ -2,6 +2,7 @@ package sistema.logica.Paseos;
 
 import java.util.ArrayList;
 
+
 import sistema.logica.Boletos.*;
 import sistema.logica.ValueObject.VOCompraBoleto;
 //import sistema.logica.Minivanes.*;
@@ -9,8 +10,12 @@ import sistema.logica.ValueObject.VOCompraBoleto;
 import sistema.logica.ValueObject.VOListadoBoletos;
 
 import java.time.LocalDateTime;
+import java.io.Serializable;
 
-public class Paseo {
+public class Paseo implements Serializable {
+	
+private static final long serialVersionUID = 1L; 
+
 	
 private String codigo;
 		LocalDateTime horaPartida; 

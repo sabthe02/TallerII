@@ -1,5 +1,8 @@
 package sistema.logica.Paseos;
+
+
 import sistema.logica.Diccionario;
+
 import sistema.logica.ValueObject.VOCompraBoleto;
 import sistema.logica.ValueObject.VOListadoBoletos;
 import sistema.logica.ValueObject.VOPaseosListado;
@@ -27,6 +30,7 @@ public class Paseos extends Diccionario <String, Paseo> {
 		return VOPaseosListadoL;
 	}
 	
+	// REQUERIMIENTO 5
 	public ArrayList <VOPaseosListado> listadoPaseosDestino (String destino) {
 		Iterator<Paseo>iter = arbol.values().iterator();
 		ArrayList<VOPaseosListado> VOPaseosListadoL = new ArrayList<VOPaseosListado>();
@@ -41,19 +45,21 @@ public class Paseos extends Diccionario <String, Paseo> {
 		}
 		return VOPaseosListadoL;
 	}
-	
-	public ArrayList <VOPaseosListado> listadoPaseosDisponible (int cantidad) {
+	// REQUERIMIENTO 6
+	public ArrayList<VOPaseosListado> listadoPaseosDisponible (int cantidad) {
+		
 		Iterator<Paseo>iter = arbol.values().iterator();
 		ArrayList<VOPaseosListado> VOPaseosListadoL = new ArrayList<VOPaseosListado>();
 		
 		VOPaseosListado VO;
 		while (iter.hasNext()) {
 			Paseo p = iter.next();
-			if ((p.getCantMaxBoletos() - p.getCantVendidos()) >= cantidad) {
+			if ((p.getCantidadBoletosDisponibles()) >= cantidad) {
 				VO = new VOPaseosListado (p.getCodigo(), p.getHoraPartida(), p.getHoraRegreso(), p.getPrecioBase(), p.getDestino(), p.getCantMaxBoletos(), (p.getCantMaxBoletos()-p.getCantVendidos()));
 				VOPaseosListadoL.add(VO);
 			}
 		}
+
 		return VOPaseosListadoL;
 	}
 	
@@ -61,53 +67,28 @@ public class Paseos extends Diccionario <String, Paseo> {
 		super.find(voCompra.getCodigoPaseo()).compraBoleto(voCompra);
 	} 
 	
-		
-	
-
 	public ArrayList <VOListadoBoletos> listadoBoletoTipo (String codigo, boolean tipo) {
-		Iterator<Paseo>iter = arbol.values().iterator();
-		ArrayList<VOListadoBoletos> VOListadoBoletoL = new ArrayList<VOListadoBoletos>();
-		boolean encontre = false;
-		
-		while (iter.hasNext() && (!encontre)) {
-			Paseo p = iter.next();
-			if (p.getCodigo() == codigo) {
-				encontre = true;
-				VOListadoBoletoL = p.listadoBoletosPaseo(tipo);
-			}
-		}
-		return VOListadoBoletoL;
+		return super.find(codigo).listadoBoletosPaseo(tipo);
 	}
 
 	
-	public double montoRecaudado (String codigo) {
-		Iterator<Paseo>iter = arbol.values().iterator();
-		boolean encontre = false;
-		double Monto = 0;
+	public int CantidadBoletosVendidos(String codigo)
+	{
+		return super.find(codigo).getCantVendidos();
 		
-		while (iter.hasNext() && (!encontre)) {
-			Paseo p = iter.next();
-			if (p.getCodigo() == codigo) {
-				encontre = true;
-				Monto = p.montoRecaudadoPaseo();
-			}
-		}
-		return Monto;
 	}
 	
+    public double montoRecaudado (String codigo) {
+		
+		return super.find(codigo).montoRecaudadoPaseo();
+	}
+	
+
+
 	public void registroPaseo (Paseo paseo) {
 		
 		arbol.put(paseo.getCodigo(), paseo);
 		
 	}
 	
-	
-	
-	
-//	public static void main (String args[]) {
-//		
-//	}
-
-	
 }
-	

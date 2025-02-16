@@ -1,6 +1,11 @@
 package sistema.logica.Boletos;
+import java.io.Serializable;
 
-public class Boleto {
+
+public class Boleto implements Serializable {
+	
+	private static final long serialVersionUID = 1L; 
+	
 	private 
 		int numeroBoleto;
 		String nombrePasajero;
@@ -58,6 +63,10 @@ public class Boleto {
 			this.precio = precio;
 	}
 	
+
+	public double montoRecaudadoPaseo ()
+
+
 
 		
 	public static void main (String args[]) {
