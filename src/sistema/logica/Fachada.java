@@ -1,7 +1,9 @@
 package sistema.logica;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Iterator;
 
@@ -11,6 +13,7 @@ import sistema.logica.Minivanes.*;
 import sistema.logica.Paseos.Paseos;
 import sistema.logica.Paseos.Paseo;
 import sistema.logica.ValueObject.*;
+import sistema.persistencia.*;
 
 
 public class Fachada {
@@ -217,13 +220,15 @@ public class Fachada {
 
 	}
 	
-	public void RespaldarDatos (VOMinivanesYPaseosRespaldo VO) {
+	public void RespaldarDatos (VOMinivanesYPaseosRespaldo VO) throws PersistenciaException {
 //	    	comentado lo de properties, entiendo que por ahora no es importante
-//	    	Properties p = new Properties();
+//	    	try {
+//			Properties p = new Properties();
 //	    	String nomArchProperties = "../../../config/config.properties";
 //	    	p.load(new FileInputStream(nomArchProperties));
 //	    	String ip = p.getProperty("ipServidor");
 //	    	String puerto = p.getProperty("puertoServidor");
+//	}
 //	    	
 //	    } catch (IOException e) {
 //	        e.printStackTrace();
@@ -232,13 +237,14 @@ public class Fachada {
 //	    }	
 	        
 	    	String nomArch = "datos.txt";
-	        if (!VO.super.isEmpty()) {
-	        	
-	        }
+	        VO.getMinivanes() = colMinivan;
+	        VO.getPaseos() = colPaseos;
 	        
-
-
+	        
+	 
 	}
+	        
+	        
 
 	public static void main(String args[]) {
 
@@ -249,13 +255,6 @@ public class Fachada {
 
 		try {
 			f.RegistroMinivanes(VOm);
-		} catch (MinivanYaExisteException e) {
-			e.printStackTrace();
-		}		
-		catch  (CantAsientosMayorCeroException e) {
-			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
 		} catch (MinivanYaExisteException e) {
 			e.printStackTrace();
 		}		
@@ -316,36 +315,6 @@ public class Fachada {
 		catch  (RuntimeException e) {
 			e.printStackTrace();
 		}
-		catch  (RuntimeException e) {
-			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
->>>>>>> Stashed changes
-			e.printStackTrace();
-		} catch (PrecioMenorCero d) {
-			d.printStackTrace();
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
-=======
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
->>>>>>> Stashed changes
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
->>>>>>> Stashed changes
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
->>>>>>> Stashed changes
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
-		}
 
 		VOPaseo v1 = new VOPaseo("PDE02",
 				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
@@ -363,14 +332,6 @@ public class Fachada {
 		}
 		catch  (RuntimeException e) {
 			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
-			e.printStackTrace();
-		} catch (PrecioMenorCero d) {
-			d.printStackTrace();
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
 		}
 
 		System.out.println("FIN // Prueba registro Paseos ");
@@ -396,11 +357,6 @@ public class Fachada {
 			e.printStackTrace();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-		} catch (PrecioMenorCero d) {
-			d.printStackTrace();
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
 		}
 
 		System.out.println("FIN // Prueba Listado Paseos Minivanes");
@@ -428,11 +384,6 @@ public class Fachada {
 			e.printStackTrace();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-		} catch (PrecioMenorCero d) {
-			d.printStackTrace();
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
 		}
 
 		System.out.println();
@@ -459,11 +410,6 @@ public class Fachada {
 			e.printStackTrace();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-		} catch (PrecioMenorCero d) {
-			d.printStackTrace();
-		}
-		catch (RuntimeException g) {
-			g.printStackTrace();
 		}
 
 		System.out.println("FIN // Prueba Listado Paseos por Destino");
