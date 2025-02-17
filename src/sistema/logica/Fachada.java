@@ -3,6 +3,7 @@ package sistema.logica;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Iterator;
 
@@ -12,12 +13,10 @@ import sistema.logica.Minivanes.*;
 import sistema.logica.Paseos.Paseos;
 import sistema.logica.Paseos.Paseo;
 import sistema.logica.ValueObject.*;
+import sistema.persistencia.*;
 
 
-public class Fachada implements Serializable {
-	
-	private static final long serialVersionUID = 1L; 
-
+public class Fachada {
 
 	private Minivanes colMinivan;
 	private Paseos colPaseos;
@@ -148,7 +147,8 @@ public class Fachada implements Serializable {
 			resp = colPaseos.listadoPaseosDisponible(cantBoletos);
 
 		} else {
-			throw new CantidadMayorCero("La cantidad de Boletos debe ser mayor que cero");
+			String mensajeError = "La cantidad de Boletos debe ser mayor que cero";
+			throw new CantidadMayorCero(mensajeError);
 
 		}
 
@@ -219,6 +219,29 @@ public class Fachada implements Serializable {
 		return resp;
 
 	}
+	
+	public void RespaldarDatos (VOMinivanesYPaseosRespaldo VO) {
+//	    	comentado lo de properties, entiendo que por ahora no es importante
+//	    	Properties p = new Properties();
+//	    	String nomArchProperties = "../../../config/config.properties";
+//	    	p.load(new FileInputStream(nomArchProperties));
+//	    	String ip = p.getProperty("ipServidor");
+//	    	String puerto = p.getProperty("puertoServidor");
+//	    	
+//	    } catch (IOException e) {
+//	        e.printStackTrace();
+//	    } catch (PersistenciaException e) {
+//	        System.out.println("Error de persistencia: " + e.getMessage());
+//	    }	
+	        
+	    	String nomArch = "datos.txt";
+	        if (!VO.super.isEmpty()) {
+	        	
+	        }
+	        
+
+
+	}
 
 	public static void main(String args[]) {
 
@@ -230,6 +253,15 @@ public class Fachada implements Serializable {
 		try {
 			f.RegistroMinivanes(VOm);
 		} catch (MinivanYaExisteException e) {
+<<<<<<< Updated upstream
+=======
+			e.printStackTrace();
+		}		
+		catch  (CantAsientosMayorCeroException e) {
+			e.printStackTrace();
+		}
+		catch  (RuntimeException e) {
+>>>>>>> Stashed changes
 			e.printStackTrace();
 		}
 
@@ -237,8 +269,13 @@ public class Fachada implements Serializable {
 
 		try {
 			f.RegistroMinivanes(VOm1);
-		} catch (MinivanYaExisteException | CantAsientosMayorCeroException e) {
-			// TODO Auto-generated catch block
+		} catch (MinivanYaExisteException e) {
+			e.printStackTrace();
+		}
+		catch (CantAsientosMayorCeroException e) {
+			e.printStackTrace();
+		}
+		catch  (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -258,7 +295,6 @@ public class Fachada implements Serializable {
 
 		System.out.println("FIN // Prueba funcion Listado General Minivanes. ");
 
-		// funciona
 
 		System.out.println("");
 		System.out.println("INICIO //  (Req 3)  Prueba registro Paseos ");
@@ -272,6 +308,14 @@ public class Fachada implements Serializable {
 		try {
 			f.RegistroPaseo(v);
 		} catch (MinivanNoExiste e) {
+<<<<<<< Updated upstream
+=======
+			e.printStackTrace();
+		} catch (PrecioMenorCero e) {
+			e.printStackTrace();
+		}
+		catch  (RuntimeException e) {
+>>>>>>> Stashed changes
 			e.printStackTrace();
 		} catch (PrecioMenorCero d) {
 			d.printStackTrace();
@@ -308,10 +352,11 @@ public class Fachada implements Serializable {
 		try {
 			f.RegistroPaseo(v1);
 		} catch (MinivanNoExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (PrecioMenorCero e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch  (RuntimeException e) {
 			e.printStackTrace();
 		} catch (PrecioMenorCero d) {
 			d.printStackTrace();
@@ -330,8 +375,10 @@ public class Fachada implements Serializable {
 			f.ListadoPaseosMinivan("A1").forEach((VOPaseosListado) -> {
 				System.out.println("Codigo: " + VOPaseosListado.getCodigo());
 				System.out.println("Destino: " + VOPaseosListado.getDestino());
-				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida());
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso());
+				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");
+				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
+				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
+				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));			
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -350,7 +397,6 @@ public class Fachada implements Serializable {
 
 		System.out.println("FIN // Prueba Listado Paseos Minivanes");
 
-		// funciona
 
 		System.out.println("");
 		System.out.println("INICIO //  (Req 5)  Prueba Listado Paseos por Destino");
@@ -361,8 +407,10 @@ public class Fachada implements Serializable {
 			f.ListadoPaseosDestino("Punta del Este").forEach((VOPaseosListado) -> {
 				System.out.println("Codigo: " + VOPaseosListado.getCodigo());
 				System.out.println("Destino: " + VOPaseosListado.getDestino());
-				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida());
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso());
+				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");
+				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
+				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
+				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -390,8 +438,10 @@ public class Fachada implements Serializable {
 			f.ListadoPaseosDispBoletos(3).forEach((VOPaseosListado) -> {
 				System.out.println("Codigo: " + VOPaseosListado.getCodigo());
 				System.out.println("Destino: " + VOPaseosListado.getDestino());
-				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida());
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso());
+				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");
+				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
+				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
+				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));	
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -410,8 +460,6 @@ public class Fachada implements Serializable {
 
 		System.out.println("FIN // Prueba Listado Paseos por Destino");
 
-		// funciona
-
 		System.out.println("");
 		System.out.println("INICIO //  (Req 7) Prueba Compra Boleto");
 
@@ -423,15 +471,17 @@ public class Fachada implements Serializable {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 			// TODO Auto-generated catch block
+=======
+>>>>>>> Stashed changes
 			e.printStackTrace();
 		} catch (PaseoNoExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (CelularMayorQue1000 e) {
-			// TODO Auto-generated catch block
-
+			e.printStackTrace();
 		} catch (MenorDe0 e) {
+<<<<<<< Updated upstream
 			// TODO Auto-generated catch block
 =======
 >>>>>>> Stashed changes
@@ -440,6 +490,11 @@ public class Fachada implements Serializable {
 =======
 >>>>>>> Stashed changes
 =======
+>>>>>>> Stashed changes
+=======
+			e.printStackTrace();
+		}
+		catch  (RuntimeException e) {
 >>>>>>> Stashed changes
 			e.printStackTrace();
 		}
@@ -448,16 +503,15 @@ public class Fachada implements Serializable {
 		try {
 			f.ComprarBoleto(vo1);
 		} catch (BoletosNoDisponibles e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (PaseoNoExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (CelularMayorQue1000 e) {
-			// TODO Auto-generated catch block
-
+			e.printStackTrace();
 		} catch (MenorDe0 e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch  (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -471,10 +525,15 @@ public class Fachada implements Serializable {
 				System.out.println("Edad: " + VOListadoBoletos.getEdad());
 				System.out.println("Celular: " + VOListadoBoletos.getCelular());
 				System.out.println("Descuento: " + VOListadoBoletos.getDescuento());
-				System.out.println("Numero de Boleto: " + VOListadoBoletos.getNumeroBoleto()); // Ver por qué tira 0 por
-																								// defecto
+				System.out.println("Numero de Boleto: " + VOListadoBoletos.getNumeroBoleto());
 			});
 		} catch (PaseoNoExiste e) {
+<<<<<<< Updated upstream
+=======
+			e.printStackTrace();
+		}
+		catch  (RuntimeException e) {
+>>>>>>> Stashed changes
 			e.printStackTrace();
 		}
 
@@ -489,9 +548,15 @@ public class Fachada implements Serializable {
 		} catch (PaseoNoExiste e) {
 			e.printStackTrace();
 		}
+		catch  (RuntimeException e) {
+			e.printStackTrace();
+		}
 
 		System.out.println("FIN //  (Req 9) Monto Recaudado en un Paseo");
 
 	}
+	
+	
+
 
 }
