@@ -1,11 +1,7 @@
 package sistema.logica;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.io.IOException;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Iterator;
 
@@ -15,8 +11,6 @@ import sistema.logica.Minivanes.*;
 import sistema.logica.Paseos.Paseos;
 import sistema.logica.Paseos.Paseo;
 import sistema.logica.ValueObject.*;
-import sistema.persistencia.*;
-import sistema.persistencia.*;
 
 
 public class Fachada {
@@ -152,8 +146,6 @@ public class Fachada {
 		} else {
 			String mensajeError = "La cantidad de Boletos debe ser mayor que cero";
 			throw new CantidadMayorCero(mensajeError);
-			String mensajeError = "La cantidad de Boletos debe ser mayor que cero";
-			throw new CantidadMayorCero(mensajeError);
 
 		}
 
@@ -264,6 +256,13 @@ public class Fachada {
 			e.printStackTrace();
 		}
 		catch  (RuntimeException e) {
+		} catch (MinivanYaExisteException e) {
+			e.printStackTrace();
+		}		
+		catch  (CantAsientosMayorCeroException e) {
+			e.printStackTrace();
+		}
+		catch  (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -271,13 +270,6 @@ public class Fachada {
 
 		try {
 			f.RegistroMinivanes(VOm1);
-		} catch (MinivanYaExisteException e) {
-			e.printStackTrace();
-		}
-		catch (CantAsientosMayorCeroException e) {
-			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
 		} catch (MinivanYaExisteException e) {
 			e.printStackTrace();
 		}
@@ -317,9 +309,11 @@ public class Fachada {
 		try {
 			f.RegistroPaseo(v);
 		} catch (MinivanNoExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (PrecioMenorCero e) {
+			e.printStackTrace();
+		}
+		catch  (RuntimeException e) {
 			e.printStackTrace();
 		}
 		catch  (RuntimeException e) {
@@ -393,10 +387,6 @@ public class Fachada {
 				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
 				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
 				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));			
-				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");
-				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
-				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));			
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -429,10 +419,6 @@ public class Fachada {
 				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
 				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
 				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));
-				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");
-				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
-				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -460,10 +446,6 @@ public class Fachada {
 			f.ListadoPaseosDispBoletos(3).forEach((VOPaseosListado) -> {
 				System.out.println("Codigo: " + VOPaseosListado.getCodigo());
 				System.out.println("Destino: " + VOPaseosListado.getDestino());
-				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");
-				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
-				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));	
 				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");
 				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
 				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
@@ -502,21 +484,6 @@ public class Fachada {
 			e.printStackTrace();
 		}
 		catch  (RuntimeException e) {
-<<<<<<< Updated upstream
-			// TODO Auto-generated catch block
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
-			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
->>>>>>> Stashed changes
 			e.printStackTrace();
 		}
 
@@ -530,9 +497,6 @@ public class Fachada {
 		} catch (CelularMayorQue1000 e) {
 			e.printStackTrace();
 		} catch (MenorDe0 e) {
-			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
 			e.printStackTrace();
 		}
 		catch  (RuntimeException e) {
@@ -552,12 +516,9 @@ public class Fachada {
 				System.out.println("Numero de Boleto: " + VOListadoBoletos.getNumeroBoleto());
 			});
 		} catch (PaseoNoExiste e) {
-<<<<<<< Updated upstream
-=======
 			e.printStackTrace();
 		}
 		catch  (RuntimeException e) {
->>>>>>> Stashed changes
 			e.printStackTrace();
 		}
 
@@ -579,9 +540,6 @@ public class Fachada {
 		System.out.println("FIN //  (Req 9) Monto Recaudado en un Paseo");
 
 	}
-	
-	
-
 	
 	
 
