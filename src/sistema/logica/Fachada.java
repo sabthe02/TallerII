@@ -31,8 +31,8 @@ public class Fachada {
 		if (VO.getCantidadAsientos() > 0) {
 			if (!colMinivan.member(VO.getMatricula())) {
 				Minivan m = new Minivan(VO.getMatricula(), VO.getMarca(), VO.getModelo(), VO.getCantidadAsientos());
-
 				colMinivan.insert(m.getMatricula(), m);
+				
 			} else {
 				String mensajeError = String.format("Ya existe una minivan con la matrícula: %s", VO.getMatricula());
 				throw new MinivanYaExisteException(mensajeError);
@@ -86,13 +86,14 @@ public class Fachada {
 
 					m.getPaseos().registroPaseo(paseo);
 					colPaseos.insert(VO.getCodigo(), paseo);
-					colMinivan.insert(VO.getCodigo(), m);
+
+
 
 				}
 
 			}
 			if (!agregar) {
-				String mensajeError = String.format("La minivan con codigo %s no existe", VO.getCodigo());
+				String mensajeError = "No hay minivanes disponibles para ese paseo";
 				throw new MinivanNoExiste(mensajeError);
 			}
 
@@ -130,9 +131,11 @@ public class Fachada {
 
 		default:
 			existe = false;
+		break;
 		}
 		if (existe) {
 			return colPaseos.listadoPaseosDestino(destino);
+			
 		} else {
 			String mensajeError = String.format("El destino %s no partenece a la lista de posibles destinos", destino);
 			throw new DestinoNoPerteneceException(mensajeError);
@@ -251,11 +254,11 @@ public class Fachada {
 			String nomArchProperties = "./config/config.properties";
 			p.load(new FileInputStream(nomArchProperties));
 			ruta = p.getProperty("rutaDatosRespaldo");
-
 			VOMinivanesYPaseosRespaldo vo = new Respaldo().recuperar(ruta);
-
-			this.colMinivan = vo.getColMinivan();
-			this.colPaseos = vo.getColPaseos();
+			if (vo!= null) {
+				this.colMinivan = vo.getColMinivan();
+				this.colPaseos = vo.getColPaseos();
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -287,7 +290,7 @@ public class Fachada {
 			e.printStackTrace();
 		}
 
-		VOMinivan VOm1 = new VOMinivan("A2", "Mercedes", "Modelo3", 3);
+		VOMinivan VOm1 = new VOMinivan("A2", "Mercedes", "Modelo2", 5);
 
 		try {
 			f.RegistroMinivanes(VOm1);
@@ -322,7 +325,7 @@ public class Fachada {
 						LocalDateTime.now().getDayOfMonth(), 13, 0),
 				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
 						LocalDateTime.now().getDayOfMonth(), 20, 0),
-				15.0, "Punta del Este");
+				20.0, "Piriapolis");
 
 		try {
 			f.RegistroPaseo(v);
