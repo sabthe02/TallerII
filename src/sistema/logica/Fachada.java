@@ -25,10 +25,7 @@ public class Fachada implements Serializable {
 	public Fachada() {
 		colMinivan = new Minivanes();
 		colPaseos = new Paseos();
-		   if (Fachada.monitor == null) {
-		        Fachada.monitor = new Monitor();
-		    }
-
+		monitor = new Monitor();
 	}
 
 	public void RegistroMinivanes(VOMinivan VO) throws MinivanYaExisteException, CantAsientosMayorCeroException {
@@ -181,7 +178,7 @@ public class Fachada implements Serializable {
 
 	}
 
-	public void ComprarBoleto(VOCompraBoleto voBoleto)
+	public void ComprarBoleto(VOCompraBoleto voBoleto)   // ME FALTA HACER ESTE, EN UN RATO LO TENGO PRONTO -Juanma
 			throws BoletosNoDisponibles, PaseoNoExiste, CelularMayorQue1000, MenorDe0 {
 		Fachada.monitor.comienzoEscritura();
 		if (voBoleto.getEdad() > 0) {
