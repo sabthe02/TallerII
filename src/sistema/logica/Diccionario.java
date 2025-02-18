@@ -1,9 +1,13 @@
 package sistema.logica;
 import java.util.TreeMap;
+import java.io.Serializable;
 import java.util.Iterator;
 
-public abstract class Diccionario <K,T> {
+public abstract class Diccionario <K,T> implements Serializable{
+	
+	
 
+	private static final long serialVersionUID = 1L;
 	protected TreeMap <K,T> arbol;
 	
 	public Diccionario () {

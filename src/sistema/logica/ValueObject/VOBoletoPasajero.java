@@ -1,7 +1,10 @@
 package sistema.logica.ValueObject;
 
-public class VOBoletoPasajero {
+import java.io.Serializable;
 
+public class VOBoletoPasajero implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private String Nombre;
 	private int Edad;
 	private String Celular;

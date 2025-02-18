@@ -3,10 +3,11 @@ package sistema.logica;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Iterator;
-
+import java.util.Properties;
 
 import sistema.logica.Excepciones.*;
 import sistema.logica.Minivanes.*;
@@ -14,7 +15,6 @@ import sistema.logica.Paseos.Paseos;
 import sistema.logica.Paseos.Paseo;
 import sistema.logica.ValueObject.*;
 import sistema.persistencia.*;
-
 
 public class Fachada {
 
@@ -219,36 +219,60 @@ public class Fachada {
 		return resp;
 
 	}
-	
-	public void RespaldarDatos (VOMinivanesYPaseosRespaldo VO) throws PersistenciaException {
-//	    	comentado lo de properties, entiendo que por ahora no es importante
-//	    	try {
-//			Properties p = new Properties();
-//	    	String nomArchProperties = "../../../config/config.properties";
-//	    	p.load(new FileInputStream(nomArchProperties));
-//	    	String ip = p.getProperty("ipServidor");
-//	    	String puerto = p.getProperty("puertoServidor");
-//	}
-//	    	
-//	    } catch (IOException e) {
-//	        e.printStackTrace();
-//	    } catch (PersistenciaException e) {
-//	        System.out.println("Error de persistencia: " + e.getMessage());
-//	    }	
-	        
-	    	String nomArch = "datos.txt";
-	        VO.getMinivanes() = colMinivan;
-	        VO.getPaseos() = colPaseos;
-	        
-	        
-	 
+
+	public void RespaldarDatos() throws PersistenciaException {
+
+		String ruta = "";
+		try {
+
+			Properties p = new Properties();
+			String nomArchProperties = "./config/config.properties";
+			p.load(new FileInputStream(nomArchProperties));
+			ruta = p.getProperty("rutaDatosRespaldo");
+
+			VOMinivanesYPaseosRespaldo vo = new VOMinivanesYPaseosRespaldo(this.colMinivan, this.colPaseos);
+
+			new Respaldo().respaldar(ruta, vo);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (PersistenciaException e) {
+			System.out.println("Error de persistencia: " + e.getMessage());
+		}
+
 	}
-	        
-	        
+
+	public void RecuperarDatos() throws PersistenciaException {
+
+		String ruta = "";
+		try {
+
+			Properties p = new Properties();
+			String nomArchProperties = "./config/config.properties";
+			p.load(new FileInputStream(nomArchProperties));
+			ruta = p.getProperty("rutaDatosRespaldo");
+
+			VOMinivanesYPaseosRespaldo vo = new Respaldo().recuperar(ruta);
+
+			this.colMinivan = vo.getColMinivan();
+			this.colPaseos = vo.getColPaseos();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (PersistenciaException e) {
+			System.out.println("Error de persistencia: " + e.getMessage());
+		}
+	}
 
 	public static void main(String args[]) {
 
 		Fachada f = new Fachada();
+
+		try {
+			f.RecuperarDatos();
+		} catch (PersistenciaException e) {
+			System.out.println("Error al recuperar datos: " + e.darMensaje());
+		}
 
 		System.out.println("INICIO // (Req 1) Prueba funcion Registro Minivan: ");
 		VOMinivan VOm = new VOMinivan("A1", "Volvo", "Modelo1", 8);
@@ -257,11 +281,9 @@ public class Fachada {
 			f.RegistroMinivanes(VOm);
 		} catch (MinivanYaExisteException e) {
 			e.printStackTrace();
-		}		
-		catch  (CantAsientosMayorCeroException e) {
+		} catch (CantAsientosMayorCeroException e) {
 			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -271,11 +293,9 @@ public class Fachada {
 			f.RegistroMinivanes(VOm1);
 		} catch (MinivanYaExisteException e) {
 			e.printStackTrace();
-		}
-		catch (CantAsientosMayorCeroException e) {
+		} catch (CantAsientosMayorCeroException e) {
 			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -295,7 +315,6 @@ public class Fachada {
 
 		System.out.println("FIN // Prueba funcion Listado General Minivanes. ");
 
-
 		System.out.println("");
 		System.out.println("INICIO //  (Req 3)  Prueba registro Paseos ");
 		VOPaseo v = new VOPaseo("PDE01",
@@ -311,8 +330,7 @@ public class Fachada {
 			e.printStackTrace();
 		} catch (PrecioMenorCero e) {
 			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -329,8 +347,7 @@ public class Fachada {
 			e.printStackTrace();
 		} catch (PrecioMenorCero e) {
 			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -347,7 +364,7 @@ public class Fachada {
 				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");
 				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
 				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));			
+				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -360,7 +377,6 @@ public class Fachada {
 		}
 
 		System.out.println("FIN // Prueba Listado Paseos Minivanes");
-
 
 		System.out.println("");
 		System.out.println("INICIO //  (Req 5)  Prueba Listado Paseos por Destino");
@@ -400,7 +416,7 @@ public class Fachada {
 				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");
 				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
 				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));	
+				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -428,8 +444,7 @@ public class Fachada {
 			e.printStackTrace();
 		} catch (MenorDe0 e) {
 			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -444,8 +459,7 @@ public class Fachada {
 			e.printStackTrace();
 		} catch (MenorDe0 e) {
 			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -463,8 +477,7 @@ public class Fachada {
 			});
 		} catch (PaseoNoExiste e) {
 			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -478,16 +491,19 @@ public class Fachada {
 					"El monto recaudado para el paseo: PDE02 es: " + f.MontoRecaudadoPorPaseo("PDE01").toString());
 		} catch (PaseoNoExiste e) {
 			e.printStackTrace();
-		}
-		catch  (RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
 		System.out.println("FIN //  (Req 9) Monto Recaudado en un Paseo");
 
-	}
-	
-	
+		try {
+			f.RespaldarDatos();
+		} catch (PersistenciaException e) {
+			System.out.println("Error al recuperar datos: " + e.darMensaje());
 
+		}
+
+	}
 
 }

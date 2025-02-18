@@ -1,7 +1,10 @@
 package sistema.logica.ValueObject;
 
-public class VOMinivan {
+import java.io.Serializable;
 
+public class VOMinivan implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private String Matricula;
 	private String Marca;
 	private String Modelo;
