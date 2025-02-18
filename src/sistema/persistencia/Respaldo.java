@@ -44,13 +44,16 @@ public class Respaldo {
 		try
 		{ 
 			System.out.println(nombreArchivo);
-			FileInputStream f = new FileInputStream(nombreArchivo);
-			ObjectInputStream o = new ObjectInputStream(f);
-
-			VO = (VOMinivanesYPaseosRespaldo) o.readObject();
-
-			o.close();
-			f.close();	
+			File file = new File (nombreArchivo);
+			if (file.exists()) {
+				FileInputStream f = new FileInputStream(file);
+				ObjectInputStream o = new ObjectInputStream(f);
+	
+				VO = (VOMinivanesYPaseosRespaldo) o.readObject();
+	
+				o.close();
+				f.close();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			String mensajeError = "Error al Recuperar";

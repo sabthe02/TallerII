@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Properties;
 
+import javax.management.monitor.Monitor;
+
 import sistema.logica.Excepciones.*;
 import sistema.logica.Minivanes.*;
 import sistema.logica.Paseos.Paseos;
@@ -34,6 +36,18 @@ public class Fachada implements Serializable {
 	}
 
 	public void RegistroMinivanes(VOMinivan VO) throws MinivanYaExisteException, CantAsientosMayorCeroException {
+		if (VO.getCantidadAsientos() > 0) {
+			if (!colMinivan.member(VO.getMatricula())) {
+				Minivan m = new Minivan(VO.getMatricula(), VO.getMarca(), VO.getModelo(), VO.getCantidadAsientos());
+				colMinivan.insert(m.getMatricula(), m);
+				
+			} else {
+				String mensajeError = String.format("Ya existe una minivan con la matrícula: %s", VO.getMatricula());
+				throw new MinivanYaExisteException(mensajeError);
+			}
+		} else {
+			String mensajeError = "La cantidad de asientos tiene que ser mayor que cero";
+			throw new CantAsientosMayorCeroException(mensajeError);
 		Fachada.monitor.comienzoEscritura();
 		try {
 			if (VO.getCantidadAsientos() <= 0) {
@@ -105,14 +119,15 @@ public class Fachada implements Serializable {
 
 					m.getPaseos().registroPaseo(paseo);
 					colPaseos.insert(VO.getCodigo(), paseo);
-					colMinivan.insert(VO.getCodigo(), m);
+
+
 
 				}
 
 			}
 			if (!agregar) {
 				Fachada.monitor.terminoEscritura();
-				String mensajeError = String.format("La minivan con codigo %s no existe", VO.getCodigo());
+				String mensajeError = "No hay minivanes disponibles para ese paseo";
 				throw new MinivanNoExiste(mensajeError);
 			}
 
@@ -155,14 +170,15 @@ public class Fachada implements Serializable {
 
 		default:
 			existe = false;
+		break;
 		}
-		
-		if (!existe) {
-			throw new DestinoNoPerteneceException(String.format("El destino %s no pertenece a la lista de posibles destinos", destino));
-		} 
-		    return colPaseos.listadoPaseosDestino(destino);
-		
-       }finally{
+		if (existe) {
+			return colPaseos.listadoPaseosDestino(destino);
+		} else {
+			String mensajeError = String.format("El destino %s no partenece a la lista de posibles destinos", destino);
+			throw new DestinoNoPerteneceException(mensajeError);
+		}
+		}finally{
 			Fachada.monitor.terminoLectura();
 		}
 
@@ -286,11 +302,11 @@ public class Fachada implements Serializable {
 			String nomArchProperties = "./config/config.properties";
 			p.load(new FileInputStream(nomArchProperties));
 			ruta = p.getProperty("rutaDatosRespaldo");
-
 			VOMinivanesYPaseosRespaldo vo = new Respaldo().recuperar(ruta);
-
-			this.colMinivan = vo.getColMinivan();
-			this.colPaseos = vo.getColPaseos();
+			if (vo!= null) {
+				this.colMinivan = vo.getColMinivan();
+				this.colPaseos = vo.getColPaseos();
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -322,7 +338,7 @@ public class Fachada implements Serializable {
 			e.printStackTrace();
 		}
 
-		VOMinivan VOm1 = new VOMinivan("A2", "Mercedes", "Modelo3", 3);
+		VOMinivan VOm1 = new VOMinivan("A2", "Mercedes", "Modelo2", 5);
 
 		try {
 			f.RegistroMinivanes(VOm1);
@@ -357,7 +373,7 @@ public class Fachada implements Serializable {
 						LocalDateTime.now().getDayOfMonth(), 13, 0),
 				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
 						LocalDateTime.now().getDayOfMonth(), 20, 0),
-				15.0, "Punta del Este");
+				20.0, "Piriapolis");
 
 		try {
 			f.RegistroPaseo(v);
