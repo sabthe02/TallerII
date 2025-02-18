@@ -16,43 +16,60 @@ import sistema.logica.ValueObject.*;
 public class Fachada implements Serializable {
 	
 	private static final long serialVersionUID = 1L; 
-
-
 	private Minivanes colMinivan;
 	private Paseos colPaseos;
+	
+	public static Monitor monitor;
+	
 
 	public Fachada() {
 		colMinivan = new Minivanes();
 		colPaseos = new Paseos();
+		   if (Fachada.monitor == null) {
+		        Fachada.monitor = new Monitor();
+		    }
 
 	}
 
 	public void RegistroMinivanes(VOMinivan VO) throws MinivanYaExisteException, CantAsientosMayorCeroException {
-		if (VO.getCantidadAsientos() > 0) {
-			if (!colMinivan.member(VO.getMatricula())) {
-				Minivan m = new Minivan(VO.getMatricula(), VO.getMarca(), VO.getModelo(), VO.getCantidadAsientos());
-
-				colMinivan.insert(m.getMatricula(), m);
-			} else {
-				String mensajeError = String.format("Ya existe una minivan con la matrícula: %s", VO.getMatricula());
-				throw new MinivanYaExisteException(mensajeError);
+		Fachada.monitor.comienzoEscritura();
+		try {
+			if (VO.getCantidadAsientos() <= 0) {
+				throw new CantAsientosMayorCeroException("La cantidad de asientos tiene que ser mayor a cero");
 			}
-		} else {
-			String mensajeError = "La cantidad de asientos tiene que ser mayor que cero";
-			throw new CantAsientosMayorCeroException(mensajeError);
+			if(colMinivan.member(VO.getMatricula())){
+				throw new MinivanYaExisteException(String.format("Ya existe una minivan con la matrícula %s", VO.getMatricula()));
+			}
+			 Minivan m = new Minivan(VO.getMatricula(), VO.getMarca(), VO.getModelo(), VO.getCantidadAsientos());
+			 colMinivan.insert(m.getMatricula(), m);
+			
+		}finally {
+	        Fachada.monitor.terminoEscritura();
 		}
+
+		
 	}
 
 	public ArrayList<VOMinivanListado> ListadoGeneralMinivanes() {
-		return colMinivan.ListadoMinivanes();
+		Fachada.monitor.comienzoLectura();
+		try {
+			return colMinivan.ListadoMinivanes();
+			
+		} finally {
+			
+			Fachada.monitor.terminoLectura();
+		}
+			
 	}
+		
+	
 
 	public void RegistroPaseo(VOPaseo VO) throws MinivanNoExiste, PrecioMenorCero {
+		Fachada.monitor.comienzoEscritura();
 		boolean agregar;
 		boolean vanDisponible;
 		if (VO.getPrecioBase() > 0) {
 			agregar = false;
-
 			Iterator<Minivan> iterm = colMinivan.arbol.values().iterator();
 
 			while (iterm.hasNext() && !agregar) {
@@ -92,31 +109,37 @@ public class Fachada implements Serializable {
 
 			}
 			if (!agregar) {
+				Fachada.monitor.terminoEscritura();
 				String mensajeError = String.format("La minivan con codigo %s no existe", VO.getCodigo());
 				throw new MinivanNoExiste(mensajeError);
 			}
 
 		} else {
-
+			Fachada.monitor.terminoEscritura();
 			String mensajeError = "Por favor ingresar un precio mayor a cero";
 			throw new PrecioMenorCero(mensajeError);
 		}
-
+            
 	}
 
 	public ArrayList<VOPaseosListado> ListadoPaseosMinivan(String matricula) throws MinivanNoExiste {
+           Fachada.monitor.comienzoLectura();
+           try {
+        	   if(!colMinivan.member(matricula)) {
+        	    throw new MinivanNoExiste(String.format("La minivan con codigo: %s no existe", matricula));
+        	   }
+        	   return colMinivan.ListadoPaseosEnMinivan(matricula);
+        	   
+           }finally {
+        	   Fachada.monitor.terminoLectura(); 
+           }
 
-		if (colMinivan.member(matricula)) {
-
-			return colMinivan.ListadoPaseosEnMinivan(matricula);
-		} else {
-			String mensajeError = String.format("La minivan con codigo %s no existe", matricula);
-			throw new MinivanNoExiste(mensajeError);
-		}
+		     
 	}
 
 	public ArrayList<VOPaseosListado> ListadoPaseosDestino(String destino) throws DestinoNoPerteneceException {
-
+        Fachada.monitor.comienzoLectura();
+   try {
 		boolean existe;
 		switch (destino) {
 
@@ -131,31 +154,36 @@ public class Fachada implements Serializable {
 		default:
 			existe = false;
 		}
-		if (existe) {
-			return colPaseos.listadoPaseosDestino(destino);
-		} else {
-			String mensajeError = String.format("El destino %s no partenece a la lista de posibles destinos", destino);
-			throw new DestinoNoPerteneceException(mensajeError);
+		
+		if (!existe) {
+			throw new DestinoNoPerteneceException(String.format("El destino %s no pertenece a la lista de posibles destinos", destino));
+		} 
+		    return colPaseos.listadoPaseosDestino(destino);
+		
+       }finally{
+			Fachada.monitor.terminoLectura();
 		}
+
+		
 	}
 
 	public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos(int cantBoletos) throws CantidadMayorCero {
-
-		ArrayList<VOPaseosListado> resp = new ArrayList<>();
-
-		if (cantBoletos > 0) {
-			resp = colPaseos.listadoPaseosDisponible(cantBoletos);
-
-		} else {
-			throw new CantidadMayorCero("La cantidad de Boletos debe ser mayor que cero");
-
+		Fachada.monitor.comienzoLectura();
+		try {
+			if(cantBoletos <= 0) {
+				throw new CantidadMayorCero("La cantidad de boletos debe ser mayor que cero");
+			}
+			return colPaseos.listadoPaseosDisponible(cantBoletos);
+			
+		}finally{
+			Fachada.monitor.terminoLectura();
 		}
 
-		return resp;
 	}
 
 	public void ComprarBoleto(VOCompraBoleto voBoleto)
 			throws BoletosNoDisponibles, PaseoNoExiste, CelularMayorQue1000, MenorDe0 {
+		Fachada.monitor.comienzoEscritura();
 		if (voBoleto.getEdad() > 0) {
 
 			if (Integer.parseInt(voBoleto.getCelular()) > 0) // verificar si el celular no deberia ser un int
@@ -167,23 +195,25 @@ public class Fachada implements Serializable {
 						colPaseos.compraBoleto(voBoleto);
 
 					} else {
-
+                        Fachada.monitor.terminoEscritura();
 						String mensajeError = "No hay boletos disponibles.";
 						throw new BoletosNoDisponibles(mensajeError);
 					}
 				} else {
+					Fachada.monitor.terminoEscritura();
 					String mensajeError = String.format("El paseo con código: %s no existe.",
 							voBoleto.getCodigoPaseo());
 					throw new PaseoNoExiste(mensajeError);
 				}
 
 			} else {
-
+				Fachada.monitor.terminoEscritura();
 				String mensajeError = "Ingresar un numero de celular mayor que 0";
 				throw new CelularMayorQue1000(mensajeError);
 			}
 
 		} else {
+			Fachada.monitor.terminoEscritura();
 			String mensajeError = String.format("Edad: %d es menor que 0, ingresar edad valida", voBoleto.getEdad());
 			throw new MenorDe0(mensajeError);
 
@@ -192,30 +222,32 @@ public class Fachada implements Serializable {
 	}
 
 	public ArrayList<VOListadoBoletos> ListadoBoleto(String codigo, boolean esEsp) throws PaseoNoExiste {
-
-		if (colPaseos.member(codigo)) {
-			if (colPaseos.CantidadBoletosVendidos(codigo) > 0) {
-				return colPaseos.listadoBoletoTipo(codigo, esEsp);
-			}
-		} else {
-			String mensajeError = String.format("El paseo con código: %s no existe.", codigo);
-			throw new PaseoNoExiste(mensajeError);
-		}
-		return null;
+        Fachada.monitor.comienzoLectura();
+        try {
+        	if(!colPaseos.member(codigo)) {
+        		throw new PaseoNoExiste(String.format("El paseo con codigo: %s no existe", codigo));
+        	}
+        	if(colPaseos.CantidadBoletosVendidos(codigo) > 0) {
+        		return colPaseos.listadoBoletoTipo(codigo, esEsp);
+        	}
+        	return new ArrayList<>();
+        }finally {
+        	Fachada.monitor.terminoLectura();
+        }
+		
 	}
 
 	public Double MontoRecaudadoPorPaseo(String codigoPaseo) throws PaseoNoExiste {
-		Double resp = -1.0;
-
-		if (colPaseos.member(codigoPaseo)) {
-			resp = colPaseos.find(codigoPaseo).montoRecaudadoPaseo();
-
-		} else {
-			throw new PaseoNoExiste("El Codigo de paseo indicado no existe.");
-
+		Fachada.monitor.comienzoLectura();
+		try {
+			if(!colPaseos.member(codigoPaseo)) {
+				throw new PaseoNoExiste("El codigo de paseo no existe");
+			}
+			return colPaseos.find(codigoPaseo).montoRecaudadoPaseo();
+		}finally {
+			Fachada.monitor.terminoLectura();
 		}
-
-		return resp;
+		
 
 	}
 
