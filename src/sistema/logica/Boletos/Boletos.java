@@ -1,10 +1,13 @@
 package sistema.logica.Boletos;
 
 import sistema.logica.ValueObject.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Boletos {
+public class Boletos implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private 
 	int tope;
 	Boleto boletos [] ;

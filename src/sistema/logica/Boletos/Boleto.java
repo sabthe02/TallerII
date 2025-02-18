@@ -62,9 +62,6 @@ public class Boleto implements Serializable {
 	public void setPrecio(double precio) {
 			this.precio = precio;
 	}
-	
-
-	public double montoRecaudadoPaseo ()
 
 
 

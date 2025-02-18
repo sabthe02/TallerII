@@ -1,21 +1,26 @@
 package sistema.logica;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Iterator;
-
+import java.util.Properties;
 
 import sistema.logica.Excepciones.*;
 import sistema.logica.Minivanes.*;
 import sistema.logica.Paseos.Paseos;
 import sistema.logica.Paseos.Paseo;
 import sistema.logica.ValueObject.*;
+import sistema.persistencia.*;
 
 
 public class Fachada implements Serializable {
 	
 	private static final long serialVersionUID = 1L; 
+
 	private Minivanes colMinivan;
 	private Paseos colPaseos;
 	
@@ -165,6 +170,7 @@ public class Fachada implements Serializable {
 	}
 
 	public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos(int cantBoletos) throws CantidadMayorCero {
+
 		Fachada.monitor.comienzoLectura();
 		try {
 			if(cantBoletos <= 0) {
@@ -174,6 +180,7 @@ public class Fachada implements Serializable {
 			
 		}finally{
 			Fachada.monitor.terminoLectura();
+
 		}
 
 	}
@@ -248,17 +255,70 @@ public class Fachada implements Serializable {
 
 	}
 
+	public void RespaldarDatos() throws PersistenciaException {
+
+		String ruta = "";
+		try {
+
+			Properties p = new Properties();
+			String nomArchProperties = "./config/config.properties";
+			p.load(new FileInputStream(nomArchProperties));
+			ruta = p.getProperty("rutaDatosRespaldo");
+
+			VOMinivanesYPaseosRespaldo vo = new VOMinivanesYPaseosRespaldo(this.colMinivan, this.colPaseos);
+
+			new Respaldo().respaldar(ruta, vo);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (PersistenciaException e) {
+			System.out.println("Error de persistencia: " + e.getMessage());
+		}
+
+	}
+
+	public void RecuperarDatos() throws PersistenciaException {
+
+		String ruta = "";
+		try {
+
+			Properties p = new Properties();
+			String nomArchProperties = "./config/config.properties";
+			p.load(new FileInputStream(nomArchProperties));
+			ruta = p.getProperty("rutaDatosRespaldo");
+
+			VOMinivanesYPaseosRespaldo vo = new Respaldo().recuperar(ruta);
+
+			this.colMinivan = vo.getColMinivan();
+			this.colPaseos = vo.getColPaseos();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (PersistenciaException e) {
+			System.out.println("Error de persistencia: " + e.getMessage());
+		}
+	}
+
 	public static void main(String args[]) {
 
 		Fachada f = new Fachada();
+
+		try {
+			f.RecuperarDatos();
+		} catch (PersistenciaException e) {
+			System.out.println("Error al recuperar datos: " + e.darMensaje());
+		}
 
 		System.out.println("INICIO // (Req 1) Prueba funcion Registro Minivan: ");
 		VOMinivan VOm = new VOMinivan("A1", "Volvo", "Modelo1", 8);
 
 		try {
 			f.RegistroMinivanes(VOm);
-		} catch (MinivanYaExisteException | CantAsientosMayorCeroException e) {
-			// TODO Auto-generated catch block
+		} catch (MinivanYaExisteException e) {
+			e.printStackTrace();
+		} catch (CantAsientosMayorCeroException e) {
+			e.printStackTrace();
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -266,8 +326,11 @@ public class Fachada implements Serializable {
 
 		try {
 			f.RegistroMinivanes(VOm1);
-		} catch (MinivanYaExisteException | CantAsientosMayorCeroException e) {
-			// TODO Auto-generated catch block
+		} catch (MinivanYaExisteException e) {
+			e.printStackTrace();
+		} catch (CantAsientosMayorCeroException e) {
+			e.printStackTrace();
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -287,8 +350,6 @@ public class Fachada implements Serializable {
 
 		System.out.println("FIN // Prueba funcion Listado General Minivanes. ");
 
-		// funciona
-
 		System.out.println("");
 		System.out.println("INICIO //  (Req 3)  Prueba registro Paseos ");
 		VOPaseo v = new VOPaseo("PDE01",
@@ -301,10 +362,10 @@ public class Fachada implements Serializable {
 		try {
 			f.RegistroPaseo(v);
 		} catch (MinivanNoExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (PrecioMenorCero e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -318,10 +379,10 @@ public class Fachada implements Serializable {
 		try {
 			f.RegistroPaseo(v1);
 		} catch (MinivanNoExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (PrecioMenorCero e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -335,8 +396,10 @@ public class Fachada implements Serializable {
 			f.ListadoPaseosMinivan("A1").forEach((VOPaseosListado) -> {
 				System.out.println("Codigo: " + VOPaseosListado.getCodigo());
 				System.out.println("Destino: " + VOPaseosListado.getDestino());
-				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida());
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso());
+				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");
+				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
+				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
+				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -350,8 +413,6 @@ public class Fachada implements Serializable {
 
 		System.out.println("FIN // Prueba Listado Paseos Minivanes");
 
-		// funciona
-
 		System.out.println("");
 		System.out.println("INICIO //  (Req 5)  Prueba Listado Paseos por Destino");
 		System.out.println();
@@ -361,8 +422,10 @@ public class Fachada implements Serializable {
 			f.ListadoPaseosDestino("Punta del Este").forEach((VOPaseosListado) -> {
 				System.out.println("Codigo: " + VOPaseosListado.getCodigo());
 				System.out.println("Destino: " + VOPaseosListado.getDestino());
-				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida());
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso());
+				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");
+				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
+				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
+				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -385,8 +448,10 @@ public class Fachada implements Serializable {
 			f.ListadoPaseosDispBoletos(3).forEach((VOPaseosListado) -> {
 				System.out.println("Codigo: " + VOPaseosListado.getCodigo());
 				System.out.println("Destino: " + VOPaseosListado.getDestino());
-				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida());
-				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso());
+				DateTimeFormatter hora = DateTimeFormatter.ofPattern("H:mm");
+				System.out.println("Hora Salida: " + VOPaseosListado.getHoraPartida().format(hora));
+				DateTimeFormatter hora2 = DateTimeFormatter.ofPattern("H:mm");
+				System.out.println("Hora Regreso: " + VOPaseosListado.getHoraRegreso().format(hora2));
 				System.out.println("Precio Base: " + VOPaseosListado.getPrecioBase());
 				System.out.println("Boletos Vendibles: " + VOPaseosListado.getCantidadMaximaBoletosVendibles());
 				System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
@@ -400,8 +465,6 @@ public class Fachada implements Serializable {
 
 		System.out.println("FIN // Prueba Listado Paseos por Destino");
 
-		// funciona
-
 		System.out.println("");
 		System.out.println("INICIO //  (Req 7) Prueba Compra Boleto");
 
@@ -409,16 +472,14 @@ public class Fachada implements Serializable {
 		try {
 			f.ComprarBoleto(vo);
 		} catch (BoletosNoDisponibles e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (PaseoNoExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (CelularMayorQue1000 e) {
-			// TODO Auto-generated catch block
-
+			e.printStackTrace();
 		} catch (MenorDe0 e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -426,16 +487,14 @@ public class Fachada implements Serializable {
 		try {
 			f.ComprarBoleto(vo1);
 		} catch (BoletosNoDisponibles e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (PaseoNoExiste e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (CelularMayorQue1000 e) {
-			// TODO Auto-generated catch block
-
+			e.printStackTrace();
 		} catch (MenorDe0 e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -449,11 +508,11 @@ public class Fachada implements Serializable {
 				System.out.println("Edad: " + VOListadoBoletos.getEdad());
 				System.out.println("Celular: " + VOListadoBoletos.getCelular());
 				System.out.println("Descuento: " + VOListadoBoletos.getDescuento());
-				System.out.println("Numero de Boleto: " + VOListadoBoletos.getNumeroBoleto()); // Ver por qué tira 0 por
-																								// defecto
+				System.out.println("Numero de Boleto: " + VOListadoBoletos.getNumeroBoleto());
 			});
 		} catch (PaseoNoExiste e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 
@@ -467,9 +526,18 @@ public class Fachada implements Serializable {
 					"El monto recaudado para el paseo: PDE02 es: " + f.MontoRecaudadoPorPaseo("PDE01").toString());
 		} catch (PaseoNoExiste e) {
 			e.printStackTrace();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
 		}
 
 		System.out.println("FIN //  (Req 9) Monto Recaudado en un Paseo");
+
+		try {
+			f.RespaldarDatos();
+		} catch (PersistenciaException e) {
+			System.out.println("Error al recuperar datos: " + e.darMensaje());
+
+		}
 
 	}
 
