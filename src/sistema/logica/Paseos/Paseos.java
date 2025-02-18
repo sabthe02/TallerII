@@ -7,11 +7,16 @@ import sistema.logica.ValueObject.VOCompraBoleto;
 import sistema.logica.ValueObject.VOListadoBoletos;
 import sistema.logica.ValueObject.VOPaseosListado;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class Paseos extends Diccionario <String, Paseo> {
+public class Paseos extends Diccionario <String, Paseo> implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+
 
 	public Paseos() {
 		super();

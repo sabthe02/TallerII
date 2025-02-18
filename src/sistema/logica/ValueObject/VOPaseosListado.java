@@ -1,9 +1,11 @@
 package sistema.logica.ValueObject;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class VOPaseosListado extends VOPaseo{
+public class VOPaseosListado extends VOPaseo implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private int CantidadMaximaBoletosVendibles;
 	private int CantidadBoletosDisponibles;
 	

@@ -1,9 +1,11 @@
 package sistema.logica.ValueObject;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class VOPaseo {
+public class VOPaseo implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private String Codigo;
 	private LocalDateTime HoraPartida;
 	private LocalDateTime HoraRegreso;

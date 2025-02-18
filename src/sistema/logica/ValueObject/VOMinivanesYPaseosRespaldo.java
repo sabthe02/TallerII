@@ -5,7 +5,7 @@ import java.io.*;
 import sistema.logica.Minivanes.Minivanes;
 import sistema.logica.Paseos.Paseos;
 
-public class VOMinivanesYPaseosRespaldo extends Diccionario implements Serializable {
+public class VOMinivanesYPaseosRespaldo implements Serializable {
 
 	private static final long serialVersionUID = 1L; 
 	private Minivanes colMinivan;
@@ -14,15 +14,43 @@ public class VOMinivanesYPaseosRespaldo extends Diccionario implements Serializa
 	public VOMinivanesYPaseosRespaldo() {
 		colMinivan = new Minivanes();
 		colPaseos = new Paseos();
-
 	}
 	
-	public Minivanes getMinivanes () {	
+	
+
+
+	public VOMinivanesYPaseosRespaldo(Minivanes colMinivan, Paseos colPaseos) {
+		super();
+		this.colMinivan = colMinivan;
+		this.colPaseos = colPaseos;
+	}
+
+
+
+
+	public void setColMinivan(Minivanes colMinivan) {
+		this.colMinivan = colMinivan;
+	}
+
+
+
+	public void setColPaseos(Paseos colPaseos) {
+		this.colPaseos = colPaseos;
+	}
+
+
+
+	public Minivanes getColMinivan() {
 		return colMinivan;
 	}
-	public Paseos getPaseos () {		
+
+
+
+	public Paseos getColPaseos() {
 		return colPaseos;
 	}
  
+	
+	
 	
 }

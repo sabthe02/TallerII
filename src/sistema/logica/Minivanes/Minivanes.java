@@ -1,5 +1,6 @@
 package sistema.logica.Minivanes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -7,7 +8,9 @@ import sistema.logica.Diccionario;
 import sistema.logica.ValueObject.VOMinivanListado;
 import sistema.logica.ValueObject.VOPaseosListado;
 
-public class Minivanes extends Diccionario<String, Minivan> {
+public class Minivanes extends Diccionario<String, Minivan> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public Minivanes() {
 		super();
