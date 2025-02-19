@@ -28,25 +28,25 @@ public class Fachada {
 	public Fachada() {
 		colMinivan = new Minivanes();
 		colPaseos = new Paseos();
-		Fachada.monitor = new Monitor();
+		monitor = new Monitor();
 	}
 
 	public void RegistroMinivanes(VOMinivan VO) throws MinivanYaExisteException, CantAsientosMayorCeroException, RemoteException {
-		monitor.comienzoEscritura();
+		Fachada.monitor.comienzoEscritura();
 		if (VO.getCantidadAsientos() > 0) {
 			if (!colMinivan.member(VO.getMatricula())) {
 				
 				Minivan m = new Minivan(VO.getMatricula(), VO.getMarca(), VO.getModelo(), VO.getCantidadAsientos());
 				colMinivan.insert(m.getMatricula(), m);
-				Fachada.monitor.terminoEscritura();
+				monitor.terminoEscritura();
 				
 			} else {
-				Fachada.monitor.terminoEscritura();
+				monitor.terminoEscritura();
 				String mensajeError = String.format("Ya existe una minivan con la matrícula: %s", VO.getMatricula());				
 				throw new MinivanYaExisteException(mensajeError);
 			}
 		} else {
-			Fachada.monitor.terminoEscritura();
+			monitor.terminoEscritura();
 			String mensajeError = "La cantidad de asientos tiene que ser mayor que cero";			
 			throw new CantAsientosMayorCeroException(mensajeError);	        
 		}
@@ -55,21 +55,17 @@ public class Fachada {
 	}
 
 	public ArrayList<VOMinivanListado> ListadoGeneralMinivanes() throws RemoteException {
-		Fachada.monitor.comienzoLectura();
-		try {
-			return colMinivan.ListadoMinivanes();
-			
-		} finally {
-			
-			Fachada.monitor.terminoLectura();
-		}
+		monitor.comienzoLectura();		
+		ArrayList<VOMinivanListado> arre = colMinivan.ListadoMinivanes();
+		monitor.terminoLectura();
+		return arre;
 			
 	}
 		
 	
 
 	public void RegistroPaseo(VOPaseo VO) throws MinivanNoExiste, PrecioMenorCero, RemoteException {
-		Fachada.monitor.comienzoEscritura();
+		monitor.comienzoEscritura();
 		boolean agregar;
 		boolean vanDisponible;
 		if (VO.getPrecioBase() > 0) {
@@ -107,19 +103,19 @@ public class Fachada {
 
 					m.getPaseos().registroPaseo(paseo);
 					colPaseos.insert(VO.getCodigo(), paseo);
-					Fachada.monitor.terminoEscritura();
+					monitor.terminoEscritura();
 
 				}
 
 			}
 			if (!agregar) {
-				Fachada.monitor.terminoEscritura();
+				monitor.terminoEscritura();
 				String mensajeError = "No hay minivanes disponibles para ese paseo";
 				throw new MinivanNoExiste(mensajeError);
 			}
 
 		} else {
-			Fachada.monitor.terminoEscritura();
+			monitor.terminoEscritura();
 			String mensajeError = "Por favor ingresar un precio mayor a cero";
 			throw new PrecioMenorCero(mensajeError);
 		}
@@ -127,23 +123,21 @@ public class Fachada {
 	}
 
 	public ArrayList<VOPaseosListado> ListadoPaseosMinivan(String matricula) throws MinivanNoExiste, RemoteException {
-           Fachada.monitor.comienzoLectura();
-           // Saqué el try...catch...finally, igual entiendo que hay que encontrar una manera para que se ejecute 
-           // el cierre del montitor DESPUES del return, pero no sé si va un try catch finally acá porque qué estamos 
-           // tratando de atrapar? Este procedimiento lanza la excepción
+           monitor.comienzoLectura();
 	           if(colMinivan.member(matricula)) {
-	        	   Fachada.monitor.terminoLectura(); // ver la manera de que se ejecute después del return
-        	   return colMinivan.ListadoPaseosEnMinivan(matricula);
+	        	   ArrayList<VOPaseosListado> arre = colMinivan.ListadoPaseosEnMinivan(matricula);
+	        	   monitor.terminoLectura();
+        	   return arre;
            }
            else {
-        	   Fachada.monitor.terminoLectura();
+        	   monitor.terminoLectura();
         	   throw new MinivanNoExiste(String.format("La minivan con codigo: %s no existe", matricula));
            }
          	     
 	}
 
 	public ArrayList<VOPaseosListado> ListadoPaseosDestino(String destino) throws DestinoNoPerteneceException, RemoteException {
-        Fachada.monitor.comienzoLectura();
+        monitor.comienzoLectura();
 		boolean existe;
 		switch (destino) {
 
@@ -160,11 +154,13 @@ public class Fachada {
 		break;
 		}
 		if (existe) {
-			Fachada.monitor.terminoLectura(); // misma cosa, saqué el try catch finally, pero entiendo el punto, hay
-			// que ver una manera de que se ejecute DESPUES del return
-			return colPaseos.listadoPaseosDestino(destino);
+			
+			ArrayList<VOPaseosListado> arre = colPaseos.listadoPaseosDestino(destino);
+			monitor.terminoLectura();
+			return arre;
+			
 		} else {
-			Fachada.monitor.terminoLectura();
+			monitor.terminoLectura();
 			String mensajeError = String.format("El destino %s no partenece a la lista de posibles destinos", destino);
 			throw new DestinoNoPerteneceException(mensajeError);
 		}
@@ -173,13 +169,12 @@ public class Fachada {
 
 	public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos(int cantBoletos) throws CantidadMayorCero, RemoteException {
 
-		Fachada.monitor.comienzoLectura();
+		monitor.comienzoLectura();
 			if(cantBoletos <= 0) {
 				monitor.terminoLectura();
 				throw new CantidadMayorCero("La cantidad de boletos debe ser mayor que cero");
 			}
-			Fachada.monitor.terminoLectura(); // misma cosa, saqué el try catch finally, pero entiendo que hay
-			// que ver una manera de que se ejecute DESPUES del return
+			monitor.terminoLectura();
 			return colPaseos.listadoPaseosDisponible(cantBoletos);
 
 	}
@@ -192,22 +187,22 @@ public class Fachada {
 				if (colPaseos.member(voBoleto.getCodigoPaseo())) {
 					if (colPaseos.find(voBoleto.getCodigoPaseo()).getCantidadBoletosDisponibles() > 0) {
 						colPaseos.compraBoleto(voBoleto);
-						Fachada.monitor.terminoEscritura();
+						monitor.terminoEscritura();
 
 					} else {
-						Fachada.monitor.terminoEscritura();
+						monitor.terminoEscritura();
 						String mensajeError = "No hay boletos disponibles.";
 						throw new BoletosNoDisponibles(mensajeError);
 					}
 				} else {
-					Fachada.monitor.terminoEscritura();
+					monitor.terminoEscritura();
 					String mensajeError = String.format("El paseo con código: %s no existe.",
 							voBoleto.getCodigoPaseo());
 					throw new PaseoNoExiste(mensajeError);
 				}
 
 			} else {
-				Fachada.monitor.terminoEscritura();
+				monitor.terminoEscritura();
 				String mensajeError = "Ingresar un numero de celular mayor que 0";
 				throw new CelularMayorQue1000(mensajeError);
 			}
@@ -223,26 +218,16 @@ public class Fachada {
 
 
 	public ArrayList<VOListadoBoletos> ListadoBoleto(String codigo, boolean esEsp) throws PaseoNoExiste, RemoteException {
-        Fachada.monitor.comienzoLectura();
-////        try { Dejo comentado, entiendo la idea que el monitor se tiene que liberar después del return
-//        	if(colPaseos.member(codigo)) {
-//        		return colPaseos.listadoBoletoTipo(codigo, esEsp);
-//        	}
-//        	else {
-//        		throw new PaseoNoExiste(String.format("El paseo con codigo: %s no existe", codigo));
-//        	}
-//        	return new ArrayList<>();
-//        }finally {
-//        	Fachada.monitor.terminoLectura();
-//        }
-//		
+        monitor.comienzoLectura();
+
 		if (colPaseos.member(codigo)) {
 			if (colPaseos.CantidadBoletosVendidos(codigo) > 0) {
-				Fachada.monitor.terminoLectura(); // ver cómo se podría hacer después del return
-				return colPaseos.listadoBoletoTipo(codigo, esEsp);
+				ArrayList<VOListadoBoletos> arre = colPaseos.listadoBoletoTipo(codigo, esEsp);
+				monitor.terminoLectura();
+				return arre;
 			}
 		} else {
-			Fachada.monitor.terminoLectura();
+			monitor.terminoLectura();
 			String mensajeError = String.format("El paseo con código: %s no existe.", codigo);
 			throw new PaseoNoExiste(mensajeError);
 		}
@@ -252,25 +237,15 @@ public class Fachada {
 	}
 
 	public Double MontoRecaudadoPorPaseo(String codigoPaseo) throws PaseoNoExiste, RemoteException {
-		Fachada.monitor.comienzoLectura();
-//		try { dejo comentado
-//			if(!colPaseos.member(codigoPaseo)) {
-//				throw new PaseoNoExiste("El codigo de paseo no existe");
-//			}
-//			return colPaseos.find(codigoPaseo).montoRecaudadoPaseo();
-//		}finally {
-//			Fachada.monitor.terminoLectura();
-//		}
-//		
-//
+		monitor.comienzoLectura();
 		Double resp = -1.0;
 
 		if (colPaseos.member(codigoPaseo)) {
 			resp = colPaseos.find(codigoPaseo).montoRecaudadoPaseo();
-			Fachada.monitor.terminoLectura();
+			monitor.terminoLectura();
 
 		} else {
-			Fachada.monitor.terminoLectura();
+			monitor.terminoLectura();
 			throw new PaseoNoExiste("El Codigo de paseo indicado no existe.");
 			
 		}
@@ -280,7 +255,7 @@ public class Fachada {
 	}
 
 	public void RespaldarDatos() throws PersistenciaException, RemoteException {
-		Fachada.monitor.comienzoLectura();
+		monitor.comienzoLectura();
 		String ruta = "";
 		try {
 
@@ -292,23 +267,22 @@ public class Fachada {
 			VOMinivanesYPaseosRespaldo vo = new VOMinivanesYPaseosRespaldo(this.colMinivan, this.colPaseos);
 
 			new Respaldo().respaldar(ruta, vo);
-			Fachada.monitor.terminoLectura();
+			monitor.terminoLectura();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+			monitor.terminoLectura();
 
 		} catch (PersistenciaException e) {
+			monitor.terminoLectura();
 			System.out.println("Error de persistencia: " + e.getMessage());
-		}
-		finally { // no tenía esto, le puse, pero me queda la duda de usar el try catch finally en el mismo procedimiento
-			// que lanza la excepción
-			Fachada.monitor.terminoLectura();
+			
 		}
 
 	}
 
 	public void RecuperarDatos() throws PersistenciaException, RemoteException {
-		Fachada.monitor.comienzoEscritura();
+		monitor.comienzoEscritura();
 		String ruta = "";
 		try {
 
@@ -320,18 +294,16 @@ public class Fachada {
 			if (vo!= null) {
 				this.colMinivan = vo.getColMinivan();
 				this.colPaseos = vo.getColPaseos();
-				Fachada.monitor.terminoEscritura();
+				monitor.terminoEscritura();
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			monitor.terminoEscritura();
 			
 		} catch (PersistenciaException e) {
 			System.out.println("Error de persistencia: " + e.getMessage());
-		}
-		finally {// no tenía esto, le puse, pero me queda la duda de usar el try catch finally en el mismo procedimiento
-			// que lanza la excepción
-			Fachada.monitor.terminoEscritura();
+			monitor.terminoEscritura();
 		}
 	}
 
