@@ -8,12 +8,22 @@ import sistema.logica.Paseos.Paseos;
 public class VOMinivanesYPaseosRespaldo implements Serializable {
 
 	private static final long serialVersionUID = 1L; 
+	
+	private static VOMinivanesYPaseosRespaldo instancia;
+	
 	private Minivanes colMinivan;
 	private Paseos colPaseos;
 
-	public VOMinivanesYPaseosRespaldo() {
+	private VOMinivanesYPaseosRespaldo() {
 		colMinivan = new Minivanes();
 		colPaseos = new Paseos();
+	}
+	
+	public static VOMinivanesYPaseosRespaldo getInstancia () {
+		if (instancia == null) {
+			instancia = new VOMinivanesYPaseosRespaldo();
+		}
+		return instancia;
 	}
 	
 	

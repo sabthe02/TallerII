@@ -12,3 +12,16 @@
 /Excepcion$PaseoNoExiste.class
 /Excepcion$PaseoNoExisteConCodigo.class
 /Excepcion$PersistenciaException.class
+/BoletosNoDisponibles.class
+/CantAsientosMayorCeroException.class
+/CantidadMayorCero.class
+/CelularMayorQue1000.class
+/DestinoNoPerteneceException.class
+/ListaPaseosVaciaException.class
+/MenorDe0.class
+/MinivanNoExiste.class
+/MinivanYaExisteException.class
+/PaseoNoExiste.class
+/PaseoNoExisteConCodigo.class
+/PrecioMenorCero.class
+/PersistenciaException.class
