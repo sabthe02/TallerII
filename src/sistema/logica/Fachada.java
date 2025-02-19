@@ -185,45 +185,32 @@ public class Fachada implements Serializable {
 
 	}
 
-	public void ComprarBoleto(VOCompraBoleto voBoleto)   // ME FALTA HACER ESTE, EN UN RATO LO TENGO PRONTO -Juanma
-			throws BoletosNoDisponibles, PaseoNoExiste, CelularMayorQue1000, MenorDe0 {
-		Fachada.monitor.comienzoEscritura();
-		if (voBoleto.getEdad() > 0) {
+	public void ComprarBoleto(VOCompraBoleto voBoleto)
+	        throws BoletosNoDisponibles, PaseoNoExiste, CelularMayorQue1000, MenorDe0 {
+	    Fachada.monitor.comienzoEscritura();
+	    try {
+	        if (voBoleto.getEdad() <= 0) {
+	            throw new MenorDe0(String.format("Edad: %d es menor que 0", voBoleto.getEdad()));
+	        }
 
-			if (Integer.parseInt(voBoleto.getCelular()) > 0) // verificar si el celular no deberia ser un int
-			{/// Pregunta, acá no puede verificar si es >0 (lo que dice la letra)?
-				if (colPaseos.member(voBoleto.getCodigoPaseo()))
+	        if (Integer.parseInt(voBoleto.getCelular()) <= 0) {
+	            throw new CelularMayorQue1000("Ingresar un número de celular mayor que 0");
+	        }
 
-				{
-					if (colPaseos.find(voBoleto.getCodigoPaseo()).getCantidadBoletosDisponibles() > 0) {
-						colPaseos.compraBoleto(voBoleto);
+	        if (!colPaseos.member(voBoleto.getCodigoPaseo())) {
+	            throw new PaseoNoExiste(String.format("El paseo con código: %s no existe", voBoleto.getCodigoPaseo()));
+	        }
 
-					} else {
-                        Fachada.monitor.terminoEscritura();
-						String mensajeError = "No hay boletos disponibles.";
-						throw new BoletosNoDisponibles(mensajeError);
-					}
-				} else {
-					Fachada.monitor.terminoEscritura();
-					String mensajeError = String.format("El paseo con código: %s no existe.",
-							voBoleto.getCodigoPaseo());
-					throw new PaseoNoExiste(mensajeError);
-				}
+	        if (colPaseos.find(voBoleto.getCodigoPaseo()).getCantidadBoletosDisponibles() <= 0) {
+	            throw new BoletosNoDisponibles("No hay boletos");
+	        }
 
-			} else {
-				Fachada.monitor.terminoEscritura();
-				String mensajeError = "Ingresar un numero de celular mayor que 0";
-				throw new CelularMayorQue1000(mensajeError);
-			}
-
-		} else {
-			Fachada.monitor.terminoEscritura();
-			String mensajeError = String.format("Edad: %d es menor que 0, ingresar edad valida", voBoleto.getEdad());
-			throw new MenorDe0(mensajeError);
-
-		}
-
+	        colPaseos.compraBoleto(voBoleto);
+	    } finally {
+	        Fachada.monitor.terminoEscritura();
+	    }
 	}
+
 
 	public ArrayList<VOListadoBoletos> ListadoBoleto(String codigo, boolean esEsp) throws PaseoNoExiste {
         Fachada.monitor.comienzoLectura();
