@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Iterator;
 import java.util.Properties;
 
@@ -17,15 +18,16 @@ import sistema.logica.ValueObject.*;
 import sistema.persistencia.*;
 
 
-public class Fachada {
+public class Fachada extends UnicastRemoteObject implements IFachada{
 	
+	private static final long serialVersionUID = 1L;
 	private Minivanes colMinivan;
 	private Paseos colPaseos;
 	
 	public static Monitor monitor;
 	
 
-	public Fachada() {
+	public Fachada() throws RemoteException {
 		colMinivan = new Minivanes();
 		colPaseos = new Paseos();
 		monitor = new Monitor();
@@ -62,8 +64,6 @@ public class Fachada {
 			
 	}
 		
-	
-
 	public void RegistroPaseo(VOPaseo VO) throws MinivanNoExiste, PrecioMenorCero, RemoteException {
 		monitor.comienzoEscritura();
 		boolean agregar;
@@ -309,7 +309,13 @@ public class Fachada {
 
 	public static void main(String args[]) {
 
-		Fachada f = new Fachada();
+		Fachada f = null;
+		
+		try {
+			f = new Fachada();
+		}catch (RemoteException e) {
+			e.printStackTrace();
+		}
 
 		try {
 			f.RecuperarDatos();
