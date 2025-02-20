@@ -1,8 +1,8 @@
 package sistema.logica.Excepciones;
-import java.io.Serializable;
+
 import java.lang.Exception;
 
-public class PaseoNoExisteConCodigo extends Exception implements Serializable {
+public class PaseoNoExisteConCodigo extends Exceptione {
 
 	private String mensaje;
 
