@@ -49,7 +49,7 @@ public class ConsolePres {
 			if(fachada!= null)
 			{
 				try {
-					fachada.RegistroMinivanes(new VOMinivan("AAB150", "Volvo", "Minivan", 55));
+					fachada.RegistroMinivanes(new VOMinivan("AAB180", "Volvo", "Minivan", 55));
 					
 					System.out.println("INICIO //  (Req 2) Prueba funcion Listado General Minivanes. ");
 					
@@ -80,15 +80,15 @@ public class ConsolePres {
 		}
 		catch (MalformedURLException e) 
 		{
-			
+			System.out.println("No se establecio la conexion correctamente. MalformedURLException");
 		}
 		catch (RemoteException e)
 		{
-			
+			System.out.println("No se establecio la conexion correctamente. RemoteException");
 		}
 		catch (NotBoundException e)
 		{
-			
+			System.out.println("No se establecio la conexion correctamente. NotBoundException");
 		}catch (CantAsientosMayorCeroException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
