@@ -1,4 +1,4 @@
-package sistema.presentacion;
+package sistema.grafica;
 
 import java.io.FileInputStream;
 import java.io.IOException;

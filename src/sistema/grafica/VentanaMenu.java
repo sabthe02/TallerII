@@ -64,8 +64,6 @@ public class VentanaMenu {
 		frm.getContentPane().add(p);
 		
 		
-		p.add(btnNewButton);
-		
 		JComboBox<String> comboBox = new JComboBox();
 		comboBox.setMaximumRowCount(10);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Elegir opcion", "Registro de minivan", "Listado general de minivanes", "Registro de paseo", "Listado de paseos asignados a una minivan", "Listado de paseos por destino", "Listado de paseos por disponibilidad de boletos", "Venta de boleo", "Listado de boletos vendidos para un paseo", "Monto recaudado en un paseo", "Respaldo de datos"}));
