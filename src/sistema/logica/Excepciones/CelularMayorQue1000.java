@@ -1,9 +1,8 @@
 package sistema.logica.Excepciones;
 
-import java.io.Serializable;
 import java.lang.Exception;
 
-public class CelularMayorQue1000 extends Exception implements Serializable {
+public class CelularMayorQue1000 extends Exception {
 
 	private String mensaje;
 

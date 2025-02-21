@@ -1,9 +1,8 @@
 package sistema.logica.Excepciones;
 
-import java.io.Serializable;
 import java.lang.Exception;
 
-public class MinivanYaExisteException extends Exception implements Serializable {
+public class MinivanYaExisteException extends Exception {
 
 	 private String mensaje;
 

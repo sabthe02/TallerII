@@ -8,6 +8,7 @@ import sistema.logica.Paseos.Paseos;
 public class VOMinivanesYPaseosRespaldo implements Serializable {
 
 	private static final long serialVersionUID = 1L; 
+	
 	private Minivanes colMinivan;
 	private Paseos colPaseos;
 

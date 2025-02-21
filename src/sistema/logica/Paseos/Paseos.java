@@ -10,6 +10,7 @@ import sistema.logica.ValueObject.VOPaseosListado;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 
 public class Paseos extends Diccionario <String, Paseo> implements Serializable{
@@ -35,22 +36,22 @@ public class Paseos extends Diccionario <String, Paseo> implements Serializable{
 		return VOPaseosListadoL;
 	}
 	
-	// REQUERIMIENTO 5
 	public ArrayList <VOPaseosListado> listadoPaseosDestino (String destino) {
-		Iterator<Paseo>iter = arbol.values().iterator();
+		Iterator<Paseo>iter = super.arbol.values().iterator();
 		ArrayList<VOPaseosListado> VOPaseosListadoL = new ArrayList<VOPaseosListado>();
 		
 		VOPaseosListado VO;
 		while (iter.hasNext()) {
 			Paseo p = iter.next();
-			if (p.getDestino()== destino) {
+			if (Objects.equals(p.getDestino(), destino)) {
+				
 				VO = new VOPaseosListado (p.getCodigo(), p.getHoraPartida(), p.getHoraRegreso(), p.getPrecioBase(), p.getDestino(), p.getCantMaxBoletos(), (p.getCantMaxBoletos()-p.getCantVendidos()));
 				VOPaseosListadoL.add(VO);
 			}
 		}
 		return VOPaseosListadoL;
 	}
-	// REQUERIMIENTO 6
+
 	public ArrayList<VOPaseosListado> listadoPaseosDisponible (int cantidad) {
 		
 		Iterator<Paseo>iter = arbol.values().iterator();
@@ -92,7 +93,7 @@ public class Paseos extends Diccionario <String, Paseo> implements Serializable{
 
 	public void registroPaseo (Paseo paseo) {
 		
-		arbol.put(paseo.getCodigo(), paseo);
+		super.arbol.put(paseo.getCodigo(), paseo);
 		
 	}
 	
