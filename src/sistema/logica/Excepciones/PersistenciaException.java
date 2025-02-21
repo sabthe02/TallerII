@@ -1,10 +1,9 @@
 
 package sistema.logica.Excepciones;
 
-import java.io.Serializable;
 import java.lang.Exception;
 
-public class PersistenciaException extends Exception implements Serializable{
+public class PersistenciaException extends Exception {
 
 	private String mensaje;
 

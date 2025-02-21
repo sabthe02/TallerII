@@ -1,9 +1,8 @@
 package sistema.logica.Excepciones;
 
-import java.io.Serializable;
 import java.lang.Exception;
 
-public class CantAsientosMayorCeroException extends Exception implements Serializable{
+public class CantAsientosMayorCeroException extends Exception {
 
 	private String mensaje;
 
