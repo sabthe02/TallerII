@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class VentanaRegistroMinivan {
 
@@ -21,6 +22,8 @@ public class VentanaRegistroMinivan {
 	private JTextField txtMarca;
 	private JLabel lblCantAsientos;
 	private JTextField textModelo;
+	private JButton btnAceptar;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -65,19 +68,23 @@ public class VentanaRegistroMinivan {
 		panel.add(lblMatricula);
 		
 		txtMatricula = new JTextField();
-		txtMatricula.setBounds(125, 28, 301, 43);
+		txtMatricula.setToolTipText("Formato alfanumerico");
+		txtMatricula.setForeground(new Color(0, 0, 0));
+		txtMatricula.setBounds(125, 36, 301, 28);
 		txtMatricula.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(txtMatricula);
 		txtMatricula.setColumns(10);
 		
 		txtMarca = new JTextField();
-		txtMarca.setBounds(125, 69, 301, 43);
+		txtMarca.setBounds(125, 77, 301, 28);
 		txtMarca.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(txtMarca);
 		txtMarca.setColumns(10);
 		
 		txtCantAsientos = new JTextField();
-		txtCantAsientos.setBounds(125, 152, 301, 43);
+		txtCantAsientos.setToolTipText("Formato de numero entero");
+		txtCantAsientos.setForeground(new Color(0, 0, 0));
+		txtCantAsientos.setBounds(125, 159, 301, 28);
 		txtCantAsientos.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(txtCantAsientos);
 		txtCantAsientos.setColumns(10);
@@ -93,23 +100,25 @@ public class VentanaRegistroMinivan {
 		panel.add(lblCantAsientos);
 		
 		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		
 		btnAceptar.setBounds(199, 217, 114, 36);
 		panel.add(btnAceptar);
 		
 		textModelo = new JTextField();
 		textModelo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		textModelo.setColumns(10);
-		textModelo.setBounds(125, 110, 301, 43);
+		textModelo.setBounds(125, 115, 301, 28);
 		panel.add(textModelo);
 		
 		JLabel lblModelo = new JLabel("Modelo");
 		lblModelo.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblModelo.setBounds(10, 110, 114, 43);
 		panel.add(lblModelo);
+		
+		lblNewLabel = new JLabel("Por favor ingresar datos de la nueva minivan");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel.setBounds(10, 13, 267, 13);
+		panel.add(lblNewLabel);
 		
 //		btnAceptar.addActionListener(
 //			new ActionListener() {
@@ -122,7 +131,10 @@ public class VentanaRegistroMinivan {
 //			}
 //			}
 //		);
+		
 	}
+	
+		
 	
 	public void setVisible (boolean b)
 	{
