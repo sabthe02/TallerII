@@ -2,21 +2,27 @@ package sistema.grafica;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
 import java.awt.Color;
+import javax.swing.JDesktopPane;
 
-public class VentanaRegistroMinivan {
+public class VentanaRegistroMinivan extends JInternalFrame{
 
-	private JFrame frmRegistroMinivan;
+	private static final long serialVersionUID = 1L;
+	
+	private JInternalFrame frmRegistroMinivan;
 	private JTextField txtCantAsientos;
 	private JTextField txtMatricula;
 	private JTextField txtMarca;
@@ -53,10 +59,11 @@ public class VentanaRegistroMinivan {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmRegistroMinivan = new JFrame();
+		
+		frmRegistroMinivan = new JInternalFrame();
 		frmRegistroMinivan.setTitle("Registro Minivan");
 		frmRegistroMinivan.setBounds(100, 100, 450, 300);
-		frmRegistroMinivan.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmRegistroMinivan.setVisible(true);
 		
 		JPanel panel = new JPanel();
 		frmRegistroMinivan.getContentPane().add(panel, BorderLayout.CENTER);
@@ -100,7 +107,6 @@ public class VentanaRegistroMinivan {
 		panel.add(lblCantAsientos);
 		
 		JButton btnAceptar = new JButton("Aceptar");
-		
 		btnAceptar.setBounds(199, 217, 114, 36);
 		panel.add(btnAceptar);
 		
@@ -120,17 +126,16 @@ public class VentanaRegistroMinivan {
 		lblNewLabel.setBounds(10, 13, 267, 13);
 		panel.add(lblNewLabel);
 		
-//		btnAceptar.addActionListener(
-//			new ActionListener() {
-//			public void actionPerformed (ActionEvent e) {
-//				String matricula = txtMatricula.getText();
-//				String marca = txtMarca.getText();
-//				String modelo = textModelo.getText();
-//				String cantAsientos = txtCantAsientos.getText();
-//				JOptionPane.showMessageDialog(frmRegistroMinivan, matricula);
-//			}
-//			}
-//		);
+		btnAceptar.addActionListener(
+			new ActionListener() {
+			public void actionPerformed (ActionEvent e) {
+				String matricula = txtMatricula.getText();
+				String marca = txtMarca.getText();
+				String modelo = textModelo.getText();
+				String cantAsientos = txtCantAsientos.getText();
+				JOptionPane.showMessageDialog(frmRegistroMinivan, matricula);
+			}
+			});
 		
 	}
 	

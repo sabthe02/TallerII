@@ -2,7 +2,7 @@ package sistema.grafica;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JEditorPane;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
@@ -17,15 +17,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Locale;
 
-import javax.swing.JPanel;
-import javax.swing.Box;
 import javax.swing.JFormattedTextField;
 import java.awt.Color;
 import javax.swing.JButton;
 
 public class VentanaRegistroPaseo {
 
-	private JFrame frmRegistroPaseo;
+	private JInternalFrame frmRegistroPaseo;
 	private JTextField txtCodigoPaseo;
 	private JTextField txtPrecioBase;
 	private JTextField txtDestino;
@@ -51,16 +49,16 @@ public class VentanaRegistroPaseo {
 	 */
 	public VentanaRegistroPaseo() {
 		initialize();
+		this.setVisible(false);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmRegistroPaseo = new JFrame();
+		frmRegistroPaseo = new JInternalFrame();
 		frmRegistroPaseo.setTitle("Registro Paseo");
 		frmRegistroPaseo.setBounds(100, 100, 450, 300);
-		frmRegistroPaseo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmRegistroPaseo.getContentPane().setLayout(null);
 		
 		txtCodigoPaseo = new JTextField();
@@ -149,6 +147,7 @@ public class VentanaRegistroPaseo {
 //					public void actionPerformed (ActionEvent e) {
 //						String codigo = txtCodigoPaseo.getText();
 //
+//
 //					}
 //
 //				} 
@@ -156,5 +155,10 @@ public class VentanaRegistroPaseo {
 //	}
 
 
+	}
+	
+	public void setVisible (boolean b)
+	{
+		frmRegistroPaseo.setVisible(b);
 	}
 }
