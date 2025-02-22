@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JMenu;
@@ -64,25 +65,36 @@ public class VentanaMenu {
 		frm.getContentPane().add(p);
 		
 		
-		p.add(btnNewButton);
+		//p.add(btnNewButton);
+		frm.setSize(600, 400); 
+		frm.setLocationRelativeTo(null); 
+		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
+
 		
 		JComboBox<String> comboBox = new JComboBox();
 		comboBox.setMaximumRowCount(10);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Elegir opcion", "Registro de minivan", "Listado general de minivanes", "Registro de paseo", "Listado de paseos asignados a una minivan", "Listado de paseos por destino", "Listado de paseos por disponibilidad de boletos", "Venta de boleo", "Listado de boletos vendidos para un paseo", "Monto recaudado en un paseo", "Respaldo de datos"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] { "Registro de minivan", "Listado general de minivanes", "Registro de paseo", "Listado de paseos asignados a una minivan", "Listado de paseos por destino", "Listado de paseos por disponibilidad de boletos", "Venta de boleo", "Listado de boletos vendidos para un paseo", "Monto recaudado en un paseo", "Respaldo de datos"}));
 		frm.getContentPane().add(comboBox, BorderLayout.NORTH);
-		
-//		JButton btnNewButton = new JButton("Aceptar");
-//		btnNewButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				String selectedItem = (String) coComboBox.getSelectedItem();
-//
-//				if (selectedItem.contentEquals("Registro de minivan")) {
-//					
-//				}
-//			}
-//		});
+		  comboBox.addActionListener(new ActionListener() {
+		        public void actionPerformed(ActionEvent e) {
+		            String selectedItem = (String) comboBox.getSelectedItem();
+		            
+		            if (selectedItem.equals("Registro de minivan")) {
+
+		            } else if (selectedItem.equals("Listado general de minivanes")) {
+	
+		            } else if(selectedItem.equals("Registro de paseo")){
+		            	
+		            }
+
+		        }
+		    });
+
 	}
 	
 	public void setVisible (boolean b) {
 	}
+
+
+	
 }

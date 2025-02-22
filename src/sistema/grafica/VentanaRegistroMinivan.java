@@ -2,6 +2,7 @@ package sistema.grafica;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -13,7 +14,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VentanaRegistroMinivan {
+public class VentanaRegistroMinivan extends JInternalFrame {
 
 	private JFrame frmRegistroMinivan;
 	private JTextField txtCantAsientos;
