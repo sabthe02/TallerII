@@ -16,7 +16,6 @@ import java.awt.Font;
 public class VentanaMenu {
 
 	private JDesktopPane frm;
-	private final JDesktopPane desktopPane = new JDesktopPane();
 
 	/**
 	 * Launch the application.
