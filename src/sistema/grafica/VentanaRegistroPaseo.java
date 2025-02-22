@@ -1,6 +1,3 @@
-package sistema.grafica;
-
-import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JEditorPane;
@@ -161,4 +158,5 @@ public class VentanaRegistroPaseo {
 	{
 		frmRegistroPaseo.setVisible(b);
 	}
+
 }

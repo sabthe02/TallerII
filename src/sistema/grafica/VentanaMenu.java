@@ -4,18 +4,39 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JMenuBar;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
+import java.awt.CardLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JList;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JDesktopPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Color;
 import javax.swing.UIManager;
 import java.awt.Font;
 
+
 public class VentanaMenu {
 
-	private JDesktopPane frm;
+	private JFrame frm;
+
 
 	/**
 	 * Launch the application.
@@ -44,6 +65,7 @@ public class VentanaMenu {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
 		frm = new JDesktopPane();
@@ -78,8 +100,8 @@ public class VentanaMenu {
 				}
 			}
 		});
+
 	}
 	
 	public void setVisible (boolean b) {
 	}
-}

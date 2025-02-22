@@ -9,14 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JTextField;
 import javax.swing.JButton;
-
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JDesktopPane;
+
+	private JFrame frmRegistroMinivan;
 
 public class VentanaRegistroMinivan extends JInternalFrame{
 
@@ -30,6 +30,7 @@ public class VentanaRegistroMinivan extends JInternalFrame{
 	private JTextField textModelo;
 	private JButton btnAceptar;
 	private JLabel lblNewLabel;
+
 
 	/**
 	 * Launch the application.
@@ -75,6 +76,7 @@ public class VentanaRegistroMinivan extends JInternalFrame{
 		panel.add(lblMatricula);
 		
 		txtMatricula = new JTextField();
+
 		txtMatricula.setToolTipText("Formato alfanumerico");
 		txtMatricula.setForeground(new Color(0, 0, 0));
 		txtMatricula.setBounds(125, 36, 301, 28);
@@ -89,9 +91,11 @@ public class VentanaRegistroMinivan extends JInternalFrame{
 		txtMarca.setColumns(10);
 		
 		txtCantAsientos = new JTextField();
+
 		txtCantAsientos.setToolTipText("Formato de numero entero");
 		txtCantAsientos.setForeground(new Color(0, 0, 0));
 		txtCantAsientos.setBounds(125, 159, 301, 28);
+    
 		txtCantAsientos.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(txtCantAsientos);
 		txtCantAsientos.setColumns(10);
@@ -121,6 +125,9 @@ public class VentanaRegistroMinivan extends JInternalFrame{
 		lblModelo.setBounds(10, 110, 114, 43);
 		panel.add(lblModelo);
 		
+
+	}
+	
 		lblNewLabel = new JLabel("Por favor ingresar datos de la nueva minivan");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel.setBounds(10, 13, 267, 13);
@@ -140,7 +147,6 @@ public class VentanaRegistroMinivan extends JInternalFrame{
 	}
 	
 		
-	
 	public void setVisible (boolean b)
 	{
 		frmRegistroMinivan.setVisible(b);
