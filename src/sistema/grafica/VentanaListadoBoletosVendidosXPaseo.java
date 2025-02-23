@@ -40,7 +40,7 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
         PanelPrincipal.setLayout(null);
         
         JLabel labelTitulo = new JLabel("Listado de Boletos Vendidos para un Paseo");
-        labelTitulo.setBounds(202, 20, 380, 22);
+        labelTitulo.setBounds(202, 20, 421, 22);
         labelTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         labelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         PanelPrincipal.add(labelTitulo);
