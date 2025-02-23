@@ -10,6 +10,8 @@ import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
