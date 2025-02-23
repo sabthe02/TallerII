@@ -24,8 +24,8 @@ public class VentanaMenu {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaMenu window = new VentanaMenu();
-					window.frm.setVisible(true);
+					VentanaMenu component = new VentanaMenu();
+					component.frm.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -67,19 +67,20 @@ public class VentanaMenu {
 		btnAceptar.setBounds(375, 344, 85, 21);
 		frm.add(btnAceptar);
 		
-		btnAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String selectedItem = (String) comboBox.getSelectedItem();
-
-				if (selectedItem.contentEquals("Registro de minivan")) {
-					VentanaRegistroMinivan ventana = new VentanaRegistroMinivan();
-					ventana.setVisible(true);
-					
-				}
-			}
-		});
+//		btnAceptar.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				String selectedItem = (String) comboBox.getSelectedItem();
+//
+//				if (selectedItem.contentEquals("Registro de minivan")) {
+//					VentanaRegistroMinivan ventana = new VentanaRegistroMinivan();
+//					ventana.setVisible(true);
+//					
+//				}
+//			}
+//		});
 	}
 	
 	public void setVisible (boolean b) {
+		frm.setVisible(b);
 	}
 }
