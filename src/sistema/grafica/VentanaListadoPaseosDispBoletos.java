@@ -13,8 +13,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.UIManager;
 
-public class VentanaListadoPaseosDispBoletos {
+public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JInternalFrame frame;
 	private JTable table;
 	private JButton btnAceptar;
@@ -39,16 +40,8 @@ public class VentanaListadoPaseosDispBoletos {
 	 * Create the application.
 	 */
 	public VentanaListadoPaseosDispBoletos() {
-		initialize();
-		setVisible(false);
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	@SuppressWarnings("serial")
-	private void initialize() {
-		frame = new JInternalFrame();
+		
+		frame = this;
 		frame.setClosable(true);
 		frame.setBounds(100, 100, 783, 395);
 		frame.getContentPane().setLayout(null);
@@ -69,6 +62,7 @@ public class VentanaListadoPaseosDispBoletos {
 				"Codigo", "Destino", "Hora de partida", "Hora de regreso", "Precio base", "Cantidad maxima de boletos vendibles", "Cantidad de boletos disponibles"
 			}
 		) {
+			private static final long serialVersionUID = 1L;
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, Integer.class, Integer.class, Float.class, Integer.class, Integer.class
@@ -99,9 +93,6 @@ public class VentanaListadoPaseosDispBoletos {
 		
 	}
 	
-	public void setVisible (boolean b)
-	{
-		frame.setVisible(b);
-	}
+	
 
 }

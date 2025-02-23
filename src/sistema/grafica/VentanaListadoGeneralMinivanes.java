@@ -6,14 +6,23 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.Color;
+import java.awt.ContainerOrderFocusTraversalPolicy;
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import sistema.grafica.Controladores.ControladorListadoGeneralMinivanes;
+import sistema.logica.ValueObject.VOMinivanListado;
+
 public class VentanaListadoGeneralMinivanes extends JInternalFrame {
-    private JTable table;
+    private static final long serialVersionUID = 1L;
+	private JTable table;
     private DefaultTableModel modeloTabla;
+    private ControladorListadoGeneralMinivanes controlador;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -68,8 +77,26 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
         table.getTableHeader().setReorderingAllowed(false);
         table.setRowHeight(25);
         
+        
+        
         JScrollPane scrollPane = new JScrollPane(table);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
+        
+        controlador = new ControladorListadoGeneralMinivanes(this);
+        
+        try {
+			ArrayList<VOMinivanListado> lista = controlador.obtenerListado();
+	        DefaultTableModel model = (DefaultTableModel) table.getModel();
+			lista.forEach(arg0 -> model.addRow(new Object[] {arg0.getMatricula(), arg0.getMarca(), arg0.getModelo(), arg0.getCantidadAsientos(), arg0.getCantidadPaseos()}));
+			
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
+        
+        
     }
     
 

@@ -76,9 +76,9 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
         grupoBoletos = new ButtonGroup();
         panelTipoBoleto.setLayout(new BorderLayout(0, 0));
         radiobuttonComun = new JRadioButton("Común");
-        radiobuttonComun.setBounds(20, 5, 71, 25);
+        radiobuttonComun.setBounds(20, 5, 136, 25);
         radiobuttonEspecial = new JRadioButton("Especial");
-        radiobuttonEspecial.setBounds(111, 5, 79, 25);
+        radiobuttonEspecial.setBounds(246, 5, 136, 25);
         
         radiobuttonComun.setFont(new Font("Arial", Font.PLAIN, 14));
         radiobuttonEspecial.setFont(new Font("Arial", Font.PLAIN, 14));

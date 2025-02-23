@@ -15,8 +15,9 @@ import javax.swing.JFrame;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VentanaListadoPaseosMinivan {
+public class VentanaListadoPaseosMinivan extends JInternalFrame{
 
+	private static final long serialVersionUID = 1L;
 	private JInternalFrame frmListadoPaseosDe;
 	private JTable table;
 
@@ -28,7 +29,7 @@ public class VentanaListadoPaseosMinivan {
 			public void run() {
 				try {
 					VentanaListadoPaseosMinivan window = new VentanaListadoPaseosMinivan();
-					window.frmListadoPaseosDe.setVisible(true);
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -39,17 +40,11 @@ public class VentanaListadoPaseosMinivan {
 	/**
 	 * Create the application.
 	 */
-	public VentanaListadoPaseosMinivan() {
-		initialize();
-		this.setVisible(false);
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	@SuppressWarnings("serial")
-	private void initialize() {
-		frmListadoPaseosDe = new JInternalFrame();
+	public VentanaListadoPaseosMinivan() {	
+		super("Listado Paseos de una minivan", true, true, true, true);
+		
+		
+		frmListadoPaseosDe = this;
 		frmListadoPaseosDe.setTitle("Listado Paseos de una minivan");
 		frmListadoPaseosDe.setBounds(100, 100, 778, 486);
 		frmListadoPaseosDe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,6 +67,7 @@ public class VentanaListadoPaseosMinivan {
 				"Codigo", "Destino", "Hora de partida", "Hora de regreso", "Precio base", "Cantidad m\u00E1xima de boletos vendibles", "Cantidad de boletos disponibles"
 			}
 		) {
+			private static final long serialVersionUID = 1L;
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, Integer.class, Integer.class, Float.class, Integer.class, Integer.class
@@ -101,8 +97,5 @@ public class VentanaListadoPaseosMinivan {
 			}
 		});
 	}
-	public void setVisible (boolean b)
-	{
-		frmListadoPaseosDe.setVisible(b);
-	}
+	
 }
