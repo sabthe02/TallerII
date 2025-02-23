@@ -2,6 +2,7 @@ package sistema.logica.ValueObject;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class VOPaseosListado extends VOPaseo implements Serializable{
 
@@ -18,7 +19,7 @@ public class VOPaseosListado extends VOPaseo implements Serializable{
 	}
 
 
-	public VOPaseosListado(String codigo, LocalDateTime horaPartida, LocalDateTime horaRegreso, Double precioBase, String destino,
+	public VOPaseosListado(String codigo, LocalTime horaPartida, LocalTime horaRegreso, Double precioBase, String destino,
 			int cantidadMaximaBoletosVendibles, int cantidadBoletosDisponibles) {
 		super(codigo, horaPartida, horaRegreso, precioBase, destino);
 		CantidadMaximaBoletosVendibles = cantidadMaximaBoletosVendibles;

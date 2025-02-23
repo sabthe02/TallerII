@@ -3,16 +3,26 @@ import javax.swing.JInternalFrame;
 import javax.swing.JEditorPane;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
+
+import sistema.grafica.Controladores.ControladorRegistroPaseo;
+import sistema.logica.Excepciones.MinivanNoExiste;
+import sistema.logica.Excepciones.PrecioMenorCero;
+import sistema.logica.ValueObject.VOPaseo;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Locale;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JFormattedTextField;
 import java.awt.Color;
@@ -21,6 +31,7 @@ import java.awt.EventQueue;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import javax.swing.JComboBox;
 
 public class VentanaRegistroPaseo extends JInternalFrame{
 
@@ -30,6 +41,11 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 	private JTextField txtCodigoPaseo;
 	private JTextField txtPrecioBase;
 	private JTextField txtDestino;
+	private ControladorRegistroPaseo controlador;
+	JFormattedTextField formattedTextHoraPartida;
+	JFormattedTextField formattedTextHoraRegreso;
+
+
 
 	/**
 	 * Launch the application.
@@ -101,6 +117,38 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 		panel.add(lblDestino);
 
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(validarCampos())
+				{
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+					VOPaseo vo = new VOPaseo();
+					vo.setCodigo(txtCodigoPaseo.getText());
+					vo.setDestino(txtDestino.getText());
+					vo.setPrecioBase(Double.parseDouble(txtPrecioBase.getText()));
+					vo.setHoraPartida(LocalTime.parse(formattedTextHoraPartida.getText(), formatter));
+					vo.setHoraRegreso(LocalTime.parse(formattedTextHoraRegreso.getText(), formatter));
+					
+					try {
+						controlador.RegistrarPaseo(vo);
+						JOptionPane.showMessageDialog(null, "Se ingreso el paseo correctamente.");
+
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (MinivanNoExiste e) {
+						// TODO Auto-generated catch block
+						
+						e.printStackTrace();
+					} catch (PrecioMenorCero e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+			}
+		});
 		btnAceptar.setBounds(323, 219, 92, 29);
 		panel.add(btnAceptar);
 
@@ -122,22 +170,41 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 
 		
 		
-		JFormattedTextField formattedTextHoraPartida = new JFormattedTextField();
+		try {
+			formattedTextHoraPartida = new JFormattedTextField(new MaskFormatter("##:##"));
+			formattedTextHoraPartida.setBounds(208, 58, 130, 26);
+			panel.add(formattedTextHoraPartida);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			formattedTextHoraRegreso = new JFormattedTextField(new MaskFormatter("##:##"));
+			formattedTextHoraRegreso.setBounds(208, 84, 130, 26);
+			panel.add(formattedTextHoraRegreso);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
 		
 
-		    
-		formattedTextHoraPartida.setBounds(208, 58, 130, 26);
-		panel.add(formattedTextHoraPartida);
-
-		
-		JFormattedTextField formattedTextHoraRegreso = new JFormattedTextField();
-		formattedTextHoraRegreso.setBounds(208, 84, 130, 26);
-		panel.add(formattedTextHoraRegreso);
-
-		
+		controlador = new ControladorRegistroPaseo(this);
 
 
 	}
 	
 	
+	private boolean validarCampos()
+	{
+		boolean validado = true;
+		
+		
+		return validado;
+	}
 }
