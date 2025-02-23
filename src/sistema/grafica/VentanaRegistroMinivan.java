@@ -121,8 +121,11 @@ public class VentanaRegistroMinivan extends JInternalFrame {
                 String modelo = textModelo.getText();
                 String cantAsientos = txtCantAsientos.getText();
                 JOptionPane.showMessageDialog(VentanaRegistroMinivan.this, matricula);
+//                super.setVisible(false); cómo hacerlo invisible??
+                
             }
         });
     }
+   
 
 }

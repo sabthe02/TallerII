@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.UIManager;
+import javax.swing.JLabel;
 
 public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 
@@ -19,6 +20,7 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 	private JInternalFrame frame;
 	private JTable table;
 	private JButton btnAceptar;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -40,6 +42,7 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 	 * Create the application.
 	 */
 	public VentanaListadoPaseosDispBoletos() {
+		setTitle("Listado e paseos por disponibilidad de boletos");
 		
 		frame = this;
 		frame.setClosable(true);
@@ -48,7 +51,7 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportBorder(UIManager.getBorder("Table.scrollPaneBorder"));
-		scrollPane.setBounds(0, 10, 769, 279);
+		scrollPane.setBounds(0, 32, 769, 257);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -83,6 +86,11 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(345, 314, 85, 21);
 		frame.getContentPane().add(btnAceptar);
+		
+		lblNewLabel = new JLabel("Listado de paseos por disponibilidad de boletos");
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNewLabel.setBounds(206, 9, 377, 13);
+		getContentPane().add(lblNewLabel);
 		
 		btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

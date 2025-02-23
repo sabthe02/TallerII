@@ -21,10 +21,11 @@ public class ControladorListadoGeneralMinivanes extends ConexionRMI{
 	
 	public ArrayList<VOMinivanListado> obtenerListado() throws RemoteException
 	{
-		ArrayList<VOMinivanListado> arre = super.iFac.ListadoGeneralMinivanes();
-		if (conectado) {
-			return arre;
+		ArrayList<VOMinivanListado> arre = null;
+		if (conectado) {	
+			arre = super.iFac.ListadoGeneralMinivanes();
 		}
+		return arre;
 	}
 	
 }

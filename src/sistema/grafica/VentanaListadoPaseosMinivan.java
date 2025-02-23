@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class VentanaListadoPaseosMinivan extends JInternalFrame{
 
@@ -51,7 +52,7 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 		frmListadoPaseosDe.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 10, 764, 375);
+		scrollPane.setBounds(0, 33, 764, 352);
 		frmListadoPaseosDe.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -82,6 +83,11 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 		
 		btnNewButton.setBounds(356, 404, 85, 21);
 		frmListadoPaseosDe.getContentPane().add(btnNewButton);
+		
+		JLabel lblNewLabel = new JLabel("Listado de Paseos de una minivan");
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNewLabel.setBounds(211, 10, 291, 13);
+		getContentPane().add(lblNewLabel);
 		table.getColumnModel().getColumn(0).setPreferredWidth(43);
 		table.getColumnModel().getColumn(1).setPreferredWidth(47);
 		table.getColumnModel().getColumn(2).setPreferredWidth(84);

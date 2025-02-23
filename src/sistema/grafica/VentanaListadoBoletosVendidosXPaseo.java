@@ -27,7 +27,7 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
     public VentanaListadoBoletosVendidosXPaseo() {
     	
         setTitle("Listado de Boletos Vendidos para un Paseo");
-        setBounds(100, 100, 800, 400);
+        setBounds(100, 100, 800, 269);
         setResizable(true);
         setClosable(true);
         setMaximizable(true);
@@ -94,5 +94,9 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
         PanelPrincipal.add(panelTipoBoleto);
         
         getContentPane().add(PanelPrincipal, BorderLayout.CENTER);
+        
+        JButton btnNewButton = new JButton("Aceptar");
+        btnNewButton.setBounds(360, 191, 85, 21);
+        PanelPrincipal.add(btnNewButton);
     }
 }
