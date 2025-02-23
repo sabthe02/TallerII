@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 
-public class VentanaEntrarAListadoPaseosDispBoletos {
+public class VentanaEntrarAListadoPaseosDispBoletos extends JInternalFrame{
 
 	private JInternalFrame frame;
 
@@ -24,7 +24,7 @@ public class VentanaEntrarAListadoPaseosDispBoletos {
 			public void run() {
 				try {
 					VentanaEntrarAListadoPaseosDispBoletos window = new VentanaEntrarAListadoPaseosDispBoletos();
-					window.frame.setVisible(true);
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -36,15 +36,7 @@ public class VentanaEntrarAListadoPaseosDispBoletos {
 	 * Create the application.
 	 */
 	public VentanaEntrarAListadoPaseosDispBoletos() {
-		initialize();
-		frame.setVisible(false);
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JInternalFrame();
+		frame = this;
 		frame.setTitle("Listado de paseos por disponibilidad de boletos");
 		frame.setBounds(100, 100, 450, 213);
 		frame.getContentPane().setLayout(null);
@@ -75,7 +67,5 @@ public class VentanaEntrarAListadoPaseosDispBoletos {
 		
 	}
 	
-	public void setVisible (boolean b) {
-		frame.setVisible(b);
-	}
+	
 }

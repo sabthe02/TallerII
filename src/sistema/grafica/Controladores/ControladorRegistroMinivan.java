@@ -1,4 +1,4 @@
-package sistema.grafica;
+package sistema.grafica.Controladores;
 
 import sistema.logica.IFachada;
 

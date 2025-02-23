@@ -1,3 +1,7 @@
+package sistema.cliente;
+
+
+
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,9 +18,10 @@ public class Cliente {
 
 	public static void main(String args[]) {
 
-		Fachada f = new Fachada();
+		Fachada f = null;
 
 		try {
+			f = new Fachada();
 			f.RecuperarDatos();
 		} catch (PersistenciaException e) {
 			System.out.println("Error al recuperar datos: " + e.darMensaje());

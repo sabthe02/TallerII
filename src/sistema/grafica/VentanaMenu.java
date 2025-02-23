@@ -35,7 +35,7 @@ import java.awt.Font;
 
 public class VentanaMenu {
 
-	private JFrame frm;
+	private JPanel frm;
 
 
 	/**
@@ -68,7 +68,7 @@ public class VentanaMenu {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
-		frm = new JDesktopPane();
+		frm = new JPanel();
 		frm.setForeground(new Color(171, 171, 171));
 		frm.setFont(new Font("Tahoma", Font.BOLD, 12));
 		frm.setName("Menu");
