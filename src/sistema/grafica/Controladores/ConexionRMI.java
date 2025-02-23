@@ -23,7 +23,7 @@ public class ConexionRMI {
 	{
 	}
 	
-	public boolean Conectar()
+	protected boolean Conectar()
 	{
 		boolean resp = false;
 		try

@@ -2,30 +2,27 @@ package sistema.logica.ValueObject;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class VOPaseo implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private String Codigo;
-	private LocalDateTime HoraPartida;
-	private LocalDateTime HoraRegreso;
+	private LocalTime HoraPartida;
+	private LocalTime HoraRegreso;
 	private Double PrecioBase;
 	private String Destino;
 	
 	public VOPaseo() {
 		// TODO Auto-generated constructor stub
 		this.Codigo = "";
-		this.HoraPartida = LocalDateTime.of(LocalDateTime.now().
-							getYear(),LocalDateTime.now().
-							getMonth(),LocalDateTime.now().
-							getDayOfMonth(),
-							1,0);
-		this.HoraRegreso = LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),1,0);
+		this.HoraPartida = LocalTime.now();
+		this.HoraRegreso = LocalTime.now();
 		this.PrecioBase = 0.0;
 		this.Destino = "";
 	}
 
-	public VOPaseo(String codigo, LocalDateTime horaPartida, LocalDateTime horaRegreso, Double precioBase, String destino) {
+	public VOPaseo(String codigo, LocalTime horaPartida, LocalTime horaRegreso, Double precioBase, String destino) {
 		super();
 		Codigo = codigo;
 		HoraPartida = horaPartida;
@@ -42,19 +39,19 @@ public class VOPaseo implements Serializable{
 		Codigo = codigo;
 	}
 
-	public LocalDateTime getHoraPartida() {
+	public LocalTime getHoraPartida() {
 		return HoraPartida;
 	}
 
-	public void setHoraPartida(LocalDateTime horaPartida) {
+	public void setHoraPartida(LocalTime horaPartida) {
 		HoraPartida = horaPartida;
 	}
 
-	public LocalDateTime getHoraRegreso() {
+	public LocalTime getHoraRegreso() {
 		return HoraRegreso;
 	}
 
-	public void setHoraRegreso(LocalDateTime horaRegreso) {
+	public void setHoraRegreso(LocalTime horaRegreso) {
 		HoraRegreso = horaRegreso;
 	}
 

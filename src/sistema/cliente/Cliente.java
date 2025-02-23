@@ -4,6 +4,7 @@ package sistema.cliente;
 
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -84,10 +85,8 @@ public class Cliente {
 		System.out.println("");
 		System.out.println("INICIO //  (Req 3)  Prueba registro Paseos ");
 		VOPaseo v = new VOPaseo("PDE01",
-				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
-						LocalDateTime.now().getDayOfMonth(), 13, 0),
-				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
-						LocalDateTime.now().getDayOfMonth(), 20, 0),
+				LocalTime.now(),
+				LocalTime.now(),
 				20.0, "Piriapolis");
 
 		try {
@@ -103,10 +102,8 @@ public class Cliente {
 		}
 
 		VOPaseo v1 = new VOPaseo("PDE02",
-				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
-						LocalDateTime.now().getDayOfMonth(), 13, 0),
-				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
-						LocalDateTime.now().getDayOfMonth(), 20, 0),
+				LocalTime.now(),
+				LocalTime.now(),
 				15.0, "Punta del Este");
 
 		try {
