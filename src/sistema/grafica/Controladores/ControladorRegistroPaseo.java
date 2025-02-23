@@ -2,7 +2,6 @@ package sistema.grafica.Controladores;
 
 import java.rmi.RemoteException;
 
-import sistema.grafica.VentanaListadoGeneralMinivanes;
 import sistema.grafica.VentanaRegistroPaseo;
 import sistema.logica.Excepciones.MinivanNoExiste;
 import sistema.logica.Excepciones.PrecioMenorCero;
