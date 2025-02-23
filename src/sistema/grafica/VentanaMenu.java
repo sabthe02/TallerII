@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JMenu;
@@ -24,10 +25,18 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JDesktopPane;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Color;
+import javax.swing.UIManager;
+import java.awt.Font;
+
 
 public class VentanaMenu {
 
 	private JFrame frm;
+
 
 	/**
 	 * Launch the application.
@@ -36,8 +45,8 @@ public class VentanaMenu {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaMenu window = new VentanaMenu();
-					window.frm.setVisible(true);
+					VentanaMenu component = new VentanaMenu();
+					component.frm.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,25 +65,37 @@ public class VentanaMenu {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
-		frm = new JFrame();
+		frm = new JDesktopPane();
+		frm.setForeground(new Color(171, 171, 171));
+		frm.setFont(new Font("Tahoma", Font.BOLD, 12));
+		frm.setName("Menu");
+		frm.setBorder(UIManager.getBorder("EditorPane.border"));
+		frm.setBounds(100, 100, 895, 533);
+		frm.setLayout(null);
 		
-		JPanel p = new JPanel();
-		
-		frm.getContentPane().add(p);
-		
-		
+
 		JComboBox<String> comboBox = new JComboBox();
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		comboBox.setBounds(280, 42, 327, 24);
+		frm.add(comboBox);
 		comboBox.setMaximumRowCount(10);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Elegir opcion", "Registro de minivan", "Listado general de minivanes", "Registro de paseo", "Listado de paseos asignados a una minivan", "Listado de paseos por destino", "Listado de paseos por disponibilidad de boletos", "Venta de boleo", "Listado de boletos vendidos para un paseo", "Monto recaudado en un paseo", "Respaldo de datos"}));
-		frm.getContentPane().add(comboBox, BorderLayout.NORTH);
 		
-//		JButton btnNewButton = new JButton("Aceptar");
-//		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnAceptar.setBounds(375, 344, 85, 21);
+		frm.add(btnAceptar);
+		
+//		btnAceptar.addActionListener(new ActionListener() {
 //			public void actionPerformed(ActionEvent e) {
-//				String selectedItem = (String) coComboBox.getSelectedItem();
+//				String selectedItem = (String) comboBox.getSelectedItem();
 //
 //				if (selectedItem.contentEquals("Registro de minivan")) {
+//					VentanaRegistroMinivan ventana = new VentanaRegistroMinivan();
+//					ventana.setVisible(true);
 //					
 //				}
 //			}
@@ -82,5 +103,6 @@ public class VentanaMenu {
 	}
 	
 	public void setVisible (boolean b) {
+		frm.setVisible(b);
 	}
 }

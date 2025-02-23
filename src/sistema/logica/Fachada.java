@@ -34,6 +34,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada{
 	}
 
 	public void RegistroMinivanes(VOMinivan VO) throws MinivanYaExisteException, CantAsientosMayorCeroException, RemoteException {
+
 		monitor.comienzoEscritura();
 		if (VO.getCantidadAsientos() > 0) {
 			if (!colMinivan.member(VO.getMatricula())) {
