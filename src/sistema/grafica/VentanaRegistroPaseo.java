@@ -1,4 +1,4 @@
-
+package sistema.grafica;
 import javax.swing.JInternalFrame;
 import javax.swing.JEditorPane;
 import javax.swing.JTextField;
@@ -16,6 +16,8 @@ import java.util.Locale;
 
 import javax.swing.JFormattedTextField;
 import java.awt.Color;
+import java.awt.EventQueue;
+
 import javax.swing.JButton;
 
 public class VentanaRegistroPaseo {
