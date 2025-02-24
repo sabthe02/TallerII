@@ -1,5 +1,10 @@
+package sistema.cliente;
+
+
+
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -14,9 +19,10 @@ public class Cliente {
 
 	public static void main(String args[]) {
 
-		Fachada f = new Fachada();
+		Fachada f = null;
 
 		try {
+			f = new Fachada();
 			f.RecuperarDatos();
 		} catch (PersistenciaException e) {
 			System.out.println("Error al recuperar datos: " + e.darMensaje());
@@ -79,10 +85,8 @@ public class Cliente {
 		System.out.println("");
 		System.out.println("INICIO //  (Req 3)  Prueba registro Paseos ");
 		VOPaseo v = new VOPaseo("PDE01",
-				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
-						LocalDateTime.now().getDayOfMonth(), 13, 0),
-				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
-						LocalDateTime.now().getDayOfMonth(), 20, 0),
+				LocalTime.now(),
+				LocalTime.now(),
 				20.0, "Piriapolis");
 
 		try {
@@ -98,10 +102,8 @@ public class Cliente {
 		}
 
 		VOPaseo v1 = new VOPaseo("PDE02",
-				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
-						LocalDateTime.now().getDayOfMonth(), 13, 0),
-				LocalDateTime.of(LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),
-						LocalDateTime.now().getDayOfMonth(), 20, 0),
+				LocalTime.now(),
+				LocalTime.now(),
 				15.0, "Punta del Este");
 
 		try {

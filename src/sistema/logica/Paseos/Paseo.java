@@ -9,7 +9,7 @@ import sistema.logica.ValueObject.VOCompraBoleto;
 //import sistema.logica.VO.*;
 import sistema.logica.ValueObject.VOListadoBoletos;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.io.Serializable;
 
 public class Paseo implements Serializable {
@@ -18,15 +18,15 @@ private static final long serialVersionUID = 1L;
 
 	
 private String codigo;
-		LocalDateTime horaPartida; 
-		LocalDateTime horaRegreso;
+		LocalTime horaPartida; 
+		LocalTime horaRegreso;
 		int cantVendidos;
 		int cantMaxBoletos;
 		double precioBase;
 		String destino;
 		Boletos boletos;
 		
-public Paseo(String codigo, LocalDateTime horaPartida, LocalDateTime horaRegreso, int cantVendidos,
+public Paseo(String codigo, LocalTime horaPartida, LocalTime horaRegreso, int cantVendidos,
 				int cantMaxBoletos, double precioBase, String destino) {
 			this.codigo = codigo;
 			this.horaPartida = horaPartida;
@@ -40,8 +40,8 @@ public Paseo(String codigo, LocalDateTime horaPartida, LocalDateTime horaRegreso
 
 public Paseo() {
 	this.codigo = "A0";
-	this.horaPartida = LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),1,0);
-	this.horaRegreso = LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),1,0);
+	this.horaPartida = LocalTime.now();
+	this.horaRegreso = LocalTime.now();
 	this.cantVendidos = 0;
 	this.cantMaxBoletos = 0;
 	this.precioBase = 0.0;
@@ -53,19 +53,19 @@ public String getCodigo () {
 	return this.codigo;
 }
 
-public LocalDateTime getHoraPartida() {
+public LocalTime getHoraPartida() {
 	return horaPartida;
 }
 
-public void setHoraPartida(LocalDateTime horaPartida) {
+public void setHoraPartida(LocalTime horaPartida) {
 	this.horaPartida = horaPartida;
 }
 
-public LocalDateTime getHoraRegreso() {
+public LocalTime getHoraRegreso() {
 	return horaRegreso;
 }
 
-public void setHoraRegreso(LocalDateTime horaRegreso) {
+public void setHoraRegreso(LocalTime horaRegreso) {
 	this.horaRegreso = horaRegreso;
 }
 
@@ -144,7 +144,7 @@ public double montoRecaudadoPaseo () {
 
 public static void main (String args[]) {
 	
-	Paseo p1 = new Paseo ("PDP1", LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),9,0), LocalDateTime.of(LocalDateTime.now().getYear(),LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),13,0), 5, 7, 15.0, "Punta del Este");
+	Paseo p1 = new Paseo ("PDP1", LocalTime.now(), LocalTime.now(), 5, 7, 15.0, "Punta del Este");
 	
 	System.out.println(p1.getCodigo());
 	System.out.println(p1.getHoraPartida());

@@ -12,12 +12,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.UIManager;
+import javax.swing.JLabel;
 
-public class VentanaListadoPaseosDispBoletos {
+public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JInternalFrame frame;
 	private JTable table;
 	private JButton btnAceptar;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -39,23 +42,16 @@ public class VentanaListadoPaseosDispBoletos {
 	 * Create the application.
 	 */
 	public VentanaListadoPaseosDispBoletos() {
-		initialize();
-		setVisible(false);
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	@SuppressWarnings("serial")
-	private void initialize() {
-		frame = new JInternalFrame();
+		setTitle("Listado e paseos por disponibilidad de boletos");
+		
+		frame = this;
 		frame.setClosable(true);
 		frame.setBounds(100, 100, 783, 395);
 		frame.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportBorder(UIManager.getBorder("Table.scrollPaneBorder"));
-		scrollPane.setBounds(0, 10, 769, 279);
+		scrollPane.setBounds(0, 32, 769, 257);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -69,6 +65,7 @@ public class VentanaListadoPaseosDispBoletos {
 				"Codigo", "Destino", "Hora de partida", "Hora de regreso", "Precio base", "Cantidad maxima de boletos vendibles", "Cantidad de boletos disponibles"
 			}
 		) {
+			private static final long serialVersionUID = 1L;
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, Integer.class, Integer.class, Float.class, Integer.class, Integer.class
@@ -90,6 +87,11 @@ public class VentanaListadoPaseosDispBoletos {
 		btnAceptar.setBounds(345, 314, 85, 21);
 		frame.getContentPane().add(btnAceptar);
 		
+		lblNewLabel = new JLabel("Listado de paseos por disponibilidad de boletos");
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNewLabel.setBounds(206, 9, 377, 13);
+		getContentPane().add(lblNewLabel);
+		
 		btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					frame.setVisible(false);
@@ -99,9 +101,6 @@ public class VentanaListadoPaseosDispBoletos {
 		
 	}
 	
-	public void setVisible (boolean b)
-	{
-		frame.setVisible(b);
-	}
+	
 
 }

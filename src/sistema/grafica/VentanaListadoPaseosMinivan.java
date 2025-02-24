@@ -14,9 +14,11 @@ import javax.swing.JFrame;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
-public class VentanaListadoPaseosMinivan {
+public class VentanaListadoPaseosMinivan extends JInternalFrame{
 
+	private static final long serialVersionUID = 1L;
 	private JInternalFrame frmListadoPaseosDe;
 	private JTable table;
 
@@ -28,7 +30,7 @@ public class VentanaListadoPaseosMinivan {
 			public void run() {
 				try {
 					VentanaListadoPaseosMinivan window = new VentanaListadoPaseosMinivan();
-					window.frmListadoPaseosDe.setVisible(true);
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -39,24 +41,18 @@ public class VentanaListadoPaseosMinivan {
 	/**
 	 * Create the application.
 	 */
-	public VentanaListadoPaseosMinivan() {
-		initialize();
-		this.setVisible(false);
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	@SuppressWarnings("serial")
-	private void initialize() {
-		frmListadoPaseosDe = new JInternalFrame();
+	public VentanaListadoPaseosMinivan() {	
+		super("Listado Paseos de una minivan", true, true, true, true);
+		
+		
+		frmListadoPaseosDe = this;
 		frmListadoPaseosDe.setTitle("Listado Paseos de una minivan");
 		frmListadoPaseosDe.setBounds(100, 100, 778, 486);
 		frmListadoPaseosDe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmListadoPaseosDe.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 10, 764, 375);
+		scrollPane.setBounds(0, 33, 764, 352);
 		frmListadoPaseosDe.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -72,6 +68,7 @@ public class VentanaListadoPaseosMinivan {
 				"Codigo", "Destino", "Hora de partida", "Hora de regreso", "Precio base", "Cantidad m\u00E1xima de boletos vendibles", "Cantidad de boletos disponibles"
 			}
 		) {
+			private static final long serialVersionUID = 1L;
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, Integer.class, Integer.class, Float.class, Integer.class, Integer.class
@@ -86,6 +83,11 @@ public class VentanaListadoPaseosMinivan {
 		
 		btnNewButton.setBounds(356, 404, 85, 21);
 		frmListadoPaseosDe.getContentPane().add(btnNewButton);
+		
+		JLabel lblNewLabel = new JLabel("Listado de Paseos de una minivan");
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		lblNewLabel.setBounds(211, 10, 291, 13);
+		getContentPane().add(lblNewLabel);
 		table.getColumnModel().getColumn(0).setPreferredWidth(43);
 		table.getColumnModel().getColumn(1).setPreferredWidth(47);
 		table.getColumnModel().getColumn(2).setPreferredWidth(84);
@@ -101,8 +103,5 @@ public class VentanaListadoPaseosMinivan {
 			}
 		});
 	}
-	public void setVisible (boolean b)
-	{
-		frmListadoPaseosDe.setVisible(b);
-	}
+	
 }

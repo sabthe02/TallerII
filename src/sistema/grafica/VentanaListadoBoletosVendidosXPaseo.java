@@ -27,7 +27,7 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
     public VentanaListadoBoletosVendidosXPaseo() {
     	
         setTitle("Listado de Boletos Vendidos para un Paseo");
-        setBounds(100, 100, 800, 400);
+        setBounds(100, 100, 800, 269);
         setResizable(true);
         setClosable(true);
         setMaximizable(true);
@@ -40,7 +40,7 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
         PanelPrincipal.setLayout(null);
         
         JLabel labelTitulo = new JLabel("Listado de Boletos Vendidos para un Paseo");
-        labelTitulo.setBounds(202, 20, 380, 22);
+        labelTitulo.setBounds(202, 20, 421, 22);
         labelTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         labelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         PanelPrincipal.add(labelTitulo);
@@ -76,9 +76,9 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
         grupoBoletos = new ButtonGroup();
         panelTipoBoleto.setLayout(new BorderLayout(0, 0));
         radiobuttonComun = new JRadioButton("Común");
-        radiobuttonComun.setBounds(20, 5, 71, 25);
+        radiobuttonComun.setBounds(20, 5, 136, 25);
         radiobuttonEspecial = new JRadioButton("Especial");
-        radiobuttonEspecial.setBounds(111, 5, 79, 25);
+        radiobuttonEspecial.setBounds(246, 5, 136, 25);
         
         radiobuttonComun.setFont(new Font("Arial", Font.PLAIN, 14));
         radiobuttonEspecial.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -94,5 +94,9 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
         PanelPrincipal.add(panelTipoBoleto);
         
         getContentPane().add(PanelPrincipal, BorderLayout.CENTER);
+        
+        JButton btnNewButton = new JButton("Aceptar");
+        btnNewButton.setBounds(360, 191, 85, 21);
+        PanelPrincipal.add(btnNewButton);
     }
 }

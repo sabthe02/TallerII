@@ -15,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -122,8 +121,11 @@ public class VentanaRegistroMinivan extends JInternalFrame {
                 String modelo = textModelo.getText();
                 String cantAsientos = txtCantAsientos.getText();
                 JOptionPane.showMessageDialog(VentanaRegistroMinivan.this, matricula);
+//                super.setVisible(false); cómo hacerlo invisible??
+                
             }
         });
     }
+   
 
 }
