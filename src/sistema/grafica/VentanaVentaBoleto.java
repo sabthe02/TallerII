@@ -104,8 +104,5 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		}
 	});
         }
-
-        
-        
     }
 
