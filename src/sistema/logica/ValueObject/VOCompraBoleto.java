@@ -35,6 +35,4 @@ public class VOCompraBoleto extends VOBoletoPasajero implements Serializable{
 	
 	
 	
-	
-	
 }

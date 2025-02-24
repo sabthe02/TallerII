@@ -68,7 +68,7 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 	 */
 	public VentanaRegistroPaseo() {
 		super("Registro Paseos", true, true, true, true);
-        setBounds(100, 100, 485, 315);
+        setBounds(100, 100, 485, 264);
         
         JPanel panel = new JPanel();
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -84,7 +84,7 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 		
 		JLabel lblNewLabel = new JLabel("Codigo de paseo");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel.setBounds(61, 40, 100, 15);
+		lblNewLabel.setBounds(61, 38, 137, 15);
 		panel.add(lblNewLabel);
 
 		JLabel lblTitulo = new JLabel("Por favor ingresar los datos de un nuevo paseo");
@@ -95,25 +95,25 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 		JLabel lblHoraDePartida = new JLabel("Hora de partida");
 		lblHoraDePartida.setToolTipText("");
 		lblHoraDePartida.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblHoraDePartida.setBounds(61, 57, 95, 15);
+		lblHoraDePartida.setBounds(61, 62, 137, 15);
 		panel.add(lblHoraDePartida);
 
 		JLabel lblHoraDeRegreso = new JLabel("Hora de regreso");
 		lblHoraDeRegreso.setToolTipText("");
 		lblHoraDeRegreso.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblHoraDeRegreso.setBounds(61, 84, 96, 15);
+		lblHoraDeRegreso.setBounds(61, 84, 137, 15);
 		panel.add(lblHoraDeRegreso);
 
 		JLabel lblPrecioBase = new JLabel("Precio base");
 		lblPrecioBase.setToolTipText("");
 		lblPrecioBase.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblPrecioBase.setBounds(61, 138, 69, 15);
+		lblPrecioBase.setBounds(61, 138, 137, 15);
 		panel.add(lblPrecioBase);
 
 		JLabel lblDestino = new JLabel("Destino");
 		lblDestino.setToolTipText("");
 		lblDestino.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblDestino.setBounds(61, 111, 46, 15);
+		lblDestino.setBounds(61, 111, 137, 15);
 		panel.add(lblDestino);
 
 		JButton btnAceptar = new JButton("Aceptar");
@@ -149,7 +149,7 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 				}
 			}
 		});
-		btnAceptar.setBounds(323, 219, 92, 29);
+		btnAceptar.setBounds(229, 182, 92, 29);
 		panel.add(btnAceptar);
 
 		txtPrecioBase = new JTextField();
@@ -165,7 +165,7 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 		txtDestino.setToolTipText("");
 		txtDestino.setForeground(new Color(0, 0, 0));
 		txtDestino.setColumns(10);
-		txtDestino.setBounds(208, 105, 130, 26);
+		txtDestino.setBounds(208, 107, 130, 26);
 		panel.add(txtDestino);
 
 		

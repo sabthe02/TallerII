@@ -1,10 +1,12 @@
 package sistema.grafica;
 
+import sistema.grafica.Controladores.Respaldo;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -12,6 +14,7 @@ import java.awt.event.ActionEvent;
 public class MainProgram {
 
 	private JFrame frame;
+	private Respaldo respaldo;
 
 	/**
 	 * Launch the application.
@@ -41,7 +44,7 @@ public class MainProgram {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 903, 510);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -134,8 +137,9 @@ public class MainProgram {
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Comprar Boleto");
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
+				VentanaVentaBoleto v = new VentanaVentaBoleto();
+				frame.getContentPane().add(v);
+				v.setVisible(true);
 			}
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
@@ -150,6 +154,27 @@ public class MainProgram {
 			}
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_7);
+		
+		JMenu mnNewMenu_2_1 = new JMenu("Respaldo");
+		menuBar.add(mnNewMenu_2_1);
+		
+		JMenuItem mntmRespaldo = new JMenuItem("Respaldar");
+		mntmRespaldo.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			respaldo = new Respaldo();
+			try {
+				respaldo.Respaldar();
+				String mensaje = "Respaldado con exito";
+				JOptionPane.showMessageDialog(frame, mensaje);
+				}
+			catch (Exception ex) {
+				String mensaje = "Error al respaldar";
+				JOptionPane.showMessageDialog(frame, mensaje);
+			}
+		}
+	});
+		mnNewMenu_2_1.add(mntmRespaldo);
+		
 	}
 
 }

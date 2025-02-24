@@ -1,12 +1,14 @@
 package sistema.grafica;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,14 +16,15 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 
-public class VentanaListadoPaseosXDestino extends JFrame {
+public class VentanaListadoPaseosXDestino extends JInternalFrame {
 
+	private JInternalFrame fm;
 	private JPanel contentPane;
-	private final JLabel lblNewLabel = new JLabel("Destino");
-	private JTextField textField;
 	private DefaultTableModel modeloTabla;
 	private JTable table;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -43,6 +46,7 @@ public class VentanaListadoPaseosXDestino extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaListadoPaseosXDestino() {
+		fm = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Listado de Paseos por Destino");
         setBounds(100, 100, 800, 400);
@@ -57,15 +61,6 @@ public class VentanaListadoPaseosXDestino extends JFrame {
         labelTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         labelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPane.add(labelTitulo);
-        
-        JPanel panelDestino = new JPanel();
-        panelDestino.setBounds(237, 43, 235, 48);
-        contentPane.add(panelDestino);
-        panelDestino.add(lblNewLabel);
-        
-        textField = new JTextField();
-        panelDestino.add(textField);
-        textField.setColumns(10);
         
         modeloTabla = new DefaultTableModel(
                 new Object[][] {},
@@ -89,8 +84,21 @@ public class VentanaListadoPaseosXDestino extends JFrame {
             table.setRowHeight(25);
 
             JScrollPane scrollPane = new JScrollPane(table);
-            scrollPane.setBounds(50, 110, 700, 200); 
+            scrollPane.setBounds(50, 42, 700, 252); 
             contentPane.add(scrollPane);
+            
+            btnNewButton = new JButton("Aceptar");
+            btnNewButton.setBounds(335, 320, 85, 21);
+            contentPane.add(btnNewButton);
+            
+            btnNewButton.addActionListener(new ActionListener() {
+    			public void actionPerformed(ActionEvent e) {
+    				
+    				fm.setVisible(false);
+    			}
+            });
+            
+            
         
  
         
