@@ -81,13 +81,12 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
         btnAceptar.setFont(new Font("Arial", Font.PLAIN, 14));
         getContentPane().add(btnAceptar);
 
-        // Panel de resultado
+    
         panelResultado = new JPanel();
         panelResultado.setBounds(150, 180, 500, 120);
         panelResultado.setLayout(null);
         getContentPane().add(panelResultado);
 
-        // Etiqueta para mostrar el resultado
         JLabel labelMontoTitulo = new JLabel("Monto Recaudado:");
         labelMontoTitulo.setBounds(50, 40, 200, 30);
         labelMontoTitulo.setFont(new Font("Arial", Font.BOLD, 16));
