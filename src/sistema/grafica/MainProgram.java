@@ -137,8 +137,9 @@ public class MainProgram {
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Comprar Boleto");
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
+				VentanaVentaBoleto v = new VentanaVentaBoleto();
+				frame.getContentPane().add(v);
+				v.setVisible(true);
 			}
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
