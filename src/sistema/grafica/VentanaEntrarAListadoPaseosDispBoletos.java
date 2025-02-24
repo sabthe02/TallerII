@@ -13,6 +13,10 @@ import javax.swing.JFormattedTextField;
 
 public class VentanaEntrarAListadoPaseosDispBoletos extends JInternalFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JInternalFrame frame;
 
 

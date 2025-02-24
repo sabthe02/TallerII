@@ -28,6 +28,7 @@ public class ControladorRegistroMinivan extends ConexionRMI {
 			super.iFac.RegistroMinivanes(voMinivan);
 		}
 		
+		
 	}
 	
 }

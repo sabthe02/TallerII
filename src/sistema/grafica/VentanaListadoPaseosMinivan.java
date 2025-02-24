@@ -42,7 +42,7 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 	 * Create the application.
 	 */
 	public VentanaListadoPaseosMinivan() {	
-		super("Listado Paseos de una minivan", true, true, true, true);
+		super();
 		
 		
 		frmListadoPaseosDe = this;
@@ -103,5 +103,8 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 			}
 		});
 	}
+	
+	
+	
 	
 }
