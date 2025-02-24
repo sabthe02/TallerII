@@ -1,7 +1,23 @@
 package sistema.grafica;
 
 import javax.swing.*;
+
+import sistema.grafica.Controladores.ControladorVentaBoleto;
+import sistema.logica.Excepciones.BoletosNoDisponibles;
+import sistema.logica.Excepciones.CelularMayorQue1000;
+import sistema.logica.Excepciones.MenorDe0;
+import sistema.logica.Excepciones.MinivanNoExiste;
+import sistema.logica.Excepciones.PaseoNoExiste;
+import sistema.logica.Excepciones.PrecioMenorCero;
+import sistema.logica.ValueObject.VOCompraBoleto;
+import sistema.logica.ValueObject.VOPaseo;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class VentanaVentaBoleto extends JInternalFrame {
     private JTextField txtCodigoPaseo;
@@ -9,6 +25,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
     private JTextField txtEdad;
     private JTextField txtCelular;
     private JButton btnRegistrar;
+    public ControladorVentaBoleto controlador;
 
     public VentanaVentaBoleto() {
     	setResizable(true);
@@ -53,5 +70,39 @@ public class VentanaVentaBoleto extends JInternalFrame {
         btnRegistrar = new JButton("Registrar Compra");
         btnRegistrar.setBounds(133, 184, 118, 26);
         getContentPane().add(btnRegistrar);
+        btnRegistrar.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+				VOCompraBoleto vo = new VOCompraBoleto();
+				vo.setCodigoPaseo(txtCodigoPaseo.getText());
+				vo.setNombre(txtNombre.getText());
+				vo.setEdad(txtEdad.getText());   // ME DA ERROR ACA, - Juanma
+				vo.setCelular(txtCelular.getText());
+				
+				try {
+					controlador.ControladorVentaBoleto(vo);
+					JOptionPane.showMessageDialog(null, "Se hizo la compra del boleto correctamente.");
+
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (BoletosNoDisponibles e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (PaseoNoExiste e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch(CelularMayorQue1000 e){
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch(MenorDe0 e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+
+			
+		}
+	});
+        }
     }
-}
+
