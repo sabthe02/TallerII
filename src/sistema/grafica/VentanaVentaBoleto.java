@@ -79,7 +79,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 				vo.setCelular(txtCelular.getText());
 				
 				try {
-					controlador.ControladorVentaBoleto(vo);
+					controlador.ComprarBoleto(vo);
 					JOptionPane.showMessageDialog(null, "Se hizo la compra del boleto correctamente.");
 
 				} catch (RemoteException e) {

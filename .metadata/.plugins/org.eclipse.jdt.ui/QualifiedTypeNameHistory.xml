@@ -2,4 +2,7 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="javax.swing.JDesktopPane"/>
     <fullyQualifiedTypeName name="javax.swing.JInternalFrame"/>
+    <fullyQualifiedTypeName name="sistema.grafica.VentanaVentaBoleto"/>
+    <fullyQualifiedTypeName name="sistema.grafica.Controladores.ControladorVentaBoleto"/>
+    <fullyQualifiedTypeName name="sistema.logica.ValueObject.VOCompraBoleto"/>
 </qualifiedTypeNameHistroy>
