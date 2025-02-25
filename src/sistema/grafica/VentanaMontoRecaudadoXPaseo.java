@@ -99,10 +99,10 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
 						montoRecaudado = controlador.MontoRecaudadoPorPaseo(codigoPaseo);
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						mostrarError("Remote Exception");
 					} catch (PaseoNoExiste e1) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						mostrarError("El Paseo NO Existe");
 					}
 					labelResultado.setText(String.format("%.2f", montoRecaudado));
 				}
