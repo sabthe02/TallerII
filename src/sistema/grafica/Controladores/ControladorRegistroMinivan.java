@@ -1,5 +1,8 @@
 package sistema.grafica.Controladores;
 
+import sistema.grafica.VentanaRegistroMinivan;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import sistema.grafica.VentanaRegistroMinivan;
@@ -16,17 +19,45 @@ public class ControladorRegistroMinivan extends ConexionRMI {
 	public ControladorRegistroMinivan (VentanaRegistroMinivan v)
 	{
 		super();
-		
-		conectado = Conectar();
 		ventana = v;
+		try {
+			conectado = Conectar();
+		} catch (MalformedURLException e) {
+			ventana.mostrarError("Problema de formar la URL");
+			
+		} catch (RemoteException e) {
+			ventana.mostrarError("Problemas de conexion al servidor");
+			
+		} catch (NotBoundException e) {
+			ventana.mostrarError("Problema con la direccion del servidor");
+		}
+		
+		
 	}
 	
-	public void RegistrarMinivan(VOMinivan voMinivan) throws MinivanYaExisteException, CantAsientosMayorCeroException, RemoteException
+	public void RegistrarMinivan(VOMinivan voMinivan)
 	{
 		if(conectado)
-		{
+		{  
+			try {	
+				
 			super.iFac.RegistroMinivanes(voMinivan);
+			}
+			 catch (MinivanYaExisteException e) {
+				 ventana.mostrarError("La minivan a ingresar ya existe");
+				
+			} catch (CantAsientosMayorCeroException e) {
+				ventana.mostrarError("La cantidad de asientos tiene que ser mayor a 0");
+			} catch (RuntimeException e) {
+				ventana.mostrarError("Error Runtime, fallo algo del sistema");
+			}
+			catch (RemoteException e) {
+				ventana.mostrarError("Problemas de conexion al servidor");
 		}
+		
+		}
+
+		
 		
 	}
 	

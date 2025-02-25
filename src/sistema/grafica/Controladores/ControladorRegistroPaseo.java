@@ -1,5 +1,7 @@
 package sistema.grafica.Controladores;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import sistema.grafica.VentanaRegistroPaseo;
@@ -16,17 +18,36 @@ public class ControladorRegistroPaseo extends ConexionRMI{
 	public ControladorRegistroPaseo(VentanaRegistroPaseo v)
 	{
 		super();
-		
-		conectado = Conectar();
-		
 		ventana = v;
+		try {
+			conectado = Conectar();
+		} catch (MalformedURLException e) {
+			ventana.mostrarError("Problema de formar la URL");
+			
+		} catch (RemoteException e) {
+			ventana.mostrarError("Problemas de conexion al servidor");
+			
+		} catch (NotBoundException e) {
+			ventana.mostrarError("Problema con la direccion del servidor");
+		}
+		
+		
 	}
 	
-	public void RegistrarPaseo(VOPaseo voPaseo) throws RemoteException, MinivanNoExiste, PrecioMenorCero
+	public void RegistrarPaseo(VOPaseo voPaseo)
 	{
 		if(conectado)
 		{
-			super.iFac.RegistroPaseo(voPaseo);
+			try {
+				super.iFac.RegistroPaseo(voPaseo);
+			}
+			 catch (RemoteException e) {
+				 ventana.mostrarError("Problemas de conexion al servidor");
+			} catch (MinivanNoExiste e) {
+				ventana.mostrarError("La minivan con el codigo ingresado no existe");
+			} catch (PrecioMenorCero e) {
+				ventana.mostrarError("El precio tiene que ser mayor que 0");
+			}
 		}
 		
 	}

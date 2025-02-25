@@ -33,8 +33,7 @@ public class Servidor
 		{ e.printStackTrace(); }
 		
 		try
-		{ 
-			
+		{ 		
 			
 			LocateRegistry.createRegistry(puerto);
 			Fachada f = new Fachada();

@@ -11,6 +11,9 @@ import java.awt.Font;
 //import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
+
+import sistema.grafica.Controladores.ControladorRegistroMinivan;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
@@ -29,7 +32,8 @@ public class VentanaRegistroMinivan extends JInternalFrame {
     private JLabel lblCantAsientos;
     private JLabel lblNewLabel;
     private JButton btnAceptar;
-
+    private JInternalFrame fm;
+    private ControladorRegistroMinivan controlador;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -50,6 +54,7 @@ public class VentanaRegistroMinivan extends JInternalFrame {
         super("Registro Minivan", true, true, true, true);
         
         setBounds(100, 100, 450, 300);
+        fm = this;
         
         JPanel panel = new JPanel();
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -118,14 +123,22 @@ public class VentanaRegistroMinivan extends JInternalFrame {
             public void actionPerformed(ActionEvent e) {
                 String matricula = txtMatricula.getText();
                 String marca = txtMarca.getText();
-                String modelo = textModelo.getText();
-                String cantAsientos = txtCantAsientos.getText();
+                
+                if (matricula. matches("[A-Za-z0-9]+")) {
+                	controlador = new ControladorRegistroMinivan(VentanaRegistroMinivan.this);
+                	VOMinivan m = new VOMinivan()
+                	
+                	controlador.RegistrarMinivan(null)
+                }
+                
                 JOptionPane.showMessageDialog(VentanaRegistroMinivan.this, matricula);
-//                super.setVisible(false); cómo hacerlo invisible??
+                fm.setVisible(false);
                 
             }
         });
     }
    
-
+    public void mostrarError(String mensaje) {
+    	JOptionPane.showMessageDialog(fm, "error: "+ mensaje);
+    }
 }

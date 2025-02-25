@@ -5,4 +5,6 @@
     <fullyQualifiedTypeName name="sistema.grafica.VentanaVentaBoleto"/>
     <fullyQualifiedTypeName name="sistema.grafica.Controladores.ControladorVentaBoleto"/>
     <fullyQualifiedTypeName name="sistema.logica.ValueObject.VOCompraBoleto"/>
+    <fullyQualifiedTypeName name="javax.swing.SwingConstants"/>
+    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 </qualifiedTypeNameHistroy>

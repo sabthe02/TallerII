@@ -2,14 +2,21 @@ package sistema.grafica;
 
 import sistema.grafica.Controladores.Respaldo;
 import java.awt.EventQueue;
+import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import java.awt.Component;
+
+import javax.swing.SwingConstants;
 
 public class MainProgram {
 
@@ -37,6 +44,7 @@ public class MainProgram {
 	 */
 	public MainProgram() {
 		initialize();
+		this.setVisible(false);
 	}
 
 	/**
@@ -44,8 +52,24 @@ public class MainProgram {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setTitle("Paseos del Sol S.A");
 		frame.setBounds(100, 100, 903, 510);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		ImageIcon imagen = new ImageIcon("PaseosDelSolSA.png");
+		frame.getContentPane().setLayout(null);
+		JLabel labelImagen = new JLabel(imagen);
+		labelImagen.setBounds(10, 44, 867, 405);
+		frame.getContentPane().add(labelImagen);
+		
+		JLabel labelTitulo = new JLabel("Paseos del Sol S.A");
+		labelTitulo.setBounds(339, 11, 173, 22);
+        labelTitulo.setFont(new Font("Arial", Font.BOLD, 18));
+        labelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+		frame.getContentPane().add(labelTitulo);
+		//asddd
+		 
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -129,7 +153,19 @@ public class MainProgram {
 				
 			}
 		});
-		mnNewMenu_1.add(mntmNewMenuItem_8);
+
+		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Monto Recaudado por Paseo");
+		mntmNewMenuItem_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaMontoRecaudadoXPaseo v = new VentanaMontoRecaudadoXPaseo();
+				frame.getContentPane().add(v);
+				v.setVisible(true);
+				
+			}
+		});
+		
+		
+		mnNewMenu_1.add(mntmNewMenuItem_9);
 		
 		JMenu mnNewMenu_2 = new JMenu("Boletos");
 		menuBar.add(mnNewMenu_2);
@@ -161,20 +197,36 @@ public class MainProgram {
 		JMenuItem mntmRespaldo = new JMenuItem("Respaldar");
 		mntmRespaldo.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			respaldo = new Respaldo();
-			try {
-				respaldo.Respaldar();
-				String mensaje = "Respaldado con exito";
-				JOptionPane.showMessageDialog(frame, mensaje);
-				}
-			catch (Exception ex) {
-				String mensaje = "Error al respaldar";
-				JOptionPane.showMessageDialog(frame, mensaje);
-			}
+			respaldo = new Respaldo(MainProgram.this);
+			respaldo.Respaldar();
 		}
 	});
 		mnNewMenu_2_1.add(mntmRespaldo);
 		
+	}
+	
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+	public void setVisible (boolean b) {
+		frame.setVisible(b);
+	}
+	
+	public void mostrarError(String mensaje) {
+    	JOptionPane.showMessageDialog(this.getFrame(), "error: "+ mensaje);
+    }
+
+	public Respaldo getRespaldo() {
+		return respaldo;
+	}
+
+	public void setRespaldo(Respaldo respaldo) {
+		this.respaldo = respaldo;
 	}
 
 }
