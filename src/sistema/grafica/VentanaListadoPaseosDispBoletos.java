@@ -19,7 +19,6 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JInternalFrame frame;
 	private JTable table;
-	private JButton btnAceptar;
 	private JLabel lblNewLabel;
 
 	/**
@@ -42,8 +41,11 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 	 * Create the application.
 	 */
 	public VentanaListadoPaseosDispBoletos() {
-		setTitle("Listado e paseos por disponibilidad de boletos");
-		
+		setTitle("Listado de Paseos por Disponibilidad de Boletos");
+		setResizable(true);
+        setClosable(true);
+        setMaximizable(true);
+        setIconifiable(true);
 		frame = this;
 		frame.setClosable(true);
 		frame.setBounds(100, 100, 783, 395);
@@ -83,20 +85,10 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 		table.getColumnModel().getColumn(5).setPreferredWidth(186);
 		table.getColumnModel().getColumn(6).setPreferredWidth(156);
 		
-		btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(345, 314, 85, 21);
-		frame.getContentPane().add(btnAceptar);
-		
-		lblNewLabel = new JLabel("Listado de paseos por disponibilidad de boletos");
+		lblNewLabel = new JLabel("Listado de Paseos Por Disponibilidad de Boletos");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNewLabel.setBounds(206, 9, 377, 13);
 		getContentPane().add(lblNewLabel);
-		
-		btnAceptar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					frame.setVisible(false);
-				}
-		});
 		
 		
 	}

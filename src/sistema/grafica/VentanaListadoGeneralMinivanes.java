@@ -89,15 +89,6 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
         scrollPane.setBounds(0, 29, 784, 286);
         getContentPane().add(scrollPane);
         
-        JButton btnNewButton = new JButton("Aceptar");
-        btnNewButton.setBounds(358, 325, 85, 21);
-        getContentPane().add(btnNewButton);
-        btnNewButton.addActionListener(new ActionListener() {
-    			public void actionPerformed(ActionEvent e) {
-    				frmListadoGeneralMinivanes.setVisible(false);
-    			}
-        });
-        
         controlador = new ControladorListadoGeneralMinivanes(this);
         
        
@@ -112,14 +103,12 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
         
     }
     
+
     public void mostrarError(String mensaje) {
     	JOptionPane.showMessageDialog(frmListadoGeneralMinivanes, "error: "+ mensaje);
     }
     
-    
-    
-    
-    // Método para limpiar la tabla
+
     public void limpiarTabla() {
         modeloTabla.setRowCount(0);
     }
