@@ -1,5 +1,7 @@
 package sistema.grafica.Controladores;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import sistema.grafica.VentanaRegistroMinivan;
@@ -17,7 +19,18 @@ public class ControladorRegistroMinivan extends ConexionRMI {
 	{
 		super();
 		
-		conectado = Conectar();
+		try {
+			conectado = Conectar();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ventana = v;
 	}
 	

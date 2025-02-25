@@ -5,6 +5,9 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,6 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import sistema.grafica.Controladores.ControladorMontoRecaudadoXPaseo;
+import sistema.logica.Excepciones.PaseoNoExiste;
 
 public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
 
@@ -42,6 +48,7 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
 	private JTextField textField;
 	private JPanel panelResultado;
 	private JLabel labelResultado;
+	private ControladorMontoRecaudadoXPaseo controlador;
 
 	/**
 	 * Create the frame.
@@ -79,6 +86,30 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
         JButton btnAceptar = new JButton("Consultar Monto");
         btnAceptar.setBounds(320, 130, 160, 30);
         btnAceptar.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnAceptar.addActionListener(new ActionListener() {
+			private VentanaMontoRecaudadoXPaseo VentanaMontoRecaudadoXPaseo;
+			public void actionPerformed(ActionEvent e) {
+				String codigoPaseo = textFieldCodigoPaseo.getText();
+				if(codigoPaseo.isEmpty()) {
+					JOptionPane.showMessageDialog(VentanaMontoRecaudadoXPaseo.this, "Ingrese el codigo del paseo","Error",JOptionPane.ERROR_MESSAGE);
+				} else {
+					controlador = new ControladorMontoRecaudadoXPaseo(VentanaMontoRecaudadoXPaseo);
+					double montoRecaudado = 0;
+					try {
+						montoRecaudado = controlador.MontoRecaudadoPorPaseo(codigoPaseo);
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (PaseoNoExiste e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					labelResultado.setText(String.format("%.2f", montoRecaudado));
+				}
+			}
+        	
+        });
+        
         getContentPane().add(btnAceptar);
 
     
@@ -99,4 +130,9 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
         panelResultado.add(labelResultado);
 
 	}
+	
+    public void mostrarError(String mensaje) {
+    	JOptionPane.showMessageDialog(getContentPane(), "error: "+ mensaje);
+    }
+	
 }
