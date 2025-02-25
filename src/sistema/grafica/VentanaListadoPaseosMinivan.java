@@ -42,14 +42,16 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 	 * Create the application.
 	 */
 	public VentanaListadoPaseosMinivan() {	
-		super("Listado Paseos de una minivan", true, true, true, true);
-		
-		
+		//super("Listado Paseos de una minivan", true, true, true, true);
 		frmListadoPaseosDe = this;
 		frmListadoPaseosDe.setTitle("Listado Paseos de una minivan");
 		frmListadoPaseosDe.setBounds(100, 100, 778, 486);
-		frmListadoPaseosDe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frmListadoPaseosDe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmListadoPaseosDe.getContentPane().setLayout(null);
+		setResizable(true);
+	    setClosable(true);
+	    setMaximizable(true);
+	    setIconifiable(true);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 33, 764, 352);
@@ -79,11 +81,6 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 			}
 		});
 		
-		JButton btnNewButton = new JButton("Aceptar");
-		
-		btnNewButton.setBounds(356, 404, 85, 21);
-		frmListadoPaseosDe.getContentPane().add(btnNewButton);
-		
 		JLabel lblNewLabel = new JLabel("Listado de Paseos de una minivan");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNewLabel.setBounds(211, 10, 291, 13);
@@ -95,13 +92,6 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 		table.getColumnModel().getColumn(4).setPreferredWidth(65);
 		table.getColumnModel().getColumn(5).setPreferredWidth(185);
 		table.getColumnModel().getColumn(6).setPreferredWidth(159);
-		
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				frmListadoPaseosDe.setVisible(false);
-			}
-		});
 	}
 	
 }

@@ -6,6 +6,7 @@ public class VOCompraBoleto extends VOBoletoPasajero implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private String CodigoPaseo;
+	private String Edad;
 
 	
 	public VOCompraBoleto() {
@@ -30,6 +31,13 @@ public class VOCompraBoleto extends VOBoletoPasajero implements Serializable{
 
 	public void setCodigoPaseo(String codigoPaseo) {
 		CodigoPaseo = codigoPaseo;
+	}
+
+
+
+	public void setEdad(String edad) {
+	    Edad = edad;
+		
 	}
 
 	
