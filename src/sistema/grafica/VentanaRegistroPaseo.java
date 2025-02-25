@@ -20,6 +20,8 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -119,8 +121,8 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if(validarCampos())
+				List<String> errores = validarCampos();
+				if(errores.isEmpty())
 				{
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 					VOPaseo vo = new VOPaseo();
@@ -130,9 +132,20 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 					vo.setHoraPartida(LocalTime.parse(formattedTextHoraPartida.getText(), formatter));
 					vo.setHoraRegreso(LocalTime.parse(formattedTextHoraRegreso.getText(), formatter));
 					
-			
+			    
 						controlador.RegistrarPaseo(vo);
 						JOptionPane.showMessageDialog(null, "Se ingreso el paseo correctamente.");
+
+
+
+				}else {
+					String aux = "";
+					for (String string : errores) {
+						aux += string + "\n";
+					}
+					
+					JOptionPane.showMessageDialog(null, "Los datos no son correctos, verifique la hora ingresada para el inicio y fin del viaje. \n" + aux);
+					
 
 				}
 			}
@@ -188,12 +201,55 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 	}
 	
 	
-	private boolean validarCampos()
+	private List<String> validarCampos()
 	{
-		boolean validado = true;
+		List<String> resp = new ArrayList<>();
+		
+		if(!ValidarHora(formattedTextHoraPartida.getText()))
+		{
+			resp.add("Hora de Partida tiene un formato invalido.");
+		}
+		
+		if(!ValidarHora(formattedTextHoraRegreso.getText()))
+		{
+			resp.add("Hora de Regreso tiene un formato invalido.");
+		}
+		
+		if(txtCodigoPaseo.getText().trim().equals(""))
+		{
+			resp.add("El codigo del Paseo no puede estar vacio.");
+		}
+		
+		if(txtPrecioBase.getText().trim().equals(""))
+		{
+			resp.add("El precio del paseo no puede estar vacio.");
+		}	
+		
+		return resp;
+	}
+	
+	private boolean ValidarHora (String hora)
+	{
+		boolean resp = false;
+		
+		String[] sep = hora.split(":");
+		
+		try
+		{
+			if(Integer.parseInt(sep[0]) <= 23 && Integer.parseInt(sep[0]) >= 0)
+			{
+				if(Integer.parseInt(sep[1]) < 60 && Integer.parseInt(sep[1]) >= 0)
+				{
+					resp = true;
+				}
+			}
+			
+		}catch(Exception e)
+		{}
 		
 		
-		return validado;
+		return resp;
+		
 	}
 	
 	public void mostrarError(String mensaje) {
