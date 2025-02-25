@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import javax.swing.JOptionPane;
+
 import sistema.grafica.VentanaRegistroPaseo;
 import sistema.logica.Excepciones.MinivanNoExiste;
 import sistema.logica.Excepciones.PrecioMenorCero;
@@ -40,6 +42,7 @@ public class ControladorRegistroPaseo extends ConexionRMI{
 		{
 			try {
 				super.iFac.RegistroPaseo(voPaseo);
+				JOptionPane.showMessageDialog(ventana, "Se ingreso el paseo correctamente.");
 			}
 			 catch (RemoteException e) {
 				 ventana.mostrarError("Problemas de conexion al servidor");

@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import javax.swing.JOptionPane;
+
 import sistema.grafica.VentanaRegistroMinivan;
 import sistema.logica.Excepciones.CantAsientosMayorCeroException;
 import sistema.logica.Excepciones.*;
@@ -42,6 +44,7 @@ public class ControladorRegistroMinivan extends ConexionRMI {
 			try {	
 				
 			super.iFac.RegistroMinivanes(voMinivan);
+			JOptionPane.showMessageDialog(ventana, "Resgistrado con exito");
 			}
 			 catch (MinivanYaExisteException e) {
 				 ventana.mostrarError("La minivan a ingresar ya existe");
