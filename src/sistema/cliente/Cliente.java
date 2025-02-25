@@ -11,6 +11,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.NotBoundException;
 
+import sistema.grafica.MainProgram;
 import sistema.logica.Fachada;
 import sistema.logica.Excepciones.*;
 import sistema.logica.ValueObject.*;
@@ -30,37 +31,40 @@ public class Cliente {
 		catch (RemoteException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("INICIO // (Req 1) Prueba funcion Registro Minivan: ");
-		VOMinivan VOm = new VOMinivan("A1", "Volvo", "Modelo1", 8);
-
-		try {
-			f.RegistroMinivanes(VOm);
-		} catch (MinivanYaExisteException e) {
-			e.printStackTrace();
-		} catch (CantAsientosMayorCeroException e) {
-			e.printStackTrace();
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-		}
-		catch (RemoteException e) {
-			e.printStackTrace();
-		}
-
-		VOMinivan VOm1 = new VOMinivan("A2", "Mercedes", "Modelo2", 5);
-
-		try {
-			f.RegistroMinivanes(VOm1);
-		} catch (MinivanYaExisteException e) {
-			e.printStackTrace();
-		} catch (CantAsientosMayorCeroException e) {
-			e.printStackTrace();
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-		}
-		catch (RemoteException e) {
-			e.printStackTrace();
-		}
+		MainProgram main = new MainProgram();
+		main.setVisible(true);
+		
+//
+//		System.out.println("INICIO // (Req 1) Prueba funcion Registro Minivan: ");
+//		VOMinivan VOm = new VOMinivan("A1", "Volvo", "Modelo1", 8);
+//
+//		try {
+//			f.RegistroMinivanes(VOm);
+//		} catch (MinivanYaExisteException e) {
+//			e.printStackTrace();
+//		} catch (CantAsientosMayorCeroException e) {
+//			e.printStackTrace();
+//		} catch (RuntimeException e) {
+//			e.printStackTrace();
+//		}
+//		catch (RemoteException e) {
+//			e.printStackTrace();
+//		}
+//
+//		VOMinivan VOm1 = new VOMinivan("A2", "Mercedes", "Modelo2", 5);
+//
+//		try {
+//			f.RegistroMinivanes(VOm1);
+//		} catch (MinivanYaExisteException e) {
+//			e.printStackTrace();
+//		} catch (CantAsientosMayorCeroException e) {
+//			e.printStackTrace();
+//		} catch (RuntimeException e) {
+//			e.printStackTrace();
+//		}
+//		catch (RemoteException e) {
+//			e.printStackTrace();
+//		}
 
 		System.out.println("FIN // Prueba funcion Registro Minivan: ");
 

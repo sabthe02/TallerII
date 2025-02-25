@@ -1,18 +1,35 @@
 package sistema.grafica.Controladores;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import javax.swing.JOptionPane;
+
+import sistema.grafica.MainProgram;
 import sistema.logica.Excepciones.*;
 
 public class Respaldo extends ConexionRMI{
 
 	boolean conectado;
+	MainProgram ventana;
 		
-		public Respaldo()
+		public Respaldo(MainProgram v)
 		{
 			super();
+			ventana = v;
 			
-			conectado = Conectar();
+			try {
+				conectado = Conectar();
+			} catch (MalformedURLException e) {
+				ventana.mostrarError("Problema de formar la URL");
+				
+			} catch (RemoteException e) {
+				ventana.mostrarError("Problemas de conexion al servidor");
+				
+			} catch (NotBoundException e) {
+				ventana.mostrarError("Problema con la direccion del servidor");
+			}
 
 		}
 		
@@ -22,12 +39,13 @@ public class Respaldo extends ConexionRMI{
 			{
 				try {
 					super.iFac.RespaldarDatos();
+					JOptionPane.showMessageDialog(ventana.getFrame(), "Respaldado con exito");
 				}
 				catch (PersistenciaException e) {
-					System.out.println("Error al recuperar datos: " + e.darMensaje());
+					ventana.mostrarError("Error al respaldar");
 
 				}catch (RemoteException e) {
-					e.printStackTrace();
+					ventana.mostrarError("Problemas de conexion al servidor");
 				}
 			}
 			

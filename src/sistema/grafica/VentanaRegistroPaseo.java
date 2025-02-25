@@ -130,21 +130,9 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 					vo.setHoraPartida(LocalTime.parse(formattedTextHoraPartida.getText(), formatter));
 					vo.setHoraRegreso(LocalTime.parse(formattedTextHoraRegreso.getText(), formatter));
 					
-					try {
+			
 						controlador.RegistrarPaseo(vo);
 						JOptionPane.showMessageDialog(null, "Se ingreso el paseo correctamente.");
-
-					} catch (RemoteException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (MinivanNoExiste e) {
-						// TODO Auto-generated catch block
-						
-						e.printStackTrace();
-					} catch (PrecioMenorCero e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 
 				}
 			}
@@ -207,4 +195,8 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 		
 		return validado;
 	}
+	
+	public void mostrarError(String mensaje) {
+    	JOptionPane.showMessageDialog(this, "error: "+ mensaje);
+    }
 }
