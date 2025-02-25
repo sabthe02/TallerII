@@ -3,10 +3,12 @@ import javax.swing.JInternalFrame;
 import javax.swing.JEditorPane;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 
+import sistema.grafica.Controladores.ControladorRegistroMinivan;
 import sistema.grafica.Controladores.ControladorRegistroPaseo;
-import sistema.logica.Excepciones.MinivanNoExiste;
-import sistema.logica.Excepciones.PrecioMenorCero;
+import sistema.logica.Excepciones.*;
+import sistema.logica.ValueObject.VOMinivan;
 import sistema.logica.ValueObject.VOPaseo;
 
 import javax.swing.JLabel;
@@ -16,15 +18,14 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
+import java.text.NumberFormat;
 import java.text.ParseException;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.swing.JFormattedTextField;
 import java.awt.Color;
@@ -41,12 +42,12 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 	//private JInternalFrame frmRegistroPaseo;
 	
 	private JTextField txtCodigoPaseo;
-	private JTextField txtPrecioBase;
 	private JTextField txtDestino;
 	private ControladorRegistroPaseo controlador;
 	JFormattedTextField formattedTextHoraPartida;
 	JFormattedTextField formattedTextHoraRegreso;
-
+	JFormattedTextField formattedTextPrecio;
+	JInternalFrame fm;
 
 
 	/**
@@ -69,7 +70,9 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 	 * Create the application.
 	 */
 	public VentanaRegistroPaseo() {
+		
 		super("Registro Paseos", true, true, true, true);
+		fm = this;
         setBounds(100, 100, 485, 264);
         
         JPanel panel = new JPanel();
@@ -169,20 +172,43 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 		txtDestino.setBounds(208, 107, 130, 26);
 		panel.add(txtDestino);
 
-		
-		
-		try {
-			formattedTextHoraPartida = new JFormattedTextField(new MaskFormatter("##:##"));
+		//Había probado si se podía restringir a un LocalTime, pero no lo pude hacer andar :-(
+//		NumberFormat format = NumberFormat.getInstance();
+//        format.setGroupingUsed(true);
+//        NumberFormatter sleepFormatter = new NumberFormatter(format);
+//        sleepFormatter.setValueClass(LocalTime.class);
+//        sleepFormatter.setMinimum(1);
+//        sleepFormatter.setMaximum(59);
+//        sleepFormatter.setAllowsInvalid(false);
+//        sleepFormatter.setCommitsOnValidEdit(true);
+//        formattedTextHoraPartida = new JFormattedTextField(sleepFormatter);
+			try {
+				formattedTextHoraPartida = new JFormattedTextField(new MaskFormatter("##:##"));
+			} catch (ParseException e) {
+				JOptionPane.showMessageDialog(this, "Error de parseo");
+			}
+			formattedTextHoraPartida.setToolTipText("Formato hh::mm");
 			formattedTextHoraPartida.setBounds(208, 58, 130, 26);
 			panel.add(formattedTextHoraPartida);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+
+	//Misma cosa acá :-(	
+//			NumberFormat format2 = NumberFormat.getInstance();
+//	        format2.setGroupingUsed(false);
+//	        NumberFormatter sleepFormatter2 = new NumberFormatter(format2);
+//	        sleepFormatter2.setValueClass(LocalTime.class);
+//	        sleepFormatter2.setMinimum(1);
+//	        sleepFormatter2.setMaximum(59);
+//	        sleepFormatter2.setAllowsInvalid(false);
+//	        sleepFormatter2.setCommitsOnValidEdit(true);
+//	        formattedTextHoraRegreso = new JFormattedTextField(sleepFormatter2);
+	        
 		try {
 			formattedTextHoraRegreso = new JFormattedTextField(new MaskFormatter("##:##"));
+			
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(this, "Error de parseo");
+		}	
+			formattedTextHoraRegreso.setToolTipText("Formato hh::mm");
 			formattedTextHoraRegreso.setBounds(208, 84, 130, 26);
 			panel.add(formattedTextHoraRegreso);
 		} catch (ParseException e) {

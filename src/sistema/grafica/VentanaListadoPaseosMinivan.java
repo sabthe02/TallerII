@@ -15,12 +15,14 @@ import javax.swing.JFrame;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class VentanaListadoPaseosMinivan extends JInternalFrame{
 
 	private static final long serialVersionUID = 1L;
 	private JInternalFrame frmListadoPaseosDe;
 	private JTable table;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -56,7 +58,7 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 	  setIconifiable(true);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 33, 764, 352);
+		scrollPane.setBounds(0, 111, 764, 274);
 		frmListadoPaseosDe.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -83,10 +85,24 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 			}
 		});
 		
-		JLabel lblNewLabel = new JLabel("Listado de Paseos de una minivan");
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		lblNewLabel.setBounds(211, 10, 291, 13);
-		getContentPane().add(lblNewLabel);
+		JLabel lblTitulo = new JLabel("Listado de Paseos de una minivan");
+		lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
+		lblTitulo.setBounds(211, 10, 291, 13);
+		getContentPane().add(lblTitulo);
+		
+		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.setBounds(323, 62, 85, 21);
+		getContentPane().add(btnAceptar);
+		
+		textField = new JTextField();
+		textField.setBounds(323, 33, 85, 19);
+		getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblIngresarCodigo = new JLabel("Ingresar codigo:");
+		lblIngresarCodigo.setFont(new Font("Arial", Font.BOLD, 12));
+		lblIngresarCodigo.setBounds(197, 36, 116, 13);
+		getContentPane().add(lblIngresarCodigo);
 		table.getColumnModel().getColumn(0).setPreferredWidth(43);
 		table.getColumnModel().getColumn(1).setPreferredWidth(47);
 		table.getColumnModel().getColumn(2).setPreferredWidth(84);
@@ -95,8 +111,4 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 		table.getColumnModel().getColumn(5).setPreferredWidth(185);
 		table.getColumnModel().getColumn(6).setPreferredWidth(159);
 	}
-	
-	
-	
-	
 }
