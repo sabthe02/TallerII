@@ -21,6 +21,10 @@ import java.rmi.RemoteException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.time.LocalTime;
 
 import javax.swing.JFormattedTextField;
@@ -117,6 +121,47 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 		lblDestino.setBounds(61, 111, 137, 15);
 		panel.add(lblDestino);
 
+		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				List<String> errores = validarCampos();
+				if(errores.isEmpty())
+				{
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+					VOPaseo vo = new VOPaseo();
+					vo.setCodigo(txtCodigoPaseo.getText());
+					vo.setDestino(txtDestino.getText());
+					vo.setPrecioBase(Double.parseDouble(txtPrecioBase.getText()));
+					vo.setHoraPartida(LocalTime.parse(formattedTextHoraPartida.getText(), formatter));
+					vo.setHoraRegreso(LocalTime.parse(formattedTextHoraRegreso.getText(), formatter));
+					
+			    
+						controlador.RegistrarPaseo(vo);
+						JOptionPane.showMessageDialog(null, "Se ingreso el paseo correctamente.");
+
+
+
+				}else {
+					String aux = "";
+					for (String string : errores) {
+						aux += string + "\n";
+					}
+					
+					JOptionPane.showMessageDialog(null, "Los datos no son correctos, verifique la hora ingresada para el inicio y fin del viaje. \n" + aux);
+					
+
+				}
+			}
+		});
+		btnAceptar.setBounds(229, 182, 92, 29);
+		panel.add(btnAceptar);
+
+		txtPrecioBase = new JTextField();
+		txtPrecioBase.setToolTipText("Formato Numero");
+		txtPrecioBase.setForeground(new Color(0, 0, 0));
+		txtPrecioBase.setColumns(10);
+		txtPrecioBase.setBounds(208, 132, 130, 26);
+		panel.add(txtPrecioBase);
 
 		
 		
@@ -166,63 +211,71 @@ public class VentanaRegistroPaseo extends JInternalFrame{
 			formattedTextHoraRegreso.setToolTipText("Formato hh::mm");
 			formattedTextHoraRegreso.setBounds(208, 84, 130, 26);
 			panel.add(formattedTextHoraRegreso);
-			
-// Había probado para restringir el formato a float, pero no me funcionó, capaz es algo choto porque en Minivan con Inteder funcionó
-//			NumberFormat format3 = NumberFormat.getNumberInstance();
-//	        format3.setGroupingUsed(false);
-//	        NumberFormatter sleepFormatter3 = new NumberFormatter(format3);
-//	        sleepFormatter3.setValueClass(Double.class);
-//	        sleepFormatter3.setMinimum(1);
-//	        sleepFormatter3.setMaximum(99999999);
-//	        sleepFormatter3.setAllowsInvalid(false);
-//	        sleepFormatter3.setCommitsOnValidEdit(true);
-//	        formattedTextPrecio = new JFormattedTextField(sleepFormatter3);
-//	        formattedTextPrecio.setColumns(8);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
 
+		controlador = new ControladorRegistroPaseo(this);
 
-			formattedTextPrecio = new JFormattedTextField();
-			panel.add(formattedTextPrecio);
-			formattedTextPrecio.setToolTipText("Formato numero");
-			formattedTextPrecio.setBounds(208, 134, 130, 26);
-
-			JButton btnAceptar = new JButton("Aceptar");
-			btnAceptar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					
-					if(validarCampos())
-					{
-						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm");
-						VOPaseo vo = new VOPaseo();
-						vo.setCodigo(txtCodigoPaseo.getText());
-						vo.setDestino(txtDestino.getText());
-						vo.setPrecioBase(Double.parseDouble(formattedTextPrecio.getText()));
-						vo.setHoraPartida(LocalTime.parse(formattedTextHoraPartida.getText(), formatter));
-						vo.setHoraRegreso(LocalTime.parse(formattedTextHoraRegreso.getText(), formatter));
-						
-						controlador = new ControladorRegistroPaseo(VentanaRegistroPaseo.this);
-						controlador.RegistrarPaseo(vo);
-						fm.setVisible(false);
-					}
-				}
-			});
-			btnAceptar.setBounds(229, 182, 92, 29);
-			panel.add(btnAceptar);
 
 	}
 	
 	
-	private boolean validarCampos()
+	private List<String> validarCampos()
 	{
-		boolean validado = false;
+		List<String> resp = new ArrayList<>();
 		
-		if (txtCodigoPaseo.getText().matches("[A-Za-z0-9]+")) {	
-			validado = true;
-        }
-        else {
-        	JOptionPane.showMessageDialog(VentanaRegistroPaseo.this, "Ingresar matricula alfanumerica");
-        }
+		if(!ValidarHora(formattedTextHoraPartida.getText()))
+		{
+			resp.add("Hora de Partida tiene un formato invalido.");
+		}
 		
-		return validado;
+		if(!ValidarHora(formattedTextHoraRegreso.getText()))
+		{
+			resp.add("Hora de Regreso tiene un formato invalido.");
+		}
+		
+		if(txtCodigoPaseo.getText().trim().equals(""))
+		{
+			resp.add("El codigo del Paseo no puede estar vacio.");
+		}
+		
+		if(txtPrecioBase.getText().trim().equals(""))
+		{
+			resp.add("El precio del paseo no puede estar vacio.");
+		}	
+		
+		return resp;
+	}
+	
+	private boolean ValidarHora (String hora)
+	{
+		boolean resp = false;
+		
+		String[] sep = hora.split(":");
+		
+		try
+		{
+			if(Integer.parseInt(sep[0]) <= 23 && Integer.parseInt(sep[0]) >= 0)
+			{
+				if(Integer.parseInt(sep[1]) < 60 && Integer.parseInt(sep[1]) >= 0)
+				{
+					resp = true;
+				}
+			}
+			
+		}catch(Exception e)
+		{}
+		
+		
+		return resp;
+		
 	}
 	
 	public void mostrarError(String mensaje) {
