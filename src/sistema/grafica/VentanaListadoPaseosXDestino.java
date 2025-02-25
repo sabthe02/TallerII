@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -46,6 +47,7 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public VentanaListadoPaseosXDestino() {
+		super();
 		fm = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Listado de Paseos por Destino");
@@ -98,11 +100,11 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
     			}
             });
             
-            
-        
- 
-        
-		
+      	
 		
 	}
+	
+	public void mostrarError(String mensaje) {
+    	JOptionPane.showMessageDialog(fm, "error: "+ mensaje);
+    }
 }

@@ -89,6 +89,15 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
         scrollPane.setBounds(0, 29, 784, 286);
         getContentPane().add(scrollPane);
         
+        JButton btnNewButton = new JButton("Cerrar");
+        btnNewButton.setBounds(346, 325, 85, 21);
+        getContentPane().add(btnNewButton);
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		frmListadoGeneralMinivanes.setVisible(false);
+        	}
+        });
+        
         controlador = new ControladorListadoGeneralMinivanes(this);
         
        

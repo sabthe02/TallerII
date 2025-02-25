@@ -11,25 +11,33 @@ import java.awt.Font;
 //import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
+import javax.swing.text.NumberFormatter;
+
+import sistema.grafica.Controladores.ControladorRegistroMinivan;
+import sistema.logica.ValueObject.VOMinivan;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.awt.event.ActionEvent;
+import javax.swing.JFormattedTextField;
 
 
 public class VentanaRegistroMinivan extends JInternalFrame {
     
     private static final long serialVersionUID = 1L;
-    private JTextField txtCantAsientos;
     private JTextField txtMatricula;
     private JTextField txtMarca;
     private JTextField textModelo;
     private JLabel lblCantAsientos;
     private JLabel lblNewLabel;
     private JButton btnAceptar;
+    private JFormattedTextField formattedTextField;
     private JInternalFrame fm;
+    private ControladorRegistroMinivan controlador;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -96,14 +104,6 @@ public class VentanaRegistroMinivan extends JInternalFrame {
         lblCantAsientos.setBounds(10, 152, 114, 43);
         panel.add(lblCantAsientos);
         
-        txtCantAsientos = new JTextField();
-        txtCantAsientos.setToolTipText("Formato de numero entero");
-        txtCantAsientos.setForeground(new Color(0, 0, 0));
-        txtCantAsientos.setBounds(125, 159, 301, 28);
-        txtCantAsientos.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        panel.add(txtCantAsientos);
-        txtCantAsientos.setColumns(10);
-        
  
         lblNewLabel = new JLabel("Por favor ingresar datos de la nueva minivan");
         lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -115,15 +115,43 @@ public class VentanaRegistroMinivan extends JInternalFrame {
         btnAceptar.setBounds(199, 217, 114, 36);
         panel.add(btnAceptar);
         
+        NumberFormat format = NumberFormat.getInstance();
+        format.setGroupingUsed(false);
+        NumberFormatter sleepFormatter = new NumberFormatter(format);
+        sleepFormatter.setValueClass(Integer.class);
+        sleepFormatter.setMinimum(1);
+        sleepFormatter.setMaximum(19);
+        sleepFormatter.setAllowsInvalid(false);
+
+        sleepFormatter.setCommitsOnValidEdit(true);
+        formattedTextField = new JFormattedTextField(sleepFormatter);
+        
+        formattedTextField.setToolTipText("Formato numero entero de 1 a 19");
+        formattedTextField.setBounds(125, 153, 299, 30);
+        panel.add(formattedTextField);
+        
         btnAceptar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String matricula = txtMatricula.getText();
-                JOptionPane.showMessageDialog(VentanaRegistroMinivan.this, matricula);
-                fm.setVisible(false);
+                String marca = txtMarca.getText();
+                String modelo = textModelo.getText();
+                int asientos = Integer.parseInt(formattedTextField.getText());
+                
+                if (matricula.matches("[A-Za-z0-9]+")) {
+                	controlador = new ControladorRegistroMinivan(VentanaRegistroMinivan.this);
+                	VOMinivan m = new VOMinivan(matricula, marca, modelo, asientos);
+                	controlador.RegistrarMinivan(m);
+                	fm.setVisible(false);	
+                }
+                else {
+                	JOptionPane.showMessageDialog(VentanaRegistroMinivan.this, "Ingresar matricula alfanumerica");
+                }
                 
             }
         });
     }
    
-
+    public void mostrarError(String mensaje) {
+    	JOptionPane.showMessageDialog(fm, "error: "+ mensaje);
+    }
 }
