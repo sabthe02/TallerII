@@ -23,7 +23,7 @@ public class ConexionRMI {
 	{
 	}
 	
-	protected boolean Conectar()
+	protected boolean Conectar() throws MalformedURLException, RemoteException, NotBoundException
 	{
 		boolean resp = false;
 		try
@@ -41,23 +41,11 @@ public class ConexionRMI {
 		}
 		
 
-		try
-		{ 
+		
 			iFac = (IFachada) Naming.lookup("//"+ipServ+":"+puerto+"/fachada");
 			resp = true;
-		}
-		catch (MalformedURLException e) 
-		{
-			System.out.println("No se establecio la conexion correctamente. MalformedURLException");
-		}
-		catch (RemoteException e)
-		{
-			System.out.println("No se establecio la conexion correctamente. RemoteException");
-		}
-		catch (NotBoundException e)
-		{
-			System.out.println("No se establecio la conexion correctamente. NotBoundException");
-		}
+		
+		
 		
 		return resp;
 	}

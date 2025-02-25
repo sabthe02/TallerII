@@ -3,6 +3,7 @@ package sistema.grafica;
 import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.Color;
@@ -90,19 +91,21 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
         
         controlador = new ControladorListadoGeneralMinivanes(this);
         
-        try {
+       
 			ArrayList<VOMinivanListado> lista = controlador.obtenerListado();
 	        DefaultTableModel model = (DefaultTableModel) table.getModel();
 			lista.forEach(arg0 -> model.addRow(new Object[] {arg0.getMatricula(), arg0.getMarca(), arg0.getModelo(), arg0.getCantidadAsientos(), arg0.getCantidadPaseos()}));
 			
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+        
+       
         
         
-        
-        
+    }
+    
+
+    public void mostrarError(String mensaje) {
+    	JOptionPane.showMessageDialog(frmListadoGeneralMinivanes, "error: "+ mensaje);
     }
     
 
