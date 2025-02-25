@@ -1,5 +1,7 @@
 package sistema.grafica.Controladores;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import sistema.grafica.VentanaRegistroPaseo;
@@ -19,7 +21,7 @@ public class ControladorVentaBoleto extends ConexionRMI {
 	private VentanaVentaBoleto ventana;
 	
 	
-	public ControladorVentaBoleto(VentanaVentaBoleto v)
+	public ControladorVentaBoleto(VentanaVentaBoleto v) throws MalformedURLException, RemoteException, NotBoundException
 	{
 		super();
 		
