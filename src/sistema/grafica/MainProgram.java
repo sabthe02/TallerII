@@ -44,6 +44,7 @@ public class MainProgram {
 	 */
 	public MainProgram() {
 		initialize();
+		this.setVisible(false);
 	}
 
 	/**
@@ -196,20 +197,36 @@ public class MainProgram {
 		JMenuItem mntmRespaldo = new JMenuItem("Respaldar");
 		mntmRespaldo.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			respaldo = new Respaldo();
-			try {
-				respaldo.Respaldar();
-				String mensaje = "Respaldado con exito";
-				JOptionPane.showMessageDialog(frame, mensaje);
-				}
-			catch (Exception ex) {
-				String mensaje = "Error al respaldar";
-				JOptionPane.showMessageDialog(frame, mensaje);
-			}
+			respaldo = new Respaldo(MainProgram.this);
+			respaldo.Respaldar();
 		}
 	});
 		mnNewMenu_2_1.add(mntmRespaldo);
 		
+	}
+	
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+	public void setVisible (boolean b) {
+		frame.setVisible(b);
+	}
+	
+	public void mostrarError(String mensaje) {
+    	JOptionPane.showMessageDialog(this.getFrame(), "error: "+ mensaje);
+    }
+
+	public Respaldo getRespaldo() {
+		return respaldo;
+	}
+
+	public void setRespaldo(Respaldo respaldo) {
+		this.respaldo = respaldo;
 	}
 
 }
