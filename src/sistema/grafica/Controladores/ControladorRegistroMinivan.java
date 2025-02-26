@@ -1,6 +1,7 @@
 package sistema.grafica.Controladores;
 
 import sistema.grafica.VentanaRegistroMinivan;
+
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

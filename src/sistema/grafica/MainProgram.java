@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
@@ -22,6 +23,7 @@ public class MainProgram {
 
 	private JFrame frame;
 	private Respaldo respaldo;
+	private JDesktopPane desktopPane;
 
 	/**
 	 * Launch the application.
@@ -56,11 +58,13 @@ public class MainProgram {
 		frame.setBounds(100, 100, 903, 510);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		desktopPane = new JDesktopPane();
+		frame.setContentPane(desktopPane);
+		
 		ImageIcon imagen = new ImageIcon("PaseosDelSolSA.png");
-		frame.getContentPane().setLayout(null);
 		JLabel labelImagen = new JLabel(imagen);
 		labelImagen.setBounds(10, 44, 867, 405);
-		frame.getContentPane().add(labelImagen);
+		desktopPane.add(labelImagen,JDesktopPane.DEFAULT_LAYER);
 		
 		JLabel labelTitulo = new JLabel("Paseos del Sol S.A");
 		labelTitulo.setBounds(339, 11, 173, 22);
@@ -122,13 +126,12 @@ public class MainProgram {
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Listado por minivan");
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Listado Paseos por Destino");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaListadoGeneralMinivanes v = new VentanaListadoGeneralMinivanes();
+				VentanaListadoPaseosXDestino v = new VentanaListadoPaseosXDestino();
 				frame.getContentPane().add(v);
 				v.setVisible(true);
-				
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);

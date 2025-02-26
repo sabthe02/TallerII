@@ -8,26 +8,25 @@ import java.util.ArrayList;
 import sistema.grafica.VentanaListadoPaseosMinivan;
 import sistema.grafica.VentanaListadoPaseosXDestino;
 import sistema.logica.Excepciones.DestinoNoPerteneceException;
+import sistema.logica.Excepciones.MinivanNoExiste;
 import sistema.logica.ValueObject.VOPaseosListado;
 
 public class ControladorListadoGeneralPaseos extends ConexionRMI{
 
 		private boolean conectado;
-		private VentanaListadoPaseosXDestino ventana;
+		private VentanaListadoPaseosMinivan ventana;
 		
-		public ControladorListadoGeneralPaseos(VentanaListadoPaseosMinivan v)
+		public void ControladorListadoGeneralMinivanes(VentanaListadoPaseosMinivan v)
 		{
 			ventana = v;
 			try {
 				conectado = Conectar();
 			} catch (MalformedURLException e) {
-				ventana.mostrarError("Problema de formar la URL");
+				
 				
 			} catch (RemoteException e) {
-				ventana.mostrarError("Problemas de conexion al servidor");
 			
 			} catch (NotBoundException e) {
-				ventana.mostrarError("Problema con la direccion del servidor");
 			}
 			
 			
@@ -38,7 +37,15 @@ public class ControladorListadoGeneralPaseos extends ConexionRMI{
 			ArrayList<VOPaseosListado> arre = null;
 			if (conectado) {	
 				
-				arre = super.iFac.ListadoPaseosMinivan(ventana);
+				try {
+					arre = super.iFac.ListadoPaseosMinivan("");
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (MinivanNoExiste e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
 
