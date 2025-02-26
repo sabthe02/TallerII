@@ -49,7 +49,7 @@ public class ControladorRegistroPaseo extends ConexionRMI {
 			}
 		}
 
-		return true;
+		return resp;
 
 	}
 
