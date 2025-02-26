@@ -95,18 +95,12 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
 				} else {
 					controlador = new ControladorMontoRecaudadoXPaseo(VentanaMontoRecaudadoXPaseo);
 					double montoRecaudado = 0;
-					try {
 						montoRecaudado = controlador.MontoRecaudadoPorPaseo(codigoPaseo);
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						mostrarError("Remote Exception");
-					} catch (PaseoNoExiste e1) {
-						// TODO Auto-generated catch block
-						mostrarError("El Paseo NO Existe");
+						labelResultado.setText(String.format("%.2f", montoRecaudado));
 					}
-					labelResultado.setText(String.format("%.2f", montoRecaudado));
+					
 				}
-			}
+			//}
         	
         });
         
