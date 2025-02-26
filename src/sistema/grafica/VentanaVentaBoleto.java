@@ -68,7 +68,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
         getContentPane().add(label_3);
 
         btnRegistrar = new JButton("Registrar Compra");
-        btnRegistrar.setBounds(133, 184, 118, 26);
+        btnRegistrar.setBounds(197, 176, 118, 26);
         getContentPane().add(btnRegistrar);
         
         NumberFormat format = NumberFormat.getInstance();
@@ -76,13 +76,15 @@ public class VentanaVentaBoleto extends JInternalFrame {
         NumberFormatter sleepFormatter = new NumberFormatter(format);
         sleepFormatter.setValueClass(Integer.class);
         sleepFormatter.setMinimum(1);
+        sleepFormatter.setMaximum(110);
         sleepFormatter.setAllowsInvalid(false);
 
         sleepFormatter.setCommitsOnValidEdit(true);
-        txtEdad = new JFormattedTextField();
+        txtEdad = new JFormattedTextField(sleepFormatter);
         txtEdad.setBounds(197, 93, 187, 29);
-        txtEdad.setToolTipText("Formato numero entero mayor a 0");
+        txtEdad.setToolTipText("Formato numero entero entre 1 y 110");
         getContentPane().add(txtEdad);
+        
         
         txtCelular = new JFormattedTextField();
         txtCelular.setToolTipText("Formato numero entero mayor a 0");
@@ -93,7 +95,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		public void actionPerformed(ActionEvent e) {
 			
 			String codigo = txtCodigoPaseo.getText();
-			int edad = Integer.parseInt(txtEdad.getText());
+			int edad = Integer.parseInt(txtEdad.getText().trim());
 			
 			List<String> errores = validarCampos();
 			if (errores.isEmpty()) {
@@ -105,6 +107,9 @@ public class VentanaVentaBoleto extends JInternalFrame {
 				vo.setCelular(txtCelular.getText());
 				controlador.ComprarBoleto(vo);
 				JOptionPane.showMessageDialog(fm, "Se hizo la compra del boleto correctamente.");
+				// Por alguna razón tira esto a pesar
+				//de no pasar las validaciones, además hay que agregar el tema si es especial o no a la ventana y el VO, si no no se
+				//puede usar para el listado
             	fm.setVisible(false);	
             }
 			else {
@@ -159,23 +164,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
             }
         }
 
-    
-        private List<String> validarCampos() {
-    		List<String> resp = new ArrayList<>();
-
-    		if (txtCodigoPaseo.getText().trim().equals("")) {
-    			resp.add("El codigo del Paseo no puede estar vacio.");
-    		}
-    		if ((!(txtCodigoPaseo.getText()).matches("[A-Za-z0-9]+"))) {
-    			resp.add("El codigo del Paseo tiene que ser alfanumerico");
-    		}
-
-    		if (txtPrecioBase.getText().trim().equals("")) {
-    			resp.add("El precio del paseo no puede estar vacio.");
-    		}
-
-    		return resp;
-    	}     
+   
         
 	public void mostrarError(String mensaje) {
 		JOptionPane.showMessageDialog(this, "error: " + mensaje);

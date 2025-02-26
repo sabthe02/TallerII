@@ -1,6 +1,5 @@
 package sistema.logica;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.io.FileInputStream;
 import java.io.IOException;

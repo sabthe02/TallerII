@@ -56,7 +56,7 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 	public VentanaListadoPaseosDispBoletos() {
 		super("Listado de paseos por disponibilidad de boletos", true, true, true, true);
 		frame = this;
-		setBounds(100, 100, 800, 389);
+		setBounds(50, 80, 800, 389);
 		getContentPane().setLayout(null);
 
 		JLabel lblCantBoletos = new JLabel("Cantidad de Boletos:");

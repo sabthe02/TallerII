@@ -42,7 +42,6 @@ public class Servidor
 			try {
 				f.RecuperarDatos();
 			} catch (PersistenciaException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			System.out.println ("Antes de publicarlo");
