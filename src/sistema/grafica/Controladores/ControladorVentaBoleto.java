@@ -25,7 +25,18 @@ public class ControladorVentaBoleto extends ConexionRMI {
 	{
 		super();
 		
-		conectado = Conectar();
+		try {
+			conectado = Conectar();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		ventana = v;
 	}

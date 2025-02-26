@@ -83,26 +83,30 @@ public class VentanaVentaBoleto extends JInternalFrame {
 					JOptionPane.showMessageDialog(null, "Se hizo la compra del boleto correctamente.");
 
 				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mostrarError("Remote Exception.");
 				} catch (BoletosNoDisponibles e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mostrarError("No hay Boletos Disponibles.");
 				} catch (PaseoNoExiste e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mostrarError("El Paseo NO Existe.");
 				} catch(CelularMayorQue1000 e){
-					// TODO Auto-generated catch block
+					mostrarError("Cel mayor que 1000.");
 					e.printStackTrace();
 				} catch(MenorDe0 e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mostrarError("Menor de 0.");
 				}
 				
 
 			
 		}
 	});
+  
+        
         }
+   	public void mostrarError(String mensaje) {
+    	JOptionPane.showMessageDialog(this, "error: "+ mensaje);
+    }   
+    
+    
+
     }
 

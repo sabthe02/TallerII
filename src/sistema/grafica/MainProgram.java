@@ -126,13 +126,12 @@ public class MainProgram {
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Listado por minivan");
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Listado Paseos por Destino");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaListadoGeneralMinivanes v = new VentanaListadoGeneralMinivanes();
+				VentanaListadoPaseosXDestino v = new VentanaListadoPaseosXDestino();
 				frame.getContentPane().add(v);
 				v.setVisible(true);
-				
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);

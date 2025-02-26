@@ -1,8 +1,12 @@
+
+
 /ConexionRMI.class
 /ControladorListadoGeneralMinivanes.class
 /ControladorListadoGeneralPaseos.class
+/ControladorListadoGeneralPaseosPorDestino.class
+/ControladorListadoPaseosPorBoletos.class
+/ControladorMontoRecaudadoXPaseo.class
 /ControladorRegistroMinivan.class
 /ControladorRegistroPaseo.class
-/Respaldo.class
 /ControladorVentaBoleto.class
-/ControladorMontoRecaudadoXPaseo.class
+/Respaldo.class

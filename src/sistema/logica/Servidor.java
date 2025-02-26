@@ -8,6 +8,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.Properties;
 
+import sistema.logica.Excepciones.PersistenciaException;
+
 public class Servidor 
 {
 
@@ -37,6 +39,12 @@ public class Servidor
 			
 			LocateRegistry.createRegistry(puerto);
 			Fachada f = new Fachada();
+			try {
+				f.RecuperarDatos();
+			} catch (PersistenciaException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.out.println ("Antes de publicarlo");
 			Naming.rebind("//" +ipServ+ ":" + puerto+"/fachada", f);
 			System.out.println ("Luego de publicarlo");

@@ -21,15 +21,13 @@ public class ControladorMontoRecaudadoXPaseo extends ConexionRMI {
 		try {
 			conectado = Conectar();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ventana.mostrarError("Problema de formar la URL");
+
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			ventana.mostrarError("Problemas con el servidor.");
-			
+			ventana.mostrarError("Problemas de conexion al servidor");
+
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ventana.mostrarError("Problema con la direccion del servidor");
 		}
 		
 	}
