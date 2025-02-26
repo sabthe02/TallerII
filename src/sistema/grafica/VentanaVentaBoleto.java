@@ -80,13 +80,15 @@ public class VentanaVentaBoleto extends JInternalFrame {
         NumberFormatter sleepFormatter = new NumberFormatter(format);
         sleepFormatter.setValueClass(Integer.class);
         sleepFormatter.setMinimum(1);
+        sleepFormatter.setMaximum(110);
         sleepFormatter.setAllowsInvalid(false);
 
         sleepFormatter.setCommitsOnValidEdit(true);
-        txtEdad = new JFormattedTextField();
+        txtEdad = new JFormattedTextField(sleepFormatter);
         txtEdad.setBounds(197, 93, 187, 29);
-        txtEdad.setToolTipText("Formato numero entero mayor a 0");
+        txtEdad.setToolTipText("Formato numero entero entre 1 y 110");
         getContentPane().add(txtEdad);
+        
         
         txtCelular = new JFormattedTextField();
         txtCelular.setToolTipText("Formato numero entero mayor a 0");
@@ -142,6 +144,9 @@ public class VentanaVentaBoleto extends JInternalFrame {
 				vo.setDescuento(descuento);
 				controlador.ComprarBoleto(vo);
 				JOptionPane.showMessageDialog(fm, "Se hizo la compra del boleto correctamente.");
+				// Por alguna razón tira esto a pesar
+				//de no pasar las validaciones, además hay que agregar el tema si es especial o no a la ventana y el VO, si no no se
+				//puede usar para el listado
             	fm.setVisible(false);	
             }
 			else {

@@ -60,7 +60,7 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 		frmListadoPaseosDe = this;
 		frmListadoPaseosDe.setTitle("Listado Paseos de una minivan");
 		frmListadoPaseosDe.setBounds(50, 80, 800, 389);
-		//frmListadoPaseosDe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frmListadoPaseosDe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmListadoPaseosDe.getContentPane().setLayout(null);
 		setResizable(true);
 		setClosable(true);

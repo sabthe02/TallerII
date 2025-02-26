@@ -26,6 +26,7 @@ import javax.swing.JButton;
 
 public class VentanaListadoPaseosXDestino extends JInternalFrame {
 
+	private static final long serialVersionUID = 5698850134580711712L;
 	private JInternalFrame fm;
 	private JPanel contentPane;
 	private DefaultTableModel modeloTabla;
@@ -56,9 +57,12 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
 	public VentanaListadoPaseosXDestino() {
 		super("Listado de Paseos por Destino", true, true, true, true);
 		fm = this;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 800, 400);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(50, 80, 800, 400);
         setResizable(true);
+        setClosable(true);
+        setMaximizable(true);
+        setIconifiable(true);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
