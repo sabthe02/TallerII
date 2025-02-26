@@ -21,7 +21,7 @@ public class ControladorVentaBoleto extends ConexionRMI {
 	private VentanaVentaBoleto ventana;
 	
 	
-	public ControladorVentaBoleto(VentanaVentaBoleto v)
+	public ControladorVentaBoleto(VentanaVentaBoleto v) throws MalformedURLException, RemoteException, NotBoundException
 	{
 		super();
 		
