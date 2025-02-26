@@ -6,8 +6,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import sistema.grafica.VentanaListadoPaseosMinivan;
-import sistema.grafica.VentanaListadoPaseosXDestino;
-import sistema.logica.Excepciones.DestinoNoPerteneceException;
 import sistema.logica.Excepciones.MinivanNoExiste;
 import sistema.logica.ValueObject.VOPaseosListado;
 
@@ -16,41 +14,46 @@ public class ControladorListadoGeneralPaseos extends ConexionRMI{
 		private boolean conectado;
 		private VentanaListadoPaseosMinivan ventana;
 		
-		public void ControladorListadoGeneralMinivanes(VentanaListadoPaseosMinivan v)
+		public ControladorListadoGeneralPaseos(VentanaListadoPaseosMinivan v)
 		{
 			ventana = v;
 			try {
 				conectado = Conectar();
 			} catch (MalformedURLException e) {
-				
+				ventana.mostrarError("Problema de formar la URL");
 				
 			} catch (RemoteException e) {
-			
+				ventana.mostrarError("Problemas de conexion al servidor");
+				
 			} catch (NotBoundException e) {
+				ventana.mostrarError("Problema con la direccion del servidor");
 			}
 			
 			
 		}
 		
-		public ArrayList<VOPaseosListado> obtenerListado() 
+		public ArrayList<VOPaseosListado> ObtenerPaseos(String matricula)
 		{
-			ArrayList<VOPaseosListado> arre = null;
-			if (conectado) {	
-				
+		
+			ArrayList<VOPaseosListado> resp = null;
+			if(conectado)
+			{
 				try {
-					arre = super.iFac.ListadoPaseosMinivan("");
+					resp = super.iFac.ListadoPaseosMinivan(matricula);
 				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					 ventana.mostrarError("Problemas de conexion al servidor");
 				} catch (MinivanNoExiste e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					ventana.mostrarError("La minivan con el codigo ingresado no existe");
+				} 
+			
+			}else {
+				ventana.mostrarError("No se pueden obtener los resultados ya que no se puede conectar al servidor.");
 				
 			}
-
 			
-			return arre;
+			return resp;
 		}
+
+
 		
 	}

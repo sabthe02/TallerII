@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import javax.swing.JOptionPane;
+
 import sistema.grafica.VentanaRegistroPaseo;
 import sistema.grafica.VentanaVentaBoleto;
 import sistema.logica.Excepciones.BoletosNoDisponibles;
@@ -21,51 +23,46 @@ public class ControladorVentaBoleto extends ConexionRMI {
 	private VentanaVentaBoleto ventana;
 	
 	
-	public ControladorVentaBoleto(VentanaVentaBoleto v) throws MalformedURLException, RemoteException, NotBoundException
+	public ControladorVentaBoleto(VentanaVentaBoleto v)
 	{
 		super();
+		ventana = v;
 		
 		try {
 			conectado = Conectar();
-      
-		} catch (MalformedURLException e) {
-      
+		} 
+		catch (MalformedURLException e) {
 			ventana.mostrarError("Problema de formar la URL");
+			
 		} catch (RemoteException e) {
 			ventana.mostrarError("Problemas de conexion al servidor");
-
+			
 		} catch (NotBoundException e) {
 			ventana.mostrarError("Problema con la direccion del servidor");
 		}
 		
-		ventana = v;
 	}
 	
-	public void ComprarBoleto(VOCompraBoleto voBoleto) throws BoletosNoDisponibles, PaseoNoExiste, CelularMayorQue1000, MenorDe0, RemoteException 
+	public void ComprarBoleto(VOCompraBoleto voBoleto)
 	{
 		if(conectado)
-		{
-			try {
-				super.iFac.ComprarBoleto(voBoleto);
-			
-			} catch (RemoteException e) {
-				ventana.mostrarError("Problemas de conexion al servidor.");
+		{	try {
+			super.iFac.ComprarBoleto(voBoleto);
+		
+		} catch (RemoteException e) {
+			ventana.mostrarError("Problemas de conexion al servidor");
+			} catch (BoletosNoDisponibles e) {
+				ventana.mostrarError("No existen suficientes cupos en el paseo");
 			} catch (PaseoNoExiste e) {
-				ventana.mostrarError("El Paseo NO Existe.");
-			} catch (CelularMayorQue1000 e) {
-				ventana.mostrarError("El Celular debe ser Mayor que 1000.");
+				ventana.mostrarError("No existe un paseo con el codigo ingresado");
+			} catch(CelularMayorQue1000 e){
+				ventana.mostrarError("El celular debe ser mayor que cero");
 			} catch(MenorDe0 e) {
-				ventana.mostrarError("Menor de 0.");
-			} catch(BoletosNoDisponibles e) {
-				ventana.mostrarError("No hay boletos disponibles.");
+				ventana.mostrarError("La edad debe ser mayor que cero");
 			}
-			
-			
-			
+		}
 		}
 		
-	}
-	
-	
+		
 
 }

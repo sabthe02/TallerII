@@ -43,7 +43,7 @@ public class ControladorRegistroPaseo extends ConexionRMI {
 			} catch (RemoteException e) {
 				ventana.mostrarError("Problemas de conexion al servidor");
 			} catch (MinivanNoExiste e) {
-				ventana.mostrarError("La minivan con el codigo ingresado no existe");
+				ventana.mostrarError("No hay minivan disponible para ese paseo");
 			} catch (PrecioMenorCero e) {
 				ventana.mostrarError("El precio tiene que ser mayor que 0");
 			}
