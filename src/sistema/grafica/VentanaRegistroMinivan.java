@@ -22,6 +22,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
 
@@ -104,16 +106,10 @@ public class VentanaRegistroMinivan extends JInternalFrame {
         lblCantAsientos.setBounds(10, 152, 114, 43);
         panel.add(lblCantAsientos);
         
- 
         lblNewLabel = new JLabel("Por favor ingresar datos de la nueva minivan");
         lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
         lblNewLabel.setBounds(10, 13, 267, 13);
         panel.add(lblNewLabel);
-        
-
-        btnAceptar = new JButton("Aceptar");
-        btnAceptar.setBounds(199, 217, 114, 36);
-        panel.add(btnAceptar);
         
         NumberFormat format = NumberFormat.getInstance();
         format.setGroupingUsed(false);
@@ -129,27 +125,55 @@ public class VentanaRegistroMinivan extends JInternalFrame {
         formattedTextField.setToolTipText("Formato numero entero de 1 a 19");
         formattedTextField.setBounds(125, 153, 299, 30);
         panel.add(formattedTextField);
-        
+         
+        btnAceptar = new JButton("Aceptar");
+        btnAceptar.setBounds(199, 217, 114, 36);
+        panel.add(btnAceptar);
         btnAceptar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String matricula = txtMatricula.getText();
-                String marca = txtMarca.getText();
-                String modelo = textModelo.getText();
-                int asientos = Integer.parseInt(formattedTextField.getText());
-                
-                if (matricula.matches("[A-Za-z0-9]+")) {
-                	controlador = new ControladorRegistroMinivan(VentanaRegistroMinivan.this);
-                	VOMinivan m = new VOMinivan(matricula, marca, modelo, asientos);
-                	controlador.RegistrarMinivan(m);
-                	fm.setVisible(false);	
+            	List<String> errores = validarCampos();
+            	if (errores.isEmpty()) {
+	                String matricula = txtMatricula.getText();
+	                String marca = txtMarca.getText();
+	                String modelo = textModelo.getText();
+	                int asientos = Integer.parseInt(formattedTextField.getText());
+	                
+	                controlador = new ControladorRegistroMinivan(VentanaRegistroMinivan.this);
+	                VOMinivan m = new VOMinivan(matricula, marca, modelo, asientos);
+	                controlador.RegistrarMinivan(m);
+	                fm.setVisible(false);	
                 }
-                else {
-                	JOptionPane.showMessageDialog(VentanaRegistroMinivan.this, "Ingresar matricula alfanumerica");
-                }
-                
+	            	else {
+						String aux = "";
+						for (String string : errores) {
+							aux += string + "\n";
+						}
+	
+						JOptionPane.showMessageDialog(fm,
+								"Los datos no son correctos, verifique la hora ingresada para el inicio y fin del viaje. \n"
+										+ aux);
+	                
+	            	}
             }
         });
     }
+    
+	private List<String> validarCampos() {
+		List<String> resp = new ArrayList<>();
+
+		if (txtMatricula.getText().trim().equals("")) {
+			resp.add("La matricula no puede estar vacio");
+		}
+		if ((!(txtMatricula.getText()).matches("[A-Za-z0-9]+"))) {
+			resp.add("La matricula tiene que ser alfanumerica");
+		}
+
+		if (textModelo.getText().trim().equals("")) {
+			resp.add("El modelo no puede ser vacio");
+		}
+
+		return resp;
+	}
    
     public void mostrarError(String mensaje) {
     	JOptionPane.showMessageDialog(fm, "error: "+ mensaje);

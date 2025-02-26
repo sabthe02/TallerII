@@ -5,6 +5,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
+import sistema.grafica.Controladores.ControladorRegistroMinivan;
 import sistema.grafica.Controladores.ControladorRegistroPaseo;
 import sistema.logica.Excepciones.MinivanNoExiste;
 import sistema.logica.Excepciones.PrecioMenorCero;
@@ -69,7 +70,7 @@ public class VentanaRegistroPaseo extends JInternalFrame {
 	 */
 	public VentanaRegistroPaseo() {
 		super("Registro Paseos", true, true, true, true);
-		setBounds(100, 100, 485, 264);
+		setBounds(50, 80, 485, 264);
 
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
@@ -118,7 +119,7 @@ public class VentanaRegistroPaseo extends JInternalFrame {
 
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				List<String> errores = validarCampos();
 				if (errores.isEmpty()) {
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -128,11 +129,13 @@ public class VentanaRegistroPaseo extends JInternalFrame {
 					vo.setPrecioBase(Double.parseDouble(txtPrecioBase.getText()));
 					vo.setHoraPartida(LocalTime.parse(formattedTextHoraPartida.getText(), formatter));
 					vo.setHoraRegreso(LocalTime.parse(formattedTextHoraRegreso.getText(), formatter));
-
-					if (controlador.RegistrarPaseo(vo))
+					
+					controlador = new ControladorRegistroPaseo(VentanaRegistroPaseo.this);
+					if (controlador.RegistrarPaseo(vo)) {
 
 						JOptionPane.showMessageDialog(null, "Se ingreso el paseo correctamente.");
-
+						VentanaRegistroPaseo.this.setVisible(false);
+					}
 				} else {
 					String aux = "";
 					for (String string : errores) {
@@ -157,7 +160,6 @@ public class VentanaRegistroPaseo extends JInternalFrame {
 		panel.add(txtPrecioBase);
 
 		txtDestino = new JTextField();
-		txtDestino.setToolTipText("");
 		txtDestino.setForeground(new Color(0, 0, 0));
 		txtDestino.setColumns(10);
 		txtDestino.setBounds(208, 107, 130, 26);
@@ -198,6 +200,9 @@ public class VentanaRegistroPaseo extends JInternalFrame {
 
 		if (txtCodigoPaseo.getText().trim().equals("")) {
 			resp.add("El codigo del Paseo no puede estar vacio.");
+		}
+		if ((!(txtCodigoPaseo.getText()).matches("[A-Za-z0-9]+"))) {
+			resp.add("El codigo del Paseo tiene que ser alfanumerico");
 		}
 
 		if (txtPrecioBase.getText().trim().equals("")) {

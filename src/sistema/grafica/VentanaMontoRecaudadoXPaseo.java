@@ -1,32 +1,25 @@
 package sistema.grafica;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.RemoteException;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
+
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-
 import sistema.grafica.Controladores.ControladorMontoRecaudadoXPaseo;
-import sistema.logica.Excepciones.PaseoNoExiste;
+
 
 public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Launch the application.
@@ -45,7 +38,6 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
 	}
 
 	private JTextField textFieldCodigoPaseo;
-	private JTextField textField;
 	private JPanel panelResultado;
 	private JLabel labelResultado;
 	private ControladorMontoRecaudadoXPaseo controlador;
@@ -54,7 +46,7 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public VentanaMontoRecaudadoXPaseo() {
-        setBounds(100, 100, 800, 400);
+        setBounds(50, 80, 800, 400);
         setTitle("Monto Recaudado para un Paseo");
         setResizable(true);
         setClosable(true);
@@ -82,37 +74,7 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
         textFieldCodigoPaseo.setFont(new Font("Arial", Font.PLAIN, 14));
         panelCodigo.add(textFieldCodigoPaseo);
         getContentPane().add(panelCodigo);
-
-        JButton btnAceptar = new JButton("Consultar Monto");
-        btnAceptar.setBounds(320, 130, 160, 30);
-        btnAceptar.setFont(new Font("Arial", Font.PLAIN, 14));
-        btnAceptar.addActionListener(new ActionListener() {
-			private VentanaMontoRecaudadoXPaseo VentanaMontoRecaudadoXPaseo;
-			public void actionPerformed(ActionEvent e) {
-				String codigoPaseo = textFieldCodigoPaseo.getText();
-				if(codigoPaseo.isEmpty()) {
-					JOptionPane.showMessageDialog(VentanaMontoRecaudadoXPaseo.this, "Ingrese el codigo del paseo","Error",JOptionPane.ERROR_MESSAGE);
-				} else {
-					controlador = new ControladorMontoRecaudadoXPaseo(VentanaMontoRecaudadoXPaseo);
-					double montoRecaudado = 0;
-					try {
-						montoRecaudado = controlador.MontoRecaudadoPorPaseo(codigoPaseo);
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						mostrarError("Remote Exception");
-					} catch (PaseoNoExiste e1) {
-						// TODO Auto-generated catch block
-						mostrarError("El Paseo NO Existe");
-					}
-					labelResultado.setText(String.format("%.2f", montoRecaudado));
-				}
-			}
-        	
-        });
         
-        getContentPane().add(btnAceptar);
-
-    
         panelResultado = new JPanel();
         panelResultado.setBounds(150, 180, 500, 120);
         panelResultado.setLayout(null);
@@ -128,6 +90,33 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
         labelResultado.setFont(new Font("Arial", Font.BOLD, 18));
         labelResultado.setHorizontalAlignment(SwingConstants.RIGHT);
         panelResultado.add(labelResultado);
+
+        JButton btnAceptar = new JButton("Consultar Monto");
+        btnAceptar.setBounds(320, 130, 160, 30);
+        btnAceptar.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnAceptar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				String codigoPaseo = textFieldCodigoPaseo.getText();
+				
+				if(!codigoPaseo.isEmpty()) {
+					if (codigoPaseo.matches("[A-Za-z0-9]+")) {
+						controlador = new ControladorMontoRecaudadoXPaseo(VentanaMontoRecaudadoXPaseo.this);
+						double montoRecaudado = 0;
+						montoRecaudado = controlador.MontoRecaudadoPorPaseo(codigoPaseo);
+						labelResultado.setText(String.format("%.2f", montoRecaudado));
+					}
+					else {
+						JOptionPane.showMessageDialog(VentanaMontoRecaudadoXPaseo.this, "Ingrese codigo alfanumerico");
+					}
+				} else {
+					JOptionPane.showMessageDialog(VentanaMontoRecaudadoXPaseo.this, "Ingrese el codigo del paseo");
+				}
+			}
+        	
+        });
+        
+        getContentPane().add(btnAceptar);
 
 	}
 	

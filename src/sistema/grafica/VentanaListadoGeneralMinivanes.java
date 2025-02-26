@@ -46,7 +46,7 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
         super("Listado general de Minivanes",true, true, true, true);
         frmListadoGeneralMinivanes = this;
         setTitle("Listado general de Minivanes");
-        setBounds(100, 100, 800, 389); 
+        setBounds(50, 80, 800, 389); 
         setResizable(true);
         setClosable(true);
         setMaximizable(true);
@@ -82,8 +82,6 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
         table.setGridColor(Color.GRAY);
         table.getTableHeader().setReorderingAllowed(false);
         table.setRowHeight(25);
-        
-        
         
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(0, 29, 784, 286);

@@ -55,7 +55,7 @@ public class MainProgram {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Paseos del Sol S.A");
-		frame.setBounds(100, 100, 903, 510);
+		frame.setBounds(100, 100, 917, 552);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		desktopPane = new JDesktopPane();
