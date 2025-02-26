@@ -1,25 +1,38 @@
 package sistema.grafica;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
+
+import sistema.grafica.Controladores.ControladorListadoPaseosPorBoletos;
+import sistema.grafica.Controladores.ControladorRegistroMinivan;
+import sistema.logica.ValueObject.VOPaseosListado;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.UIManager;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JInternalFrame frame;
 	private JTable table;
+	private DefaultTableModel modeloTabla;
 	private JLabel lblNewLabel;
+	private ControladorListadoPaseosPorBoletos controlador;
 
 	/**
 	 * Launch the application.
@@ -41,58 +54,82 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 	 * Create the application.
 	 */
 	public VentanaListadoPaseosDispBoletos() {
-		setTitle("Listado de Paseos por Disponibilidad de Boletos");
-		setResizable(true);
-        setClosable(true);
-        setMaximizable(true);
-        setIconifiable(true);
+		super("Listado de paseos por disponibilidad de boletos", true, true, true, true);
 		frame = this;
-		frame.setClosable(true);
-		frame.setBounds(100, 100, 783, 395);
-		frame.getContentPane().setLayout(null);
+		setBounds(100, 100, 800, 389);
+		getContentPane().setLayout(null);
+
+		JLabel lblCantBoletos = new JLabel("Cantidad de Boletos:");
+		lblCantBoletos.setToolTipText("Formato numero entero");
+		lblCantBoletos.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblCantBoletos.setBounds(10, 32, 135, 15);
+		getContentPane().add(lblCantBoletos);
+
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.setBounds(254, 30, 85, 21);
+		getContentPane().add(btnBuscar);
+
+		NumberFormat format = NumberFormat.getInstance();
+		NumberFormatter formatter = new NumberFormatter(format);
+		formatter.setValueClass(Integer.class);
+		formatter.setMinimum(0);
+		formatter.setMaximum(Integer.MAX_VALUE);
+		formatter.setAllowsInvalid(false);
+		formatter.setCommitsOnValidEdit(true);
+		JFormattedTextField cantBoletos = new JFormattedTextField(formatter);
+		cantBoletos.setToolTipText("Formato numero entero");
+		cantBoletos.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		cantBoletos.setBounds(157, 30, 85, 19);
+		frame.getContentPane().add(cantBoletos);
+
+		modeloTabla = new DefaultTableModel(new Object[][] {},
+				new String[] { "Codigo", "Destino", "Hora de partida", "Hora de regreso", "Precio base",
+						"Cantidad maxima de boletos vendibles", "Cantidad de boletos disponibles" }) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setViewportBorder(UIManager.getBorder("Table.scrollPaneBorder"));
-		scrollPane.setBounds(0, 32, 769, 257);
-		frame.getContentPane().add(scrollPane);
+		scrollPane.setBounds(6, 59, 800, 278);
+		getContentPane().add(scrollPane);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		table.setEnabled(false);
-		table.setFont(new Font("Tahoma", Font.BOLD, 6));
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Codigo", "Destino", "Hora de partida", "Hora de regreso", "Precio base", "Cantidad maxima de boletos vendibles", "Cantidad de boletos disponibles"
-			}
-		) {
-			private static final long serialVersionUID = 1L;
-			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, Integer.class, Integer.class, Float.class, Integer.class, Integer.class
-			};
-			@SuppressWarnings({ "rawtypes", "unchecked" })
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		table.getColumnModel().getColumn(0).setPreferredWidth(47);
-		table.getColumnModel().getColumn(1).setPreferredWidth(47);
-		table.getColumnModel().getColumn(2).setPreferredWidth(83);
-		table.getColumnModel().getColumn(3).setPreferredWidth(91);
-		table.getColumnModel().getColumn(4).setPreferredWidth(68);
-		table.getColumnModel().getColumn(5).setPreferredWidth(186);
-		table.getColumnModel().getColumn(6).setPreferredWidth(156);
-		
-		lblNewLabel = new JLabel("Listado de Paseos Por Disponibilidad de Boletos");
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		lblNewLabel.setBounds(206, 9, 377, 13);
-		getContentPane().add(lblNewLabel);
-		
-		
-	}
-	
-	
+				table = new JTable(modeloTabla);
+				scrollPane.setViewportView(table);
+				table.setBackground(new Color(240, 240, 240));
+				table.setGridColor(Color.GRAY);
+				table.getTableHeader().setReorderingAllowed(false);
+				table.setRowHeight(25);
 
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<VOPaseosListado> resp = controlador.ObtenerPaseos(Integer.parseInt(cantBoletos.getText()));
+
+				if (resp != null) {
+					DefaultTableModel model = (DefaultTableModel) table.getModel();
+					model.setRowCount(0);
+					resp.forEach(arg0 -> model.addRow(new Object[] { arg0.getCodigo(), arg0.getDestino(),
+							arg0.getHoraPartida(), arg0.getHoraRegreso(), arg0.getPrecioBase(),
+							arg0.getCantidadMaximaBoletosVendibles(), arg0.getCantidadBoletosDisponibles() }));
+				}
+
+			}
+
+		});
+
+		controlador = new ControladorListadoPaseosPorBoletos(this);
+
+	}
+
+	public void mostrarError(String error) {
+
+		JOptionPane.showMessageDialog(null, "error: " + error);
+
+	}
 }

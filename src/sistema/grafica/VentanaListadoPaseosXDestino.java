@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -16,6 +17,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import sistema.grafica.Controladores.ControladorListadoGeneralPaseosPorDestino;
+import sistema.logica.ValueObject.VOPaseosListado;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -26,6 +31,8 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
 	private DefaultTableModel modeloTabla;
 	private JTable table;
 	private JButton btnNewButton;
+	private JTextField txtDestino;
+	private ControladorListadoGeneralPaseosPorDestino controlador;
 
 	/**
 	 * Launch the application.
@@ -47,22 +54,15 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public VentanaListadoPaseosXDestino() {
-		super();
+		super("Listado de Paseos por Destino", true, true, true, true);
 		fm = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Listado de Paseos por Destino");
         setBounds(100, 100, 800, 400);
         setResizable(true);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel labelTitulo = new JLabel("Listado de Paseos por Destino");
-		labelTitulo.setBounds(227, 10, 380, 22);
-        labelTitulo.setFont(new Font("Arial", Font.BOLD, 18));
-        labelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        contentPane.add(labelTitulo);
         
         modeloTabla = new DefaultTableModel(
                 new Object[][] {},
@@ -92,6 +92,42 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
             btnNewButton = new JButton("Aceptar");
             btnNewButton.setBounds(335, 320, 85, 21);
             contentPane.add(btnNewButton);
+            
+            JLabel lblNewLabel = new JLabel("Destino:");
+            lblNewLabel.setBounds(50, 14, 61, 16);
+            contentPane.add(lblNewLabel);
+            
+            txtDestino = new JTextField();
+            txtDestino.setBounds(123, 9, 130, 26);
+            contentPane.add(txtDestino);
+            txtDestino.setColumns(10);
+            
+            controlador = new ControladorListadoGeneralPaseosPorDestino(this);
+            
+            JButton btnNewButton_1 = new JButton("Buscar");
+            btnNewButton_1.addActionListener(new ActionListener() {
+            	public void actionPerformed(ActionEvent arg0) {
+            		
+            		String destino = txtDestino.getText();
+            		if(!destino.trim().equals(""))
+            		{
+            			ArrayList<VOPaseosListado> resp = controlador.ObtenerPaseos(destino);
+
+        				if (resp != null) {
+        					DefaultTableModel model = (DefaultTableModel) table.getModel();
+        					model.setRowCount(0);
+        					
+        					resp.forEach(arg1-> model.addRow(new Object[] { arg1.getCodigo(), arg1.getDestino(),
+        							arg1.getHoraPartida(), arg1.getHoraRegreso(), arg1.getPrecioBase(),
+        							arg1.getCantidadMaximaBoletosVendibles(), arg1.getCantidadBoletosDisponibles() }));
+        				}
+            			
+            		}
+            		
+            	}
+            });
+            btnNewButton_1.setBounds(271, 9, 117, 29);
+            contentPane.add(btnNewButton_1);
             
             btnNewButton.addActionListener(new ActionListener() {
     			public void actionPerformed(ActionEvent e) {
