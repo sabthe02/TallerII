@@ -27,9 +27,10 @@ public class ControladorVentaBoleto extends ConexionRMI {
 		
 		try {
 			conectado = Conectar();
+      
 		} catch (MalformedURLException e) {
+      
 			ventana.mostrarError("Problema de formar la URL");
-
 		} catch (RemoteException e) {
 			ventana.mostrarError("Problemas de conexion al servidor");
 
