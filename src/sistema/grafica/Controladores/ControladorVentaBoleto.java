@@ -27,15 +27,15 @@ public class ControladorVentaBoleto extends ConexionRMI {
 		
 		try {
 			conectado = Conectar();
+      
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+      
+			ventana.mostrarError("Problema de formar la URL");
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ventana.mostrarError("Problemas de conexion al servidor");
+
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ventana.mostrarError("Problema con la direccion del servidor");
 		}
 		
 		ventana = v;
@@ -45,7 +45,22 @@ public class ControladorVentaBoleto extends ConexionRMI {
 	{
 		if(conectado)
 		{
-			super.iFac.ComprarBoleto(voBoleto);
+			try {
+				super.iFac.ComprarBoleto(voBoleto);
+			
+			} catch (RemoteException e) {
+				ventana.mostrarError("Problemas de conexion al servidor.");
+			} catch (PaseoNoExiste e) {
+				ventana.mostrarError("El Paseo NO Existe.");
+			} catch (CelularMayorQue1000 e) {
+				ventana.mostrarError("El Celular debe ser Mayor que 1000.");
+			} catch(MenorDe0 e) {
+				ventana.mostrarError("Menor de 0.");
+			} catch(BoletosNoDisponibles e) {
+				ventana.mostrarError("No hay boletos disponibles.");
+			}
+			
+			
 			
 		}
 		
