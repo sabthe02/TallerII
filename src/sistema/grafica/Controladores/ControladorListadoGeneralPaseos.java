@@ -5,6 +5,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import sistema.grafica.VentanaListadoPaseosMinivan;
 import sistema.grafica.VentanaListadoPaseosXDestino;
 import sistema.logica.Excepciones.DestinoNoPerteneceException;
 import sistema.logica.ValueObject.VOPaseosListado;
@@ -14,7 +15,7 @@ public class ControladorListadoGeneralPaseos extends ConexionRMI{
 		private boolean conectado;
 		private VentanaListadoPaseosXDestino ventana;
 		
-		public ControladorListadoGeneralMinivanes(VentanaListadoPaseosMinivan v)
+		public ControladorListadoGeneralPaseos(VentanaListadoPaseosMinivan v)
 		{
 			ventana = v;
 			try {
@@ -37,7 +38,7 @@ public class ControladorListadoGeneralPaseos extends ConexionRMI{
 			ArrayList<VOPaseosListado> arre = null;
 			if (conectado) {	
 				
-				arre = super.iFac.ListadoPaseosMinivan();
+				arre = super.iFac.ListadoPaseosMinivan(ventana);
 				
 			}
 
