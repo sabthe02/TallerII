@@ -14,10 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.BorderLayout;
 import java.awt.Component;
 
-import javax.swing.SwingConstants;
 
 public class MainProgram {
 
@@ -55,16 +53,16 @@ public class MainProgram {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Paseos del Sol S.A");
-		frame.setBounds(100, 100, 903, 510);
+		frame.setBounds(100, 100, 917, 552);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		desktopPane = new JDesktopPane();
-		frame.setContentPane(desktopPane);
-		
 		ImageIcon imagen = new ImageIcon("PaseosDelSolSA.png");
-		JLabel labelImagen = new JLabel(imagen);
+		JLabel labelImagen = new JLabel(new ImageIcon("src\\PaseosDelSolSA.png"));
 		labelImagen.setBounds(10, 44, 867, 405);
 		desktopPane.add(labelImagen,JDesktopPane.DEFAULT_LAYER);
+		frame.setContentPane(desktopPane);
+		
 		
 		JLabel labelTitulo = new JLabel("Paseos del Sol S.A");
 		labelTitulo.setBounds(339, 11, 173, 22);

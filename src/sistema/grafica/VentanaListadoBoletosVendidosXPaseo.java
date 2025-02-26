@@ -6,7 +6,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
-    private JTextField textFieldCodigoPaseo;
+    private static final long serialVersionUID = 1L;
+	private JTextField textFieldCodigoPaseo;
     private ButtonGroup grupoBoletos;  
     private JRadioButton radiobuttonComun;
     private JRadioButton radiobuttonEspecial;

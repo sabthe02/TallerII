@@ -21,20 +21,18 @@ public class ControladorMontoRecaudadoXPaseo extends ConexionRMI {
 		try {
 			conectado = Conectar();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ventana.mostrarError("Problema de formar la URL");
+			
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			ventana.mostrarError("Problemas con el servidor.");
+			ventana.mostrarError("Problemas de conexion al servidor");
 			
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ventana.mostrarError("Problema con la direccion del servidor");
 		}
 		
 	}
 	
-	public double MontoRecaudadoPorPaseo(String codigo) throws PaseoNoExiste, RemoteException
+	public double MontoRecaudadoPorPaseo(String codigo)
 	{
 		double resu = 0;
 		if(conectado)
@@ -42,9 +40,9 @@ public class ControladorMontoRecaudadoXPaseo extends ConexionRMI {
 			try {
 				resu = super.iFac.MontoRecaudadoPorPaseo(codigo);
 			}catch(PaseoNoExiste e) {
-				ventana.mostrarError("El Paseo no existe.");
+				ventana.mostrarError("El Paseo con ese codigo no existe");
 			} catch(RemoteException e) {
-				ventana.mostrarError("Remote Exception.");
+				ventana.mostrarError("Problemas de conexion al servidor");
 			}
 		}
 		return resu;
