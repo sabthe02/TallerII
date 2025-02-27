@@ -58,7 +58,7 @@ public class MainProgram {
 		
 		desktopPane = new JDesktopPane();
 		ImageIcon imagen = new ImageIcon("PaseosDelSolSA.png");
-		JLabel labelImagen = new JLabel(new ImageIcon("src\\PaseosDelSolSA.png"));
+		JLabel labelImagen = new JLabel(new ImageIcon(".\\src\\PaseosDelSolSA.png"));
 		labelImagen.setBounds(10, 44, 867, 405);
 		desktopPane.add(labelImagen,JDesktopPane.DEFAULT_LAYER);
 		frame.setContentPane(desktopPane);

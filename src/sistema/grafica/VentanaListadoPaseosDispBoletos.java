@@ -100,12 +100,12 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 		scrollPane.setBounds(6, 59, 800, 278);
 		getContentPane().add(scrollPane);
 		
-				table = new JTable(modeloTabla);
-				scrollPane.setViewportView(table);
-				table.setBackground(new Color(240, 240, 240));
-				table.setGridColor(Color.GRAY);
-				table.getTableHeader().setReorderingAllowed(false);
-				table.setRowHeight(25);
+		table = new JTable(modeloTabla);
+		scrollPane.setViewportView(table);
+		table.setBackground(new Color(240, 240, 240));
+		table.setGridColor(Color.GRAY);
+		table.getTableHeader().setReorderingAllowed(false);
+		table.setRowHeight(25);
 
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
