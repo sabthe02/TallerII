@@ -4,13 +4,26 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import sistema.grafica.Controladores.ControladorListadoBoletosVendidosPorPaseo;
+import sistema.logica.ValueObject.VOListadoBoletos;
+
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
 
 public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
     private static final long serialVersionUID = 1L;
-	private JTextField textFieldCodigoPaseo;
-    private ButtonGroup grupoBoletos;  
+	private JTextField txtCodigoPaseo;
     private JRadioButton radiobuttonComun;
     private JRadioButton radiobuttonEspecial;
+	private DefaultTableModel modeloTabla;
+	private ButtonGroup grupoBoletos;
+    //private JTable table;
+    
+    private ControladorListadoBoletosVendidosPorPaseo controlador;
+    private JTable table_1;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -40,64 +53,140 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
         PanelPrincipal.setBorder(new EmptyBorder(20, 20, 20, 20));
         PanelPrincipal.setLayout(null);
         
-        JLabel labelTitulo = new JLabel("Listado de Boletos Vendidos para un Paseo");
-        labelTitulo.setBounds(202, 20, 421, 22);
-        labelTitulo.setFont(new Font("Arial", Font.BOLD, 18));
-        labelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        PanelPrincipal.add(labelTitulo);
-        
         JPanel panelCodigo = new JPanel();
-        panelCodigo.setBounds(192, 42, 400, 33);
+        panelCodigo.setBounds(6, 6, 764, 33);
         panelCodigo.setMaximumSize(new Dimension(400, 33));
         
         JLabel labelCodigo = new JLabel("Código de Paseo:");
-        labelCodigo.setBounds(55, 8, 113, 17);
+        labelCodigo.setBounds(6, 8, 113, 17);
         labelCodigo.setFont(new Font("Arial", Font.PLAIN, 14));
-        textFieldCodigoPaseo = new JTextField(15);
-        textFieldCodigoPaseo.setBounds(173, 5, 171, 23);
-        textFieldCodigoPaseo.setFont(new Font("Arial", Font.PLAIN, 14));
+        txtCodigoPaseo = new JTextField(15);
+        txtCodigoPaseo.setBounds(131, 5, 171, 23);
+        txtCodigoPaseo.setFont(new Font("Arial", Font.PLAIN, 14));
         panelCodigo.setLayout(null);
         
         panelCodigo.add(labelCodigo);
-        panelCodigo.add(textFieldCodigoPaseo);
+        panelCodigo.add(txtCodigoPaseo);
         PanelPrincipal.add(panelCodigo);
-        
-        JPanel panelTipoBoleto = new JPanel();
-        panelTipoBoleto.setBounds(192, 75, 400, 100);
-        panelTipoBoleto.setLayout(new BoxLayout(panelTipoBoleto, BoxLayout.Y_AXIS));
-        panelTipoBoleto.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createEtchedBorder(),
-            "Tipo de Boleto",
-            TitledBorder.LEFT,
-           TitledBorder.TOP,
-            new Font("Arial", Font.BOLD, 14)
-        ));
-        panelTipoBoleto.setMaximumSize(new Dimension(400, 100));
-        
-        grupoBoletos = new ButtonGroup();
-        panelTipoBoleto.setLayout(new BorderLayout(0, 0));
         radiobuttonComun = new JRadioButton("Común");
-        radiobuttonComun.setBounds(20, 5, 136, 25);
-        radiobuttonEspecial = new JRadioButton("Especial");
-        radiobuttonEspecial.setBounds(246, 5, 136, 25);
+        radiobuttonComun.setBounds(331, 3, 136, 25);
+        panelCodigo.add(radiobuttonComun);
         
         radiobuttonComun.setFont(new Font("Arial", Font.PLAIN, 14));
+        radiobuttonEspecial = new JRadioButton("Especial");
+        radiobuttonEspecial.setBounds(479, 3, 136, 25);
+        
+        
+        grupoBoletos = new ButtonGroup();
+		grupoBoletos.add(radiobuttonComun);
+		grupoBoletos.add(radiobuttonEspecial);
+		
+        panelCodigo.add(radiobuttonEspecial);
         radiobuttonEspecial.setFont(new Font("Arial", Font.PLAIN, 14));
-        grupoBoletos.add(radiobuttonComun);
-        grupoBoletos.add(radiobuttonEspecial);
+        
+        controlador = new ControladorListadoBoletosVendidosPorPaseo(this);
+        
+        JButton btnNewButton = new JButton("Aceptar");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		
+        		if(!txtCodigoPaseo.getText().trim().equals(""))
+        		{
+        			ArrayList<VOListadoBoletos> resp = controlador.obtenerListado(txtCodigoPaseo.getText(), radiobuttonEspecial.isSelected());
+        			
+        			if(resp != null)
+        			{
+        				
+        				cargarDatosTabla(resp);
+        			}
+        			
+        		}else {
+        			mostrarError("El campo Codigo Paseo no puede estar vacio.");
+        			
+        		}
+        
+        	}
+        });
+        btnNewButton.setBounds(673, 7, 85, 21);
+        panelCodigo.add(btnNewButton);
+        
+        
+        
+        panelCodigo.setLayout(new BorderLayout(0, 0));
         
         JPanel radioPanel = new JPanel();
         radioPanel.setLayout(null);
-        radioPanel.add(radiobuttonComun);
-        radioPanel.add(radiobuttonEspecial);
-        panelTipoBoleto.add(radioPanel);
+        panelCodigo.add(radioPanel);
         
-        PanelPrincipal.add(panelTipoBoleto);
+        PanelPrincipal.add(panelCodigo);
         
         getContentPane().add(PanelPrincipal, BorderLayout.CENTER);
         
-        JButton btnNewButton = new JButton("Aceptar");
-        btnNewButton.setBounds(360, 191, 85, 21);
-        PanelPrincipal.add(btnNewButton);
+        modeloTabla = new DefaultTableModel(new Object[][] {},
+				new String[] { "Numero de Boleto", "Nombre Pasajero", "Edad Pasajero", "Celular", "Descuento"}) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+        
+		
+        
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(16, 51, 754, 166);
+        
+        PanelPrincipal.add(scrollPane);
+        
+        table_1 = new JTable(modeloTabla);
+        table_1.setBackground(new Color(240, 240, 240));
+        table_1.setGridColor(Color.GRAY);
+        table_1.getTableHeader().setReorderingAllowed(false);
+        table_1.setRowHeight(25);
+        scrollPane.setViewportView(table_1);
+    }
+    
+    
+    public void cargarDatosTabla(ArrayList<VOListadoBoletos> datos)
+    {
+    	
+    	
+    	modeloTabla.setRowCount(0);
+    	if(radiobuttonEspecial.isSelected())
+    	{
+    		if(modeloTabla.getColumnCount() == 4)
+    		{
+    			modeloTabla.addColumn("Descuento");    			
+    		}
+    	}else
+    	{
+    		if(modeloTabla.getColumnCount() == 5)
+    		{
+    			modeloTabla.setColumnCount(4);
+    		}    
+    	}
+    	
+
+    
+    	
+    	if(radiobuttonEspecial.isSelected())
+    	{
+    		datos.forEach(boleto -> modeloTabla.addRow(new String[] {String.valueOf(boleto.getNumeroBoleto()), boleto.getCelular(), boleto.getNombre(), String.valueOf(boleto.getEdad()), String.valueOf(boleto.getDescuento())}));
+    	}else
+    	{
+        	datos.forEach(boleto -> modeloTabla.addRow(new String[] {String.valueOf(boleto.getNumeroBoleto()), boleto.getCelular(), boleto.getNombre(), String.valueOf(boleto.getEdad())}));
+
+    	}
+    	
+    }
+    
+    public void mostrarError(String mensaje)
+    {
+    	
+    	JOptionPane.showMessageDialog(null, "error: "+ mensaje);
     }
 }

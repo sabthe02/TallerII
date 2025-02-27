@@ -20,7 +20,7 @@ public class Cliente {
 
 	public static void main(String args[]) {
 
-		Fachada f = null;
+		/*Fachada f = null;
 
 		try {
 			f = new Fachada();
@@ -30,7 +30,9 @@ public class Cliente {
 		}
 		catch (RemoteException e) {
 			e.printStackTrace();
-		}
+		}*/
+		
+		
 		MainProgram main = new MainProgram();
 		main.setVisible(true);
 		
