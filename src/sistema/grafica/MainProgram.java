@@ -15,6 +15,9 @@ import javax.swing.JMenu;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
+import java.awt.Color;
+import javax.swing.UIManager;
+import java.awt.Dimension;
 
 
 public class MainProgram {
@@ -52,13 +55,20 @@ public class MainProgram {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setForeground(new Color(255, 128, 64));
+		frame.setFont(new Font("Arial", Font.ITALIC, 14));
 		frame.setTitle("Paseos del Sol S.A");
 		frame.setBounds(100, 100, 917, 552);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		desktopPane = new JDesktopPane();
+		desktopPane.setBackground(new Color(255, 128, 64));
+		desktopPane.setBorder(UIManager.getBorder("EditorPane.border"));
 		ImageIcon imagen = new ImageIcon("PaseosDelSolSA.png");
 		JLabel labelImagen = new JLabel(new ImageIcon(".\\src\\PaseosDelSolSA.png"));
+		labelImagen.setAlignmentY(2.0f);
+		labelImagen.setAlignmentX(2.0f);
+		labelImagen.setBackground(new Color(240, 240, 240));
 		labelImagen.setBounds(10, 44, 867, 405);
 		desktopPane.add(labelImagen,JDesktopPane.DEFAULT_LAYER);
 		frame.setContentPane(desktopPane);
@@ -73,9 +83,14 @@ public class MainProgram {
 		
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setMaximumSize(new Dimension(5, 5));
+		menuBar.setBorder(UIManager.getBorder("MenuBar.border"));
+		menuBar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		menuBar.setOpaque(false);
 		frame.setJMenuBar(menuBar);
 		
 		JMenu mnNewMenu = new JMenu("Minivans");
+		mnNewMenu.setPreferredSize(new Dimension(150, 50));
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Agregar Nueva");
@@ -110,6 +125,7 @@ public class MainProgram {
 		mnNewMenu.add(mntmNewMenuItem_4);
 		
 		JMenu mnNewMenu_1 = new JMenu("Paseos");
+		mnNewMenu_1.setPreferredSize(new Dimension(150, 50));
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Agregar");
@@ -168,6 +184,7 @@ public class MainProgram {
 		mnNewMenu_1.add(mntmNewMenuItem_9);
 		
 		JMenu mnNewMenu_2 = new JMenu("Boletos");
+		mnNewMenu_2.setPreferredSize(new Dimension(150, 50));
 		menuBar.add(mnNewMenu_2);
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Comprar Boleto");
@@ -192,6 +209,7 @@ public class MainProgram {
 		mnNewMenu_2.add(mntmNewMenuItem_7);
 		
 		JMenu mnNewMenu_2_1 = new JMenu("Respaldo");
+		mnNewMenu_2_1.setPreferredSize(new Dimension(150, 50));
 		menuBar.add(mnNewMenu_2_1);
 		
 		JMenuItem mntmRespaldo = new JMenuItem("Respaldar");
