@@ -23,6 +23,8 @@ import sistema.logica.ValueObject.VOPaseosListado;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaListadoPaseosXDestino extends JInternalFrame {
 
@@ -34,30 +36,18 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
 	private JButton btnNewButton;
 	private JTextField txtDestino;
 	private ControladorListadoGeneralPaseosPorDestino controlador;
+	private JFrame jframePrinc;
+	private JButton btnComprarBoleto;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaListadoPaseosXDestino frame = new VentanaListadoPaseosXDestino();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
+	
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaListadoPaseosXDestino() {
+	public VentanaListadoPaseosXDestino(JFrame jframePadre) {
 		super("Listado de Paseos por Destino", true, true, true, true);
 		fm = this;
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(50, 80, 800, 400);
         setResizable(true);
         setClosable(true);
@@ -67,6 +57,9 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		jframePrinc = jframePadre;
+
         
         modeloTabla = new DefaultTableModel(
                 new Object[][] {},
@@ -84,6 +77,7 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
             };
             
             table = new JTable(modeloTabla);
+            
             table.setBackground(new Color(240, 240, 240));
             table.setGridColor(Color.GRAY);
             table.getTableHeader().setReorderingAllowed(false);
@@ -132,6 +126,27 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
             });
             btnNewButton_1.setBounds(271, 9, 117, 29);
             contentPane.add(btnNewButton_1);
+            
+            btnComprarBoleto = new JButton("Comprar Boleto");
+            btnComprarBoleto.addActionListener(new ActionListener() {
+            	public void actionPerformed(ActionEvent arg0) {
+            		
+            		if(table.getSelectedRow()>=0)
+    				{
+    					
+    					VentanaVentaBoleto v = new VentanaVentaBoleto(table.getValueAt(table.getSelectedRow(), 0).toString());
+    					jframePrinc.add(v);
+    					v.setVisible(true);
+    			
+    				}else 
+    				{
+    					mostrarError("Primero debe seleccionar un paseo de la tabla.");
+    					
+    				}
+            	}
+            });
+            btnComprarBoleto.setBounds(640, 9, 130, 29);
+            contentPane.add(btnComprarBoleto);
             
             btnNewButton.addActionListener(new ActionListener() {
     			public void actionPerformed(ActionEvent e) {

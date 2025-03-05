@@ -37,6 +37,17 @@ public class VentanaVentaBoleto extends JInternalFrame {
 	private JLabel label_5;
 
 	public VentanaVentaBoleto() {
+		Inicializar();
+	}
+	
+	public VentanaVentaBoleto(String idPaseo) {
+		Inicializar();
+		txtCodigoPaseo.setText(idPaseo);
+	}
+	
+	
+	public void Inicializar()
+	{
 		fm = this;
 		setResizable(true);
 		setIconifiable(true);
