@@ -85,8 +85,7 @@ public class ConsolePres {
 							System.out.println("Boletos Disponibles: " + VOPaseosListado.getCantidadBoletosDisponibles());
 							System.out.println();
 						});
-					} catch (DestinoNoPerteneceException e) {
-						e.printStackTrace();
+					
 					} catch (RuntimeException e) {
 						e.printStackTrace();
 					}

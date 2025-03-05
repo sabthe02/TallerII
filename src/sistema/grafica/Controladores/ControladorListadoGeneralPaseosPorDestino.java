@@ -43,8 +43,6 @@ public class ControladorListadoGeneralPaseosPorDestino extends ConexionRMI{
 				resp =  super.iFac.ListadoPaseosDestino(destino);
 			} catch (RemoteException e) {
 				 ventana.mostrarError("Problemas de conexion al servidor");
-			} catch (DestinoNoPerteneceException e) {
-				ventana.mostrarError("El destino indicado no existe");
 			} 
 		
 		}else {

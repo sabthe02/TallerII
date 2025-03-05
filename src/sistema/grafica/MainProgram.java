@@ -91,7 +91,7 @@ public class MainProgram {
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Listado General");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaListadoGeneralMinivanes v = new VentanaListadoGeneralMinivanes();
+				VentanaListadoGeneralMinivanes v = new VentanaListadoGeneralMinivanes(frame);
 				frame.getContentPane().add(v);
 				v.setVisible(true);
 			}
@@ -127,7 +127,7 @@ public class MainProgram {
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Listado Paseos por Destino");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaListadoPaseosXDestino v = new VentanaListadoPaseosXDestino();
+				VentanaListadoPaseosXDestino v = new VentanaListadoPaseosXDestino(frame);
 				frame.getContentPane().add(v);
 				v.setVisible(true);
 			}
@@ -137,7 +137,7 @@ public class MainProgram {
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Listado Disponible por Boletos");
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaListadoPaseosDispBoletos v = new VentanaListadoPaseosDispBoletos();
+				VentanaListadoPaseosDispBoletos v = new VentanaListadoPaseosDispBoletos(frame);
 				frame.getContentPane().add(v);
 				v.setVisible(true);
 			}
@@ -147,7 +147,7 @@ public class MainProgram {
 		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Listado por Destino");
 		mntmNewMenuItem_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaListadoPaseosXDestino v = new VentanaListadoPaseosXDestino();
+				VentanaListadoPaseosXDestino v = new VentanaListadoPaseosXDestino(frame);
 				frame.getContentPane().add(v);
 				v.setVisible(true);
 				

@@ -43,7 +43,7 @@ public class Paseos extends Diccionario <String, Paseo> implements Serializable{
 		VOPaseosListado VO;
 		while (iter.hasNext()) {
 			Paseo p = iter.next();
-			if (Objects.equals(p.getDestino(), destino)) {
+			if (p.getDestino().toUpperCase().equals(destino.toUpperCase())) {
 				
 				VO = new VOPaseosListado (p.getCodigo(), p.getHoraPartida(), p.getHoraRegreso(), p.getPrecioBase(), p.getDestino(), p.getCantMaxBoletos(), (p.getCantMaxBoletos()-p.getCantVendidos()));
 				VOPaseosListadoL.add(VO);

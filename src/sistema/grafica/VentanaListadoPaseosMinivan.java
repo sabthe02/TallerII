@@ -33,27 +33,25 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 	private JTable table;
 	private JTextField textField;
 	private ControladorListadoGeneralPaseos controlador;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaListadoPaseosMinivan window = new VentanaListadoPaseosMinivan();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private JButton btnAceptar;
+	
 	/**
 	 * Create the application.
 	 */
 	public VentanaListadoPaseosMinivan() {	
+		inicializar();
+	}
+	
+	public VentanaListadoPaseosMinivan(String matricula)
+	{
+		inicializar();
+		textField.setText(matricula);
+		btnAceptar.doClick();
+		
+	}
+	
+	public void inicializar()
+	{
 
 		//super();
 
@@ -121,7 +119,7 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 		table.getColumnModel().getColumn(5).setPreferredWidth(185);
 		table.getColumnModel().getColumn(6).setPreferredWidth(159);
 		
-		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(323, 62, 85, 21);
 		
 		

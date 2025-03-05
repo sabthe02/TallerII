@@ -20,10 +20,14 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 
@@ -33,31 +37,19 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 	private DefaultTableModel modeloTabla;
 	private JLabel lblNewLabel;
 	private ControladorListadoPaseosPorBoletos controlador;
+	private JFrame jframePrinc;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaListadoPaseosDispBoletos window = new VentanaListadoPaseosDispBoletos();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
+	
 	/**
 	 * Create the application.
 	 */
-	public VentanaListadoPaseosDispBoletos() {
+	public VentanaListadoPaseosDispBoletos(JFrame jframePadre) {
 		super("Listado de paseos por disponibilidad de boletos", true, true, true, true);
 		frame = this;
 		setBounds(50, 80, 800, 389);
 		getContentPane().setLayout(null);
+		jframePrinc = jframePadre;
 
 		JLabel lblCantBoletos = new JLabel("Cantidad de Boletos:");
 		lblCantBoletos.setToolTipText("Formato numero entero");
@@ -66,6 +58,7 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 		getContentPane().add(lblCantBoletos);
 
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
 		btnBuscar.setBounds(254, 30, 85, 21);
 		getContentPane().add(btnBuscar);
 
@@ -97,15 +90,53 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 		};
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				
+				
+			}
+		});
 		scrollPane.setBounds(6, 59, 800, 278);
 		getContentPane().add(scrollPane);
 		
 		table = new JTable(modeloTabla);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			
+				
+				
+			}
+		});
 		scrollPane.setViewportView(table);
 		table.setBackground(new Color(240, 240, 240));
 		table.setGridColor(Color.GRAY);
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setRowHeight(25);
+		
+		JButton btnComprarBoleto = new JButton("Comprar Boleto");
+		btnComprarBoleto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(table.getSelectedRow()>=0)
+				{
+					
+					VentanaVentaBoleto v = new VentanaVentaBoleto(table.getValueAt(table.getSelectedRow(), 0).toString());
+					jframePrinc.add(v);
+					v.setVisible(true);
+			
+				}else 
+				{
+					mostrarError("Primero debe seleccionar un paseo de la tabla.");
+					
+				}
+			}
+		});
+		btnComprarBoleto.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
+		btnComprarBoleto.setBounds(629, 26, 141, 29);
+		getContentPane().add(btnComprarBoleto);
 
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

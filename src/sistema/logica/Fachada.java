@@ -135,35 +135,12 @@ public class Fachada extends UnicastRemoteObject implements IFachada{
          	     
 	}
 
-	public ArrayList<VOPaseosListado> ListadoPaseosDestino(String destino) throws DestinoNoPerteneceException, RemoteException {
+	public ArrayList<VOPaseosListado> ListadoPaseosDestino(String destino) throws RemoteException {
         monitor.comienzoLectura();
-		boolean existe;
-		switch (destino) {
-
-		case "Punta del Este":
-		case "Piriapolis":
-		case "Canelones":
-		case "Maldonado":
-		case "Rocha":
-			existe = true;
-			break;
-
-		default:
-			existe = false;
-		break;
-		}
-		if (existe) {
 			
-			ArrayList<VOPaseosListado> arre = colPaseos.listadoPaseosDestino(destino);
-			monitor.terminoLectura();
-			return arre;
-			
-		} else {
-			monitor.terminoLectura();
-			String mensajeError = String.format("El destino %s no partenece a la lista de posibles destinos", destino);
-			throw new DestinoNoPerteneceException(mensajeError);
-		}
-		
+		ArrayList<VOPaseosListado> arre = colPaseos.listadoPaseosDestino(destino);
+		monitor.terminoLectura();
+		return arre;
 	}
 
 	public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos(int cantBoletos) throws CantidadMayorCero, RemoteException {
