@@ -50,7 +50,7 @@ public class Servidor
 			}
 			System.out.println ("Antes de publicarlo");
 			Naming.rebind("//" +ipServ+ ":" + puerto+"/fachada", f);
-			System.out.println ("Luego de publicarlo");
+			System.out.println ("Luego de publicarlo: " + ipServ + ":" + puerto);
 		}
 		
 		catch (RemoteException e)

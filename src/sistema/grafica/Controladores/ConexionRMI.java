@@ -42,9 +42,9 @@ public class ConexionRMI {
 		
 
 		
-			iFac = (IFachada) Naming.lookup("//"+ipServ+":"+puerto+"/fachada");
-			resp = true;
-		
+		iFac = (IFachada) Naming.lookup("//"+ipServ+":"+puerto+"/fachada");
+		resp = true;
+
 		
 		
 		return resp;
