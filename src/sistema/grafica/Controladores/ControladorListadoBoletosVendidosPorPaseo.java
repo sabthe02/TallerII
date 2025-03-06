@@ -13,7 +13,7 @@ import sistema.logica.ValueObject.VOMinivanListado;
 public class ControladorListadoBoletosVendidosPorPaseo extends ConexionRMI{
 	
 	private VentanaListadoBoletosVendidosXPaseo ventana;
-	private Boolean conectado;
+	private boolean conectado;
 	
 	public ControladorListadoBoletosVendidosPorPaseo(VentanaListadoBoletosVendidosXPaseo v) {
 		ventana = v;
@@ -36,7 +36,8 @@ public class ControladorListadoBoletosVendidosPorPaseo extends ConexionRMI{
 	public ArrayList<VOListadoBoletos> obtenerListado(String codigoPaseo, boolean esEspecial) 
 	{
 		ArrayList<VOListadoBoletos> arre = null;
-		if (conectado) {	
+		if (conectado) 
+		{	
 			try {
 				arre = super.iFac.ListadoBoleto(codigoPaseo, esEspecial);
 			} catch (RemoteException e) {
@@ -45,6 +46,9 @@ public class ControladorListadoBoletosVendidosPorPaseo extends ConexionRMI{
 				// TODO Auto-generated catch block
 				ventana.mostrarError("El paseo indicado no existe.");
 			}
+		}else {
+			ventana.mostrarError("No se pueden obtener los resultados ya que no se puede conectar al servidor.");
+			
 		}
 			
 		

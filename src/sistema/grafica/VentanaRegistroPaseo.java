@@ -123,15 +123,16 @@ public class VentanaRegistroPaseo extends JInternalFrame {
 				List<String> errores = validarCampos();
 				if (errores.isEmpty()) {
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-					VOPaseo vo = new VOPaseo();
-					vo.setCodigo(txtCodigoPaseo.getText());
-					vo.setDestino(txtDestino.getText());
-					vo.setPrecioBase(Double.parseDouble(txtPrecioBase.getText()));
-					vo.setHoraPartida(LocalTime.parse(formattedTextHoraPartida.getText(), formatter));
-					vo.setHoraRegreso(LocalTime.parse(formattedTextHoraRegreso.getText(), formatter));
+					
+					LocalTime horaPartida = LocalTime.parse(formattedTextHoraPartida.getText(), formatter);
+					LocalTime horaRegreso = LocalTime.parse(formattedTextHoraRegreso.getText(), formatter);
+
+					
+					
 					
 					controlador = new ControladorRegistroPaseo(VentanaRegistroPaseo.this);
-					if (controlador.RegistrarPaseo(vo)) {
+					if (controlador.RegistrarPaseo(txtCodigoPaseo.getText(), txtDestino.getText(), Double.parseDouble(txtPrecioBase.getText()), horaPartida, horaRegreso)) 
+					{
 
 						JOptionPane.showMessageDialog(null, "Se ingreso el paseo correctamente.");
 						VentanaRegistroPaseo.this.setVisible(false);

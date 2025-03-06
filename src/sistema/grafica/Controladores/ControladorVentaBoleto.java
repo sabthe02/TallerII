@@ -40,11 +40,21 @@ public class ControladorVentaBoleto extends ConexionRMI {
 
 	}
 
-	public boolean ComprarBoleto(VOCompraBoleto voBoleto) {
+	public boolean ComprarBoleto(String codigo, String Nombre, int edad, String Celular, boolean especial, Double descuento) {
 		boolean resp = false;
 		if (conectado) {
 			try {
-				super.iFac.ComprarBoleto(voBoleto);
+				
+				VOCompraBoleto vo = new VOCompraBoleto();
+				vo.setCodigoPaseo(codigo);
+				vo.setNombre(Nombre);
+				vo.setEdad(edad);
+				vo.setCelular(Celular);
+				vo.setEsEspecial(especial);
+				vo.setDescuento(descuento);
+				
+				
+				super.iFac.ComprarBoleto(vo);
 				resp = true;
 
 			} catch (RemoteException e) {
