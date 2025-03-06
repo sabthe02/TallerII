@@ -31,8 +31,6 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 	private ControladorListadoGeneralMinivanes controlador;
 	private JFrame jframePrinc;
 
-	
-
 	public VentanaListadoGeneralMinivanes(JFrame jframePadre) {
 		super("Listado general de Minivanes", true, true, true, true);
 		frmListadoGeneralMinivanes = this;
@@ -44,7 +42,6 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 		setIconifiable(true);
 		getContentPane().setLayout(null);
 		jframePrinc = jframePadre;
-
 
 		modeloTabla = new DefaultTableModel(new Object[][] {}, new String[] { "Matrícula", "Marca", "Modelo",
 				"Cantidad de Asientos", "Cantidad de Paseos Asignados" }) {
@@ -72,24 +69,23 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 		JButton btnNewButton = new JButton("Cerrar");
 		btnNewButton.setBounds(346, 325, 85, 21);
 		getContentPane().add(btnNewButton);
-		
+
 		JButton btnVerPaseos = new JButton("Ver Paseos");
 		btnVerPaseos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(table.getSelectedRow()>=0)
-				{
-					
-					VentanaListadoPaseosMinivan v = new VentanaListadoPaseosMinivan(table.getValueAt(table.getSelectedRow(), 0).toString());
+
+				if (table.getSelectedRow() >= 0) {
+
+					VentanaListadoPaseosMinivan v = new VentanaListadoPaseosMinivan(
+							table.getValueAt(table.getSelectedRow(), 0).toString());
 					jframePrinc.add(v);
 					v.setVisible(true);
-			
-				}else 
-				{
+
+				} else {
 					mostrarError("Primero debe seleccionar una minivan de la tabla.");
-					
+
 				}
-				
+
 			}
 		});
 		btnVerPaseos.setBounds(653, 0, 117, 29);
@@ -103,9 +99,11 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 		controlador = new ControladorListadoGeneralMinivanes(this);
 
 		ArrayList<VOMinivanListado> lista = controlador.obtenerListado();
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		lista.forEach(arg0 -> model.addRow(new Object[] { arg0.getMatricula(), arg0.getMarca(), arg0.getModelo(),
-				arg0.getCantidadAsientos(), arg0.getCantidadPaseos() }));
+		if (lista != null) {
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			lista.forEach(arg0 -> model.addRow(new Object[] { arg0.getMatricula(), arg0.getMarca(), arg0.getModelo(),
+					arg0.getCantidadAsientos(), arg0.getCantidadPaseos() }));
+		}
 
 	}
 

@@ -139,8 +139,7 @@ public class VentanaRegistroMinivan extends JInternalFrame {
 	                int asientos = Integer.parseInt(formattedTextField.getText());
 	                
 	                controlador = new ControladorRegistroMinivan(VentanaRegistroMinivan.this);
-	                VOMinivan m = new VOMinivan(matricula, marca, modelo, asientos);
-	                controlador.RegistrarMinivan(m);
+	                controlador.RegistrarMinivan(matricula, marca, modelo, asientos);
 	                fm.setVisible(false);	
                 }
 	            	else {

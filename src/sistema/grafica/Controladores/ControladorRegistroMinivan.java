@@ -18,51 +18,44 @@ public class ControladorRegistroMinivan extends ConexionRMI {
 	private VentanaRegistroMinivan ventana;
 
 	private boolean conectado;
-	
-	public ControladorRegistroMinivan (VentanaRegistroMinivan v)
-	{
+
+	public ControladorRegistroMinivan(VentanaRegistroMinivan v) {
 		super();
 		ventana = v;
 		try {
 			conectado = Conectar();
 		} catch (MalformedURLException e) {
 			ventana.mostrarError("Problema de formar la URL");
-			
+
 		} catch (RemoteException e) {
 			ventana.mostrarError("Problemas de conexion al servidor");
-			
+
 		} catch (NotBoundException e) {
 			ventana.mostrarError("Problema con la direccion del servidor");
 		}
-		
-		
+
 	}
-	
-	public void RegistrarMinivan(VOMinivan voMinivan)
-	{
-		if(conectado)
-		{  
-			try {	
+
+	public void RegistrarMinivan(String matricula, String marca, String modelo, int asientos) {
+		if (conectado) {
+			try {
+                VOMinivan m = new VOMinivan(matricula, marca, modelo, asientos);
+				super.iFac.RegistroMinivanes(m);
+				JOptionPane.showMessageDialog(ventana, "Resgistrado con exito");
 				
-			super.iFac.RegistroMinivanes(voMinivan);
-			JOptionPane.showMessageDialog(ventana, "Resgistrado con exito");
-			}
-			 catch (MinivanYaExisteException e) {
-				 ventana.mostrarError("La minivan a ingresar ya existe");
-				
+			} catch (MinivanYaExisteException e) {
+				ventana.mostrarError("La minivan a ingresar ya existe");
+
 			} catch (CantAsientosMayorCeroException e) {
 				ventana.mostrarError("La cantidad de asientos tiene que ser mayor a 0");
 			} catch (RuntimeException e) {
 				ventana.mostrarError("Error Runtime, fallo algo del sistema");
-			}
-			catch (RemoteException e) {
+			} catch (RemoteException e) {
 				ventana.mostrarError("Problemas de conexion al servidor");
-		}
-		
+			}
+
 		}
 
-		
-		
 	}
-	
+
 }
