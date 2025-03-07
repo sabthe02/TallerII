@@ -15,15 +15,13 @@ import sistema.logica.Paseos.Paseo;
 import sistema.logica.ValueObject.*;
 import sistema.persistencia.*;
 
+public class Fachada extends UnicastRemoteObject implements IFachada {
 
-public class Fachada extends UnicastRemoteObject implements IFachada{
-	
 	private static final long serialVersionUID = 1L;
 	private Minivanes colMinivan;
 	private Paseos colPaseos;
-	
+
 	public static Monitor monitor;
-	
 
 	public Fachada() throws RemoteException {
 		colMinivan = new Minivanes();
@@ -31,86 +29,94 @@ public class Fachada extends UnicastRemoteObject implements IFachada{
 		monitor = new Monitor();
 	}
 
-	public void RegistroMinivanes(VOMinivan VO) throws MinivanYaExisteException, CantAsientosMayorCeroException, RemoteException {
+	public void RegistroMinivanes(VOMinivan VO)
+			throws MinivanYaExisteException, CantAsientosMayorCeroException, RemoteException {
 
 		monitor.comienzoEscritura();
 		if (VO.getCantidadAsientos() > 0) {
-			if (!colMinivan.member(VO.getMatricula())) {
-				
+			if (!colMinivan.member(VO.getMatricula().toUpperCase())) {
+
 				Minivan m = new Minivan(VO.getMatricula(), VO.getMarca(), VO.getModelo(), VO.getCantidadAsientos());
-				colMinivan.insert(m.getMatricula(), m);
+				colMinivan.insert(m.getMatricula().toUpperCase(), m);
 				monitor.terminoEscritura();
-				
+
 			} else {
 				monitor.terminoEscritura();
-				String mensajeError = String.format("Ya existe una minivan con la matrícula: %s", VO.getMatricula());				
+				String mensajeError = String.format("Ya existe una minivan con la matrícula: %s", VO.getMatricula());
 				throw new MinivanYaExisteException(mensajeError);
 			}
 		} else {
 			monitor.terminoEscritura();
-			String mensajeError = "La cantidad de asientos tiene que ser mayor que cero";			
-			throw new CantAsientosMayorCeroException(mensajeError);	        
+			String mensajeError = "La cantidad de asientos tiene que ser mayor que cero";
+			throw new CantAsientosMayorCeroException(mensajeError);
 		}
 
-		
 	}
 
 	public ArrayList<VOMinivanListado> ListadoGeneralMinivanes() throws RemoteException {
-		monitor.comienzoLectura();		
+		monitor.comienzoLectura();
 		ArrayList<VOMinivanListado> arre = colMinivan.ListadoMinivanes();
 		monitor.terminoLectura();
 		return arre;
-			
+
 	}
-		
-	public void RegistroPaseo(VOPaseo VO) throws MinivanNoExiste, PrecioMenorCero, RemoteException {
+
+	public void RegistroPaseo(VOPaseo VO) throws MinivanNoExiste, PrecioMenorCero, CodigoPaseoYaExiste, RemoteException {
 		monitor.comienzoEscritura();
 		boolean agregar;
 		boolean vanDisponible;
 		if (VO.getPrecioBase() > 0) {
-			agregar = false;
-			Iterator<Minivan> iterm = colMinivan.arbol.values().iterator();
 
-			while (iterm.hasNext() && !agregar) {
-				vanDisponible = true;
-				Minivan m = iterm.next();
-				Iterator<Paseo> iterp = m.getPaseos().arbol.values().iterator();
+			if (!colPaseos.member(VO.getCodigo().toUpperCase())) {
 
-				while (iterp.hasNext() && vanDisponible) {
-					Paseo p = iterp.next();
-					if (p.getHoraPartida().isAfter(VO.getHoraPartida())) {
-						if (p.getHoraPartida().isBefore(VO.getHoraRegreso())) {
-							vanDisponible = false;
-						}
-					} else {
-						if (p.getHoraPartida().isBefore(VO.getHoraPartida())) {
-							if (p.getHoraRegreso().isAfter(VO.getHoraPartida())) {
+				agregar = false;
+				Iterator<Minivan> iterm = colMinivan.arbol.values().iterator();
+
+				while (iterm.hasNext() && !agregar) {
+					vanDisponible = true;
+					Minivan m = iterm.next();
+					Iterator<Paseo> iterp = m.getPaseos().arbol.values().iterator();
+
+					while (iterp.hasNext() && vanDisponible) {
+						Paseo p = iterp.next();
+						if (p.getHoraPartida().isAfter(VO.getHoraPartida())) {
+							if (p.getHoraPartida().isBefore(VO.getHoraRegreso())) {
 								vanDisponible = false;
-
 							}
 						} else {
-							vanDisponible = false;
+							if (p.getHoraPartida().isBefore(VO.getHoraPartida())) {
+								if (p.getHoraRegreso().isAfter(VO.getHoraPartida())) {
+									vanDisponible = false;
+
+								}
+							} else {
+								vanDisponible = false;
+							}
 						}
 					}
-				}
-				if (vanDisponible) {
-					agregar = true;
-				}
-				if (agregar) {
-					Paseo paseo = new Paseo(VO.getCodigo(), VO.getHoraPartida(), VO.getHoraRegreso(), 0,
-							m.getCantAsientos(), VO.getPrecioBase(), VO.getDestino());
+					if (vanDisponible) {
+						agregar = true;
+					}
+					if (agregar) {
+						Paseo paseo = new Paseo(VO.getCodigo(), VO.getHoraPartida(), VO.getHoraRegreso(), 0,
+								m.getCantAsientos(), VO.getPrecioBase(), VO.getDestino());
 
-					m.getPaseos().registroPaseo(paseo);
-					colPaseos.insert(VO.getCodigo(), paseo);
+						m.getPaseos().registroPaseo(paseo);
+						colPaseos.insert(VO.getCodigo().toUpperCase(), paseo);
+						monitor.terminoEscritura();
+
+					}
+
+				}
+				if (!agregar) {
 					monitor.terminoEscritura();
-
+					String mensajeError = "No hay minivanes disponibles para ese paseo";
+					throw new MinivanNoExiste(mensajeError);
 				}
-
-			}
-			if (!agregar) {
+			} else {
 				monitor.terminoEscritura();
-				String mensajeError = "No hay minivanes disponibles para ese paseo";
-				throw new MinivanNoExiste(mensajeError);
+				String mensajeError = "Ya existe un paseo creado con ese codigo.";
+				throw new CodigoPaseoYaExiste(mensajeError);
 			}
 
 		} else {
@@ -118,70 +124,47 @@ public class Fachada extends UnicastRemoteObject implements IFachada{
 			String mensajeError = "Por favor ingresar un precio mayor a cero";
 			throw new PrecioMenorCero(mensajeError);
 		}
-            
+
 	}
 
 	public ArrayList<VOPaseosListado> ListadoPaseosMinivan(String matricula) throws MinivanNoExiste, RemoteException {
-           monitor.comienzoLectura();
-	           if(colMinivan.member(matricula)) {
-	        	   ArrayList<VOPaseosListado> arre = colMinivan.ListadoPaseosEnMinivan(matricula);
-	        	   monitor.terminoLectura();
-        	   return arre;
-           }
-           else {
-        	   monitor.terminoLectura();
-        	   throw new MinivanNoExiste(String.format("La minivan con codigo: %s no existe", matricula));
-           }
-         	     
-	}
-
-	public ArrayList<VOPaseosListado> ListadoPaseosDestino(String destino) throws DestinoNoPerteneceException, RemoteException {
-        monitor.comienzoLectura();
-		boolean existe;
-		switch (destino) {
-
-		case "Punta del Este":
-		case "Piriapolis":
-		case "Canelones":
-		case "Maldonado":
-		case "Rocha":
-			existe = true;
-			break;
-
-		default:
-			existe = false;
-		break;
-		}
-		if (existe) {
-			
-			ArrayList<VOPaseosListado> arre = colPaseos.listadoPaseosDestino(destino);
+		monitor.comienzoLectura();
+		if (colMinivan.member(matricula.toUpperCase())) {
+			ArrayList<VOPaseosListado> arre = colMinivan.ListadoPaseosEnMinivan(matricula.toUpperCase());
 			monitor.terminoLectura();
 			return arre;
-			
 		} else {
 			monitor.terminoLectura();
-			String mensajeError = String.format("El destino %s no partenece a la lista de posibles destinos", destino);
-			throw new DestinoNoPerteneceException(mensajeError);
+			throw new MinivanNoExiste(String.format("La minivan con codigo: %s no existe", matricula));
 		}
-		
+
 	}
 
-	public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos(int cantBoletos) throws CantidadMayorCero, RemoteException {
+	public ArrayList<VOPaseosListado> ListadoPaseosDestino(String destino) throws RemoteException {
+		monitor.comienzoLectura();
+
+		ArrayList<VOPaseosListado> arre = colPaseos.listadoPaseosDestino(destino);
+		monitor.terminoLectura();
+		return arre;
+	}
+
+	public ArrayList<VOPaseosListado> ListadoPaseosDispBoletos(int cantBoletos)
+			throws CantidadMayorCero, RemoteException {
 
 		monitor.comienzoLectura();
-			if(cantBoletos <= 0) {
-				monitor.terminoLectura();
-				throw new CantidadMayorCero("La cantidad de boletos debe ser mayor que cero");
-			}
+		if (cantBoletos <= 0) {
 			monitor.terminoLectura();
-			return colPaseos.listadoPaseosDisponible(cantBoletos);
+			throw new CantidadMayorCero("La cantidad de boletos debe ser mayor que cero");
+		}
+		monitor.terminoLectura();
+		return colPaseos.listadoPaseosDisponible(cantBoletos);
 
 	}
 
 	public void ComprarBoleto(VOCompraBoleto voBoleto)
-	        throws BoletosNoDisponibles, PaseoNoExiste, CelularMayorQue1000, MenorDe0, RemoteException {
+			throws BoletosNoDisponibles, PaseoNoExiste, CelularMayorQue1000, MenorDe0, RemoteException {
 		if (voBoleto.getEdad() > 0) {
-
+			voBoleto.setCodigoPaseo(voBoleto.getCodigoPaseo().toUpperCase());
 			if (Integer.parseInt(voBoleto.getCelular()) > 0) {
 				if (colPaseos.member(voBoleto.getCodigoPaseo())) {
 					if (colPaseos.find(voBoleto.getCodigoPaseo()).getCantidadBoletosDisponibles() > 0) {
@@ -215,13 +198,13 @@ public class Fachada extends UnicastRemoteObject implements IFachada{
 
 	}
 
+	public ArrayList<VOListadoBoletos> ListadoBoleto(String codigo, boolean esEsp)
+			throws PaseoNoExiste, RemoteException {
+		monitor.comienzoLectura();
 
-	public ArrayList<VOListadoBoletos> ListadoBoleto(String codigo, boolean esEsp) throws PaseoNoExiste, RemoteException {
-        monitor.comienzoLectura();
-
-		if (colPaseos.member(codigo)) {
-			if (colPaseos.CantidadBoletosVendidos(codigo) > 0) {
-				ArrayList<VOListadoBoletos> arre = colPaseos.listadoBoletoTipo(codigo, esEsp);
+		if (colPaseos.member(codigo.toUpperCase())) {
+			if (colPaseos.CantidadBoletosVendidos(codigo.toUpperCase()) > 0) {
+				ArrayList<VOListadoBoletos> arre = colPaseos.listadoBoletoTipo(codigo.toUpperCase(), esEsp);
 				monitor.terminoLectura();
 				return arre;
 			}
@@ -231,26 +214,25 @@ public class Fachada extends UnicastRemoteObject implements IFachada{
 			throw new PaseoNoExiste(mensajeError);
 		}
 		return null;
-        
-        
+
 	}
 
 	public Double MontoRecaudadoPorPaseo(String codigoPaseo) throws PaseoNoExiste, RemoteException {
 		monitor.comienzoLectura();
 		Double resp = -1.0;
 
-		if (colPaseos.member(codigoPaseo)) {
-			resp = colPaseos.find(codigoPaseo).montoRecaudadoPaseo();
+		if (colPaseos.member(codigoPaseo.toUpperCase())) {
+			resp = colPaseos.find(codigoPaseo.toUpperCase()).montoRecaudadoPaseo();
 			monitor.terminoLectura();
 
 		} else {
 			monitor.terminoLectura();
 			throw new PaseoNoExiste("El Codigo de paseo indicado no existe.");
-			
+
 		}
 
 		return resp;
-		
+
 	}
 
 	public void RespaldarDatos() throws PersistenciaException, RemoteException {
@@ -267,7 +249,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada{
 
 			new Respaldo().respaldar(ruta, vo);
 			monitor.terminoLectura();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			monitor.terminoLectura();
@@ -275,7 +257,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada{
 		} catch (PersistenciaException e) {
 			monitor.terminoLectura();
 			System.out.println("Error de persistencia: " + e.getMessage());
-			
+
 		}
 
 	}
@@ -290,7 +272,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada{
 			p.load(new FileInputStream(nomArchProperties));
 			ruta = p.getProperty("rutaDatosRespaldo");
 			VOMinivanesYPaseosRespaldo vo = new Respaldo().recuperar(ruta);
-			if (vo!= null) {
+			if (vo != null) {
 				this.colMinivan = vo.getColMinivan();
 				this.colPaseos = vo.getColPaseos();
 				monitor.terminoEscritura();
@@ -299,7 +281,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada{
 		} catch (IOException e) {
 			e.printStackTrace();
 			monitor.terminoEscritura();
-			
+
 		} catch (PersistenciaException e) {
 			System.out.println("Error de persistencia: " + e.getMessage());
 			monitor.terminoEscritura();

@@ -37,6 +37,17 @@ public class VentanaVentaBoleto extends JInternalFrame {
 	private JLabel label_5;
 
 	public VentanaVentaBoleto() {
+		Inicializar();
+	}
+	
+	public VentanaVentaBoleto(String idPaseo) {
+		Inicializar();
+		txtCodigoPaseo.setText(idPaseo);
+	}
+	
+	
+	public void Inicializar()
+	{
 		fm = this;
 		setResizable(true);
 		setIconifiable(true);
@@ -159,23 +170,14 @@ public class VentanaVentaBoleto extends JInternalFrame {
 					
 					
 					controlador = new ControladorVentaBoleto(VentanaVentaBoleto.this);
-					VOCompraBoleto vo = new VOCompraBoleto();
-					vo.setCodigoPaseo(codigo);
-					vo.setNombre(txtNombre.getText());
-					vo.setEdad(edad);
-					vo.setCelular(txtCelular.getText());
-					vo.setEsEspecial(especial);
-					vo.setDescuento(descuento);
 					
 					
-					if (controlador.ComprarBoleto(vo)) {
+					
+					if (controlador.ComprarBoleto(codigo, txtNombre.getText(), edad, txtCelular.getText(), especial, descuento)) {
 						JOptionPane.showMessageDialog(fm, "Se hizo la compra del boleto correctamente.");
 						fm.setVisible(false);
 					}
-					// Por alguna razón tira esto a pesar
-					// de no pasar las validaciones, además hay que agregar el tema si es especial o
-					// no a la ventana y el VO, si no no se
-					// puede usar para el listado
+					
 
 				} else {
 					String aux = "";
