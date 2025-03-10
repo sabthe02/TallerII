@@ -36,12 +36,14 @@ public class ControladorRegistroMinivan extends ConexionRMI {
 
 	}
 
-	public void RegistrarMinivan(String matricula, String marca, String modelo, int asientos) {
+	public boolean RegistrarMinivan(String matricula, String marca, String modelo, int asientos) {
+		boolean resp = false;
 		if (conectado) {
 			try {
                 VOMinivan m = new VOMinivan(matricula, marca, modelo, asientos);
 				super.iFac.RegistroMinivanes(m);
-				JOptionPane.showMessageDialog(ventana, "Registrado con exito.");
+				JOptionPane.showMessageDialog(ventana, "Resgistrado con exito");
+				resp = true;
 				
 			} catch (MinivanYaExisteException e) {
 				ventana.mostrarError("La minivan a ingresar ya existe.");
@@ -51,10 +53,11 @@ public class ControladorRegistroMinivan extends ConexionRMI {
 			} catch (RuntimeException e) {
 				ventana.mostrarError("Error Runtime, fallo algo del sistema.");
 			} catch (RemoteException e) {
-				ventana.mostrarError("Problemas de conexion al servidor.");
+				ventana.mostrarError("Problemas de conexion al servidor"); 
 			}
 
 		}
+		return resp;
 
 	}
 
