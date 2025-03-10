@@ -15,6 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
@@ -29,15 +33,19 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JComboBox;
 
-public class VentanaRegistroPaseo extends JInternalFrame {
+public  class VentanaRegistroPaseo extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	// private JInternalFrame frmRegistroPaseo;
@@ -54,6 +62,7 @@ public class VentanaRegistroPaseo extends JInternalFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+
 			public void run() {
 				try {
 					VentanaRegistroPaseo window = new VentanaRegistroPaseo();
@@ -64,6 +73,7 @@ public class VentanaRegistroPaseo extends JInternalFrame {
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the application.
@@ -150,6 +160,8 @@ public class VentanaRegistroPaseo extends JInternalFrame {
 				}
 			}
 		});
+		
+		btnAceptar.setBackground(Color.GREEN);
 		btnAceptar.setBounds(229, 182, 92, 29);
 		panel.add(btnAceptar);
 
@@ -235,4 +247,5 @@ public class VentanaRegistroPaseo extends JInternalFrame {
 	public void mostrarError(String mensaje) {
 		JOptionPane.showMessageDialog(this, "error: " + mensaje);
 	}
+	
 }
