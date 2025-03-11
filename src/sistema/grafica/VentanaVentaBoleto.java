@@ -31,11 +31,8 @@ public class VentanaVentaBoleto extends JInternalFrame {
 	private JFormattedTextField txtCelular;
 	private JFormattedTextField txtEdad;
 	private ButtonGroup grupoBoletos;
-	private JInternalFrame panelTipoBoleto;
-	private JRadioButton radiobuttonComun;
-	private Component radiobuttonEspecial;
 	private JTextField txtDescuento;
-	private JLabel label_5;
+	private JLabel label_5; 
 
 	public VentanaVentaBoleto() {
 		Inicializar();
@@ -158,7 +155,6 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		getContentPane().add(lblNewLabel);
 
 		btnAceptar = new JButton("Aceptar");
-		btnAceptar = new JButton ("Aceptar");
         btnAceptar.setText("Aceptar");
         btnAceptar.setBackground(Color.GREEN);
 		btnAceptar.setBounds(352, 253, 84, 23);
