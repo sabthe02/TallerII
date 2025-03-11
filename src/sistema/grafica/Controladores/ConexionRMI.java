@@ -32,7 +32,7 @@ public class ConexionRMI {
 			String nomArchProperties = "./config/config.properties";
 			p.load(new FileInputStream(nomArchProperties));
 			ipServ = p.getProperty("ipServidor");
-			puerto = p.getProperty("puertoServidor");
+			puerto = p.getProperty("puertoServidor"); 
 
 		}
 		catch (IOException e)

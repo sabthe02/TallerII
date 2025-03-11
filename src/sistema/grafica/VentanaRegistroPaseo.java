@@ -67,7 +67,7 @@ public  class VentanaRegistroPaseo extends JInternalFrame {
 	public VentanaRegistroPaseo() {
 		super("Registro Paseos", true, true, true, true);
 		fm = this;
-		setBounds(50, 80, 485, 264);
+		setBounds(50, 80, 485, 249);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 200, 145));
@@ -119,6 +119,7 @@ public  class VentanaRegistroPaseo extends JInternalFrame {
 		btnAceptar.setBackground(Color.GREEN);
 		btnAceptar.setBounds(349, 179, 84, 23);
 		btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
+		btnAceptar.setBorder(UIManager.getBorder("Button.border"));
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				List<String> errores = validarCampos();

@@ -101,7 +101,7 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 		lblTitulo.setBounds(211, 10, 291, 13);
 		getContentPane().add(lblTitulo);
 		
-		
+		 
 		textField = new JTextField();
 		textField.setBounds(323, 33, 85, 19);
 		getContentPane().add(textField);
