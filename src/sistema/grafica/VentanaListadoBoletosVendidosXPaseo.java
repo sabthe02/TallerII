@@ -44,7 +44,7 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
     	
 	 	fm = this;
         setTitle("Listado de Boletos Vendidos para un Paseo");
-        setBounds(300, 100, 800, 302);
+        setBounds(300, 100, 800, 322);
         setResizable(true);
         setClosable(true);
         setMaximizable(true);
@@ -73,6 +73,7 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
         panelCodigo.add(txtCodigoPaseo);
         PanelPrincipal.add(panelCodigo);
         radiobuttonComun = new JRadioButton("Común");
+        radiobuttonComun.setSelected(true);
         radiobuttonComun.setBackground(new Color(255, 200, 145));
         radiobuttonComun.setFont(new Font("Segoe UI", Font.PLAIN, 12)); 
         radiobuttonComun.setBounds(331, 3, 100, 25);
@@ -92,15 +93,15 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
         radioPanel.setBackground(new Color(255, 200, 145));
         panelCodigo.add(radioPanel);
         
-        JButton btnAceptar = new JButton("Aceptar");
-        btnAceptar.setBounds(669, 5, 85, 21);
+        JButton btnAceptar = new JButton("Buscar");
+        btnAceptar.setBounds(576, 5, 85, 21);
         radioPanel.add(btnAceptar);
         btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10)); 
         btnAceptar.setBackground(Color.GREEN);
         btnAceptar.setBorder(UIManager.getBorder("Button.border"));
         
-        btnCancelar = new JButton("Cancelar");
-        btnCancelar.setBounds(574, 5, 85, 21);
+        btnCancelar = new JButton("Salir");
+        btnCancelar.setBounds(673, 5, 85, 21);
         radioPanel.add(btnCancelar);
         btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
         btnCancelar.setBorder(UIManager.getBorder("Button.border"));
@@ -163,28 +164,17 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         scrollPane.setBackground(new Color(255, 200, 145));
-        scrollPane.setBounds(16, 75, 754, 187);
+        scrollPane.setBounds(16, 75, 754, 195);
         
         PanelPrincipal.add(scrollPane);
         
-        table_1 = new JTable(new DefaultTableModel(
-        	new Object[][] {
-        	},
-        	new String[] {
-        		"Numero de Boleto", "Nombre Pasajero", "Edad Pasajero", "Celular", "Descuento"
-        	}
-        ));
+        table_1 = new JTable(modeloTabla);
         table_1.setFont(new Font("Segoe UI", Font.PLAIN, 12)); 
         table_1.setBackground(new Color(240, 240, 240));
         table_1.setGridColor(Color.GRAY);
         table_1.getTableHeader().setReorderingAllowed(false);
         table_1.setRowHeight(25);
         scrollPane.setViewportView(table_1);
-        
-        JLabel lblNewLabel = new JLabel("Ingresar codigo de un paseo y si es comun o especial para mostrar un listado");
-        lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        lblNewLabel.setBounds(16, 10, 445, 13);
-        PanelPrincipal.add(lblNewLabel);
     }
     
     
@@ -212,10 +202,10 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
     	
     	if(radiobuttonEspecial.isSelected())
     	{
-    		datos.forEach(boleto -> modeloTabla.addRow(new String[] {String.valueOf(boleto.getNumeroBoleto()), boleto.getCelular(), boleto.getNombre(), String.valueOf(boleto.getEdad()), String.valueOf(boleto.getDescuento())}));
+    		datos.forEach(boleto -> modeloTabla.addRow(new String[] {String.valueOf(boleto.getNumeroBoleto()),boleto.getNombre(),   String.valueOf(boleto.getEdad()),boleto.getCelular(), String.valueOf(boleto.getDescuento())}));
     	}else
     	{
-        	datos.forEach(boleto -> modeloTabla.addRow(new String[] {String.valueOf(boleto.getNumeroBoleto()), boleto.getCelular(), boleto.getNombre(), String.valueOf(boleto.getEdad())}));
+        	datos.forEach(boleto -> modeloTabla.addRow(new String[] {String.valueOf(boleto.getNumeroBoleto()), boleto.getNombre(), String.valueOf(boleto.getEdad()),boleto.getCelular()}));
 
     	}
     	

@@ -65,8 +65,8 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 		scrollPane.setBounds(0, 40, 784, 247);
 		getContentPane().add(scrollPane);
 
-		JButton btnCerrar = new JButton("Cancelar");
-		btnCerrar.setBounds(585, 14, 85, 21);
+		JButton btnCerrar = new JButton("Salir");
+		btnCerrar.setBounds(521, 14, 85, 21);
 		btnCerrar.setBackground(Color.RED);
 		btnCerrar.setFont(new Font("Segoe UI", Font.BOLD, 10));
 		btnCerrar.setBorder(UIManager.getBorder("Button.border"));
@@ -78,7 +78,8 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 		
 		getContentPane().add(btnCerrar);
 
-		JButton btnVerPaseos = new JButton("Ver Paseos");
+		JButton btnVerPaseos = new JButton("Ver Paseos de Minivan");
+		btnVerPaseos.setToolTipText("Haga clic, si quiere ver los paseos que tiene asignada la minivan seleccionada de la tabla");
 		btnVerPaseos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -96,15 +97,10 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 
 			}
 		});
-		btnVerPaseos.setBounds(680, 14, 94, 21);
+		btnVerPaseos.setBounds(618, 14, 156, 21);
 		btnVerPaseos.setFont(new Font("Segoe UI", Font.BOLD, 10));
 		btnVerPaseos.setBorder(UIManager.getBorder("Button.border"));
 		getContentPane().add(btnVerPaseos);
-		
-		JLabel lblNewLabel = new JLabel("Si quiere ver los paseos de una minivan en particular, marquela y apriete \"Ver Paseos\"");
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		lblNewLabel.setBounds(32, 17, 543, 13);
-		getContentPane().add(lblNewLabel);
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmListadoGeneralMinivanes.setVisible(false);

@@ -46,12 +46,12 @@ public class ControladorRegistroMinivan extends ConexionRMI {
 				resp = true;
 				
 			} catch (MinivanYaExisteException e) {
-				ventana.mostrarError("La minivan a ingresar ya existe");
+				ventana.mostrarError("La minivan a ingresar ya existe.");
 
 			} catch (CantAsientosMayorCeroException e) {
-				ventana.mostrarError("La cantidad de asientos tiene que ser mayor a 0");
+				ventana.mostrarError("La cantidad de asientos tiene que ser mayor a 0.");
 			} catch (RuntimeException e) {
-				ventana.mostrarError("Error Runtime, fallo algo del sistema");
+				ventana.mostrarError("Error Runtime, fallo algo del sistema.");
 			} catch (RemoteException e) {
 				ventana.mostrarError("Problemas de conexion al servidor"); 
 			}

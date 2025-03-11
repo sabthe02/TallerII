@@ -61,14 +61,8 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
         setIconifiable(true);
         getContentPane().setLayout(null);
 
-        JLabel labelTitulo = new JLabel("Ingrese el codigo de un paseo para ver el monto recaudado por el");
-        labelTitulo.setBounds(90, 10, 400, 30);
-        labelTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        getContentPane().add(labelTitulo);
-
         JPanel panelCodigo = new JPanel();
-        panelCodigo.setBounds(40, 63, 300, 48);
+        panelCodigo.setBounds(40, 63, 500, 48);
         panelCodigo.setLayout(null);
 
         JLabel labelCodigo = new JLabel("Código de Paseo:");
@@ -82,28 +76,13 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
         panelCodigo.add(textFieldCodigoPaseo);
         getContentPane().add(panelCodigo);
         
-        panelResultado = new JPanel();
-        panelResultado.setBounds(40, 134, 500, 48);
-        panelResultado.setLayout(null);
-        getContentPane().add(panelResultado);
-
-        JLabel labelMontoTitulo = new JLabel("Monto Recaudado:");
-        labelMontoTitulo.setBounds(46, 10, 200, 30);
-        labelMontoTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        panelResultado.add(labelMontoTitulo);
-
-        labelResultado = new JLabel("0.00");
-        labelResultado.setBounds(198, 10, 177, 30);
-        labelResultado.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        labelResultado.setHorizontalAlignment(SwingConstants.RIGHT);
-        panelResultado.add(labelResultado);
-
-        JButton btnAceptar = new JButton("Aceptar");
-        btnAceptar.setBounds(450, 73, 90, 25);
-        btnAceptar.setBackground(Color.GREEN);
-        btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
-        btnAceptar.setBorder(UIManager.getBorder("Button.border"));
-        btnAceptar.addActionListener(new ActionListener() { 
+                JButton btnAceptar = new JButton("Buscar");
+                btnAceptar.setBounds(285, 10, 90, 25);
+                panelCodigo.add(btnAceptar);
+                btnAceptar.setBackground(Color.GREEN);
+                btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
+                btnAceptar.setBorder(UIManager.getBorder("Button.border"));
+                btnAceptar.addActionListener(new ActionListener() { 
 
 			public void actionPerformed(ActionEvent e) {
 				String codigoPaseo = textFieldCodigoPaseo.getText();
@@ -126,16 +105,30 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
 										+ aux);
 				}
 			}
-        	
-        });
+                	
+                });
         
-        getContentPane().add(btnAceptar);
+        panelResultado = new JPanel();
+        panelResultado.setBounds(40, 134, 500, 48);
+        panelResultado.setLayout(null);
+        getContentPane().add(panelResultado);
+
+        JLabel labelMontoTitulo = new JLabel("Monto Recaudado:");
+        labelMontoTitulo.setBounds(46, 10, 200, 30);
+        labelMontoTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        panelResultado.add(labelMontoTitulo);
+
+        labelResultado = new JLabel("0.00");
+        labelResultado.setBounds(198, 10, 177, 30);
+        labelResultado.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        labelResultado.setHorizontalAlignment(SwingConstants.RIGHT);
+        panelResultado.add(labelResultado);
         
-        JButton btnCancelar = new JButton("Cancelar");
+        JButton btnCancelar = new JButton("Salir");
         btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
         btnCancelar.setBorder(UIManager.getBorder("Button.border"));
         btnCancelar.setBackground(Color.RED);
-        btnCancelar.setBounds(350, 73, 90, 25);
+        btnCancelar.setBounds(482, 224, 90, 25);
         btnCancelar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 	             fm.setVisible(false);	

@@ -33,6 +33,8 @@ public class VentanaVentaBoleto extends JInternalFrame {
 	private ButtonGroup grupoBoletos;
 	private JTextField txtDescuento;
 	private JLabel label_5; 
+	private JRadioButton radioButtonEspecial;
+	private JRadioButton radioButtonComun;
 
 	public VentanaVentaBoleto() {
 		Inicializar();
@@ -109,7 +111,8 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		label_4.setBounds(30, 183, 133, 26);
 		getContentPane().add(label_4);
 
-		JRadioButton radioButtonComun = new JRadioButton("Comun");
+		radioButtonComun = new JRadioButton("Comun");
+		radioButtonComun.setSelected(true);
 		radioButtonComun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (radioButtonComun.isSelected()) {
@@ -122,7 +125,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		radioButtonComun.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		getContentPane().add(radioButtonComun);
 
-		JRadioButton radioButtonEspecial = new JRadioButton("Especial");
+	    radioButtonEspecial = new JRadioButton("Especial");
 		radioButtonEspecial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (radioButtonEspecial.isSelected()) {
@@ -141,18 +144,15 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		grupoBoletos.add(radioButtonEspecial);
 
 		label_5 = new JLabel("Valor de Descuento:");
+		label_5.setVisible(false);
 		label_5.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		label_5.setBounds(30, 224, 133, 23);
 		getContentPane().add(label_5);
 
 		txtDescuento = new JTextField();
+		txtDescuento.setVisible(false);
 		txtDescuento.setBounds(167, 219, 256, 24);
 		getContentPane().add(txtDescuento);
-		
-		JLabel lblNewLabel = new JLabel("Por favor ingresar datos del boleto a registrar");
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		lblNewLabel.setBounds(30, 12, 354, 13);
-		getContentPane().add(lblNewLabel);
 
 		btnAceptar = new JButton("Aceptar");
         btnAceptar.setText("Aceptar");
@@ -234,6 +234,19 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		}
 		if (!(isNumeric(txtCelular.getText().trim()))) {
 			resp.add("El celular tiene que ser un numero");
+		}
+
+		if (radioButtonEspecial.isSelected()) {
+
+			if (txtDescuento.getText().equals("")) {
+				resp.add("El campo descuento no puede estar vacio.");
+			} else {
+				try {
+					Double.parseDouble(txtDescuento.getText());
+				} catch (NumberFormatException e) {
+					resp.add("El campo descuento tiene que ser un numero");
+				}
+			}
 		}
 
 		return resp;

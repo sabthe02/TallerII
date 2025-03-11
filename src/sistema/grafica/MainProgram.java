@@ -65,7 +65,7 @@ public class MainProgram {
 		desktopPane.setBackground(new Color(255, 200, 145));
 		desktopPane.setBorder(UIManager.getBorder("EditorPane.border"));
 		ImageIcon imagen = new ImageIcon("PaseosDelSolSA.png");
-		JLabel labelImagen = new JLabel(new ImageIcon(".\\src\\PaseosDelSolSA.png"));
+		JLabel labelImagen = new JLabel(new ImageIcon("./src/PaseosDelSolSA.png"));
 		labelImagen.setAlignmentY(2.0f);
 		labelImagen.setAlignmentX(2.0f);
 		labelImagen.setBackground(new Color(240, 240, 240));
