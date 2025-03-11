@@ -1,9 +1,6 @@
 package sistema.grafica;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,9 +19,9 @@ import sistema.grafica.Controladores.ControladorListadoGeneralPaseosPorDestino;
 import sistema.logica.ValueObject.VOPaseosListado;
 
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.Font;
 
 public class VentanaListadoPaseosXDestino extends JInternalFrame {
 
@@ -33,11 +30,13 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
 	private JPanel contentPane;
 	private DefaultTableModel modeloTabla;
 	private JTable table;
-	private JButton btnNewButton;
+	private JButton btnCancelar;
 	private JTextField txtDestino;
 	private ControladorListadoGeneralPaseosPorDestino controlador;
 	private JFrame jframePrinc;
 	private JButton btnComprarBoleto;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
 
 
 	
@@ -48,7 +47,7 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
 	public VentanaListadoPaseosXDestino(JFrame jframePadre) {
 		super("Listado de Paseos por Destino", true, true, true, true);
 		fm = this;
-        setBounds(50, 80, 800, 400);
+        setBounds(180, 80, 800, 377);
         setResizable(true);
         setClosable(true);
         setMaximizable(true);
@@ -57,6 +56,7 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		contentPane.setBackground(new Color(255, 200, 145));
 		
 		jframePrinc = jframePadre;
 
@@ -84,26 +84,34 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
             table.setRowHeight(25);
 
             JScrollPane scrollPane = new JScrollPane(table);
-            scrollPane.setBounds(50, 42, 700, 252); 
+            scrollPane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            scrollPane.setBounds(10, 79, 764, 252); 
             contentPane.add(scrollPane);
             
-            btnNewButton = new JButton("Aceptar");
-            btnNewButton.setBounds(335, 320, 85, 21);
-            contentPane.add(btnNewButton);
-            
-            JLabel lblNewLabel = new JLabel("Destino:");
-            lblNewLabel.setBounds(50, 14, 61, 16);
-            contentPane.add(lblNewLabel);
+            btnCancelar = new JButton("Cancelar");
+            btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
+            btnCancelar.setBorder(UIManager.getBorder("Button.border"));
+            btnCancelar.setBackground(Color.RED);
+            btnCancelar.setBounds(594, 10, 85, 23);
+            btnCancelar.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+    	             fm.setVisible(false);	
+    	        }
+            });
+            contentPane.add(btnCancelar);
             
             txtDestino = new JTextField();
-            txtDestino.setBounds(123, 9, 130, 26);
+            txtDestino.setBounds(385, 10, 166, 26);
             contentPane.add(txtDestino);
             txtDestino.setColumns(10);
             
             controlador = new ControladorListadoGeneralPaseosPorDestino(this);
             
-            JButton btnNewButton_1 = new JButton("Buscar");
-            btnNewButton_1.addActionListener(new ActionListener() {
+            JButton btnAceptar = new JButton("Aceptar");
+            btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
+            btnAceptar.setBorder(UIManager.getBorder("Button.border"));
+            btnAceptar.setBackground(Color.GREEN);
+            btnAceptar.addActionListener(new ActionListener() {
             	public void actionPerformed(ActionEvent arg0) {
             		
             		String destino = txtDestino.getText();
@@ -121,13 +129,17 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
         				}
             			
             		}
+            		else {
+            			JOptionPane.showMessageDialog(fm, "Destino no debe ser vacio");
+            		}
             		
             	}
             });
-            btnNewButton_1.setBounds(271, 9, 117, 29);
-            contentPane.add(btnNewButton_1);
+            btnAceptar.setBounds(689, 10, 85, 23);
+            contentPane.add(btnAceptar);
             
             btnComprarBoleto = new JButton("Comprar Boleto");
+            btnComprarBoleto.setFont(new Font("Segoe UI", Font.BOLD, 10));
             btnComprarBoleto.addActionListener(new ActionListener() {
             	public void actionPerformed(ActionEvent arg0) {
             		
@@ -135,7 +147,7 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
     				{
     					
     					VentanaVentaBoleto v = new VentanaVentaBoleto(table.getValueAt(table.getSelectedRow(), 0).toString());
-    					jframePrinc.add(v);
+    					jframePrinc.getContentPane().add(v);
     					v.setVisible(true);
     			
     				}else 
@@ -145,10 +157,20 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
     				}
             	}
             });
-            btnComprarBoleto.setBounds(640, 9, 130, 29);
+            btnComprarBoleto.setBounds(647, 43, 127, 23);
             contentPane.add(btnComprarBoleto);
             
-            btnNewButton.addActionListener(new ActionListener() {
+            lblNewLabel_1 = new JLabel("Ingresar destino para mostrar los paseos que van a ese destino");
+            lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 12));
+            lblNewLabel_1.setBounds(24, 15, 351, 13);
+            contentPane.add(lblNewLabel_1);
+            
+            lblNewLabel_2 = new JLabel("Marcar un destino en la tabla y hacer click en \"Comprar Boleto\" para adquirir un boleto en ese paseo");
+            lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 12));
+            lblNewLabel_2.setBounds(24, 47, 567, 13);
+            contentPane.add(lblNewLabel_2);
+            
+            btnCancelar.addActionListener(new ActionListener() {
     			public void actionPerformed(ActionEvent e) {
     				
     				fm.setVisible(false);

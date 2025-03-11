@@ -16,6 +16,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import sistema.grafica.Controladores.ControladorListadoGeneralMinivanes;
@@ -33,9 +34,10 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 
 	public VentanaListadoGeneralMinivanes(JFrame jframePadre) {
 		super("Listado general de Minivanes", true, true, true, true);
+		setBackground(new Color(255, 200, 145));
 		frmListadoGeneralMinivanes = this;
 		setTitle("Listado general de Minivanes");
-		setBounds(50, 80, 800, 389);
+		setBounds(200, 80, 800, 327);
 		setResizable(true);
 		setClosable(true);
 		setMaximizable(true);
@@ -57,18 +59,28 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 		};
 
 		table = new JTable(modeloTabla);
+		table.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		table.setBackground(new Color(240, 240, 240));
 		table.setGridColor(Color.GRAY);
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setRowHeight(25);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(0, 29, 784, 286);
+		scrollPane.setBounds(0, 40, 784, 247);
 		getContentPane().add(scrollPane);
 
-		JButton btnNewButton = new JButton("Cerrar");
-		btnNewButton.setBounds(346, 325, 85, 21);
-		getContentPane().add(btnNewButton);
+		JButton btnCerrar = new JButton("Cancelar");
+		btnCerrar.setBounds(585, 14, 85, 21);
+		btnCerrar.setBackground(Color.RED);
+		btnCerrar.setFont(new Font("Segoe UI", Font.BOLD, 10));
+		btnCerrar.setBorder(UIManager.getBorder("Button.border"));
+		btnCerrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmListadoGeneralMinivanes.setVisible(false);
+			}
+			});
+		
+		getContentPane().add(btnCerrar);
 
 		JButton btnVerPaseos = new JButton("Ver Paseos");
 		btnVerPaseos.addActionListener(new ActionListener() {
@@ -78,7 +90,7 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 
 					VentanaListadoPaseosMinivan v = new VentanaListadoPaseosMinivan(
 							table.getValueAt(table.getSelectedRow(), 0).toString());
-					jframePrinc.add(v);
+					jframePrinc.getContentPane().add(v);
 					v.setVisible(true);
 
 				} else {
@@ -88,9 +100,16 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 
 			}
 		});
-		btnVerPaseos.setBounds(653, 0, 117, 29);
+		btnVerPaseos.setBounds(680, 14, 94, 21);
+		btnVerPaseos.setFont(new Font("Segoe UI", Font.BOLD, 10));
+		btnVerPaseos.setBorder(UIManager.getBorder("Button.border"));
 		getContentPane().add(btnVerPaseos);
-		btnNewButton.addActionListener(new ActionListener() {
+		
+		JLabel lblNewLabel = new JLabel("Si quiere ver los paseos de una minivan en particular, marquela y apriete \"Ver Paseos\"");
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblNewLabel.setBounds(32, 17, 543, 13);
+		getContentPane().add(lblNewLabel);
+		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmListadoGeneralMinivanes.setVisible(false);
 			}

@@ -43,7 +43,6 @@ public class ControladorListadoBoletosVendidosPorPaseo extends ConexionRMI{
 			} catch (RemoteException e) {
 				ventana.mostrarError("Problemas de conexion al servidor.");
 			} catch (PaseoNoExiste e) {
-				// TODO Auto-generated catch block
 				ventana.mostrarError("El paseo indicado no existe.");
 			}
 		}else {
