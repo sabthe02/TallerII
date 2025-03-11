@@ -48,15 +48,9 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 		getContentPane().setBackground(new Color(255, 200, 145));
 		jframePrinc = jframePadre;
 
-		JLabel lblCantBoletos = new JLabel("Ingrese la cantidad de boletos para obtener los paseos que tienen al menos esa cantidad de boletos disponibles");
-		lblCantBoletos.setToolTipText("Formato numero entero");
-		lblCantBoletos.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		lblCantBoletos.setBounds(10, 10, 706, 15);
-		getContentPane().add(lblCantBoletos);
-
-		JButton btnAceptar = new JButton("Aceptar");
+		JButton btnAceptar = new JButton("Buscar");
 		btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
-		btnAceptar.setBounds(193, 35, 85, 21);
+		btnAceptar.setBounds(246, 7, 85, 21);
 		btnAceptar.setBackground(Color.GREEN);
 		getContentPane().add(btnAceptar);
 
@@ -70,7 +64,7 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 		JFormattedTextField cantBoletos = new JFormattedTextField(formatter);
 		cantBoletos.setToolTipText("Formato numero entero");
 		cantBoletos.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		cantBoletos.setBounds(10, 35, 85, 19);
+		cantBoletos.setBounds(149, 6, 85, 19);
 		frame.getContentPane().add(cantBoletos);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -107,6 +101,7 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 		table.setRowHeight(25);
 		
 		JButton btnComprarBoleto = new JButton("Comprar Boleto");
+		btnComprarBoleto.setToolTipText("Marque un Paseo de la lista y haga click para comprar un boleto en ese Paseo.");
 		btnComprarBoleto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -125,12 +120,12 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 			}
 		});
 		btnComprarBoleto.setFont(new Font("Segoe UI", Font.BOLD, 10));
-		btnComprarBoleto.setBounds(570, 60, 121, 21);
+		btnComprarBoleto.setBounds(1280, 40, 121, 21);
 		getContentPane().add(btnComprarBoleto);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton("Salir");
 		btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
-		btnCancelar.setBounds(105, 35, 85, 21);
+		btnCancelar.setBounds(1280, 7, 121, 21);
 		btnCancelar.setBorder(UIManager.getBorder("Button.border"));
 	    btnCancelar.setBackground(Color.RED);
 	    btnCancelar.addActionListener(new ActionListener() {
@@ -140,10 +135,10 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
         });
 		getContentPane().add(btnCancelar);
 		
-		JLabel lblMarqueUnPaseo = new JLabel("Marque un Paseo de la lista y haga click en \"Comprar Boleto\" para comprar un boleto en ese Paseo");
+		JLabel lblMarqueUnPaseo = new JLabel("Cantidad de Boletos");
 		lblMarqueUnPaseo.setToolTipText("Formato numero entero");
 		lblMarqueUnPaseo.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		lblMarqueUnPaseo.setBounds(10, 63, 550, 15);
+		lblMarqueUnPaseo.setBounds(5, 8, 132, 15);
 		getContentPane().add(lblMarqueUnPaseo);
 
 		btnAceptar.addActionListener(new ActionListener() {

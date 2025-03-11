@@ -95,21 +95,21 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 		table.getColumnModel().getColumn(5).setPreferredWidth(185);
 		table.getColumnModel().getColumn(6).setPreferredWidth(159);
 		
-		JLabel lblTitulo = new JLabel("Ingrese la matricula de una minivan para obtener sus paseos");
+		JLabel lblTitulo = new JLabel("Matricula: ");
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		lblTitulo.setBounds(21, 13, 349, 13);
+		lblTitulo.setBounds(21, 13, 64, 13);
 		getContentPane().add(lblTitulo);
 		
 		 
 		textField = new JTextField();
 		textField.setFont(new Font("Segoe UI", Font.PLAIN, 10));
-		textField.setBounds(375, 11, 85, 19);
+		textField.setBounds(97, 11, 85, 19);
 		getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		btnAceptar = new JButton("Aceptar");
+		btnAceptar = new JButton("Buscar");
 		btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
-		btnAceptar.setBounds(565, 10, 85, 21);
+		btnAceptar.setBounds(188, 11, 85, 21);
 		btnAceptar.setBackground(Color.GREEN);
 		btnAceptar.setBorder(UIManager.getBorder("Button.border"));
 		btnAceptar.addActionListener(new ActionListener () {
@@ -151,9 +151,9 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 		});
 		getContentPane().add(btnAceptar);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton("Salir");
 		btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
-		btnCancelar.setBounds(470, 10, 85, 21);
+		btnCancelar.setBounds(285, 11, 85, 21);
 		btnCancelar.setBackground(Color.RED);
 		btnCancelar.setBorder(UIManager.getBorder("Button.border"));
 		btnCancelar.addActionListener(new ActionListener() {

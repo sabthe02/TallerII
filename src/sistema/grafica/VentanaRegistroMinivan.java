@@ -36,7 +36,6 @@ public class VentanaRegistroMinivan extends JInternalFrame {
     private JTextField txtMarca;
     private JTextField textModelo;
     private JLabel lblCantAsientos;
-    private JLabel lblNewLabel;
     private JButton btnAceptar;
     private JButton btnCancelar;
     private JFormattedTextField formattedTextField;
@@ -74,49 +73,44 @@ public class VentanaRegistroMinivan extends JInternalFrame {
         
         
         JLabel lblMatricula = new JLabel("Matricula");
-        lblMatricula.setBounds(20, 51, 114, 43);
+        lblMatricula.setBounds(20, 6, 114, 43);
         lblMatricula.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         panel.add(lblMatricula);
         
         txtMatricula = new JTextField();
         txtMatricula.setToolTipText("Formato alfanumerico");
         txtMatricula.setForeground(new Color(0, 0, 0));
-        txtMatricula.setBounds(145, 59, 291, 28);
+        txtMatricula.setBounds(145, 14, 291, 28);
         txtMatricula.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         panel.add(txtMatricula);
         txtMatricula.setColumns(10);
         
         JLabel lblMarca = new JLabel("Marca");
         lblMarca.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        lblMarca.setBounds(20, 92, 114, 43);
+        lblMarca.setBounds(20, 47, 114, 43);
         panel.add(lblMarca);
         
         txtMarca = new JTextField();
-        txtMarca.setBounds(145, 100, 291, 28);
+        txtMarca.setBounds(145, 55, 291, 28);
         txtMarca.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         panel.add(txtMarca);
         txtMarca.setColumns(10);
         
         JLabel lblModelo = new JLabel("Modelo");
         lblModelo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        lblModelo.setBounds(20, 133, 114, 43);
+        lblModelo.setBounds(20, 88, 114, 43);
         panel.add(lblModelo);
         
         textModelo = new JTextField();
         textModelo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         textModelo.setColumns(10);
-        textModelo.setBounds(145, 138, 291, 28);
+        textModelo.setBounds(145, 93, 291, 28);
         panel.add(textModelo);
         
         lblCantAsientos = new JLabel("Cantidad de asientos");
         lblCantAsientos.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        lblCantAsientos.setBounds(20, 175, 126, 43);
+        lblCantAsientos.setBounds(20, 130, 126, 43);
         panel.add(lblCantAsientos);
-        
-        lblNewLabel = new JLabel("Por favor ingresar datos de la nueva minivan");
-        lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        lblNewLabel.setBounds(10, 13, 267, 13);
-        panel.add(lblNewLabel);
         
         NumberFormat format = NumberFormat.getInstance();
         format.setGroupingUsed(false);
@@ -131,13 +125,13 @@ public class VentanaRegistroMinivan extends JInternalFrame {
         formattedTextField.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         
         formattedTextField.setToolTipText("Formato numero entero de 1 a 19");
-        formattedTextField.setBounds(145, 176, 289, 30);
+        formattedTextField.setBounds(145, 131, 289, 30);
         panel.add(formattedTextField);
          
         btnAceptar = new JButton ("Aceptar");
         btnAceptar.setText("Aceptar");
         btnAceptar.setBackground(Color.GREEN);
-		btnAceptar.setBounds(352, 228, 84, 23);
+		btnAceptar.setBounds(442, 225, 84, 23);
 
         btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
         btnAceptar.setBorder(UIManager.getBorder("Button.border"));
@@ -175,7 +169,7 @@ public class VentanaRegistroMinivan extends JInternalFrame {
         btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
         btnCancelar.setBorder(UIManager.getBorder("Button.border"));
         btnCancelar.setBackground(Color.RED);
-        btnCancelar.setBounds(261, 228, 81, 23);
+        btnCancelar.setBounds(361, 225, 81, 23);
         btnCancelar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 	             fm.setVisible(false);	

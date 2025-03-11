@@ -36,7 +36,6 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
 	private JFrame jframePrinc;
 	private JButton btnComprarBoleto;
 	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
 
 
 	
@@ -88,11 +87,11 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
             scrollPane.setBounds(10, 79, 764, 252); 
             contentPane.add(scrollPane);
             
-            btnCancelar = new JButton("Cancelar");
+            btnCancelar = new JButton("Salir");
             btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
             btnCancelar.setBorder(UIManager.getBorder("Button.border"));
             btnCancelar.setBackground(Color.RED);
-            btnCancelar.setBounds(594, 10, 85, 23);
+            btnCancelar.setBounds(647, 10, 123, 23);
             btnCancelar.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
     	             fm.setVisible(false);	
@@ -101,13 +100,13 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
             contentPane.add(btnCancelar);
             
             txtDestino = new JTextField();
-            txtDestino.setBounds(385, 10, 166, 26);
+            txtDestino.setBounds(87, 6, 166, 26);
             contentPane.add(txtDestino);
             txtDestino.setColumns(10);
             
             controlador = new ControladorListadoGeneralPaseosPorDestino(this);
             
-            JButton btnAceptar = new JButton("Aceptar");
+            JButton btnAceptar = new JButton("Buscar");
             btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
             btnAceptar.setBorder(UIManager.getBorder("Button.border"));
             btnAceptar.setBackground(Color.GREEN);
@@ -135,10 +134,11 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
             		
             	}
             });
-            btnAceptar.setBounds(689, 10, 85, 23);
+            btnAceptar.setBounds(256, 6, 85, 23);
             contentPane.add(btnAceptar);
             
             btnComprarBoleto = new JButton("Comprar Boleto");
+            btnComprarBoleto.setToolTipText("Marcar un destino en la tabla y hacer clic para adquirir un boleto en ese paseo");
             btnComprarBoleto.setFont(new Font("Segoe UI", Font.BOLD, 10));
             btnComprarBoleto.addActionListener(new ActionListener() {
             	public void actionPerformed(ActionEvent arg0) {
@@ -157,18 +157,13 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
     				}
             	}
             });
-            btnComprarBoleto.setBounds(647, 43, 127, 23);
+            btnComprarBoleto.setBounds(647, 43, 123, 23);
             contentPane.add(btnComprarBoleto);
             
-            lblNewLabel_1 = new JLabel("Ingresar destino para mostrar los paseos que van a ese destino");
+            lblNewLabel_1 = new JLabel("Destino:");
             lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 12));
-            lblNewLabel_1.setBounds(24, 15, 351, 13);
+            lblNewLabel_1.setBounds(24, 15, 65, 13);
             contentPane.add(lblNewLabel_1);
-            
-            lblNewLabel_2 = new JLabel("Marcar un destino en la tabla y hacer click en \"Comprar Boleto\" para adquirir un boleto en ese paseo");
-            lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 12));
-            lblNewLabel_2.setBounds(24, 47, 567, 13);
-            contentPane.add(lblNewLabel_2);
             
             btnCancelar.addActionListener(new ActionListener() {
     			public void actionPerformed(ActionEvent e) {
