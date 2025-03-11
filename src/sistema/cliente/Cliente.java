@@ -34,7 +34,7 @@ public class Cliente {
 		
 		
 		MainProgram main = new MainProgram();
-		main.setVisible(true);
+		main.setVisible(true); 
 		
 //
 //		System.out.println("INICIO // (Req 1) Prueba funcion Registro Minivan: ");

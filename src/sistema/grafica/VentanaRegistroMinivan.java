@@ -37,8 +37,6 @@ public class VentanaRegistroMinivan extends JInternalFrame {
     private JTextField textModelo;
     private JLabel lblCantAsientos;
     private JLabel lblNewLabel;
-//    private JGradientButton btnAceptar;
-//    private JGradientButton btnCancelar
     private JButton btnAceptar;
     private JButton btnCancelar;
     private JFormattedTextField formattedTextField;
@@ -49,7 +47,6 @@ public class VentanaRegistroMinivan extends JInternalFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-//                	createAndShowGUI();
                     VentanaRegistroMinivan frame = new VentanaRegistroMinivan();
                     
                     frame.setVisible(true);
@@ -85,7 +82,7 @@ public class VentanaRegistroMinivan extends JInternalFrame {
         txtMatricula.setToolTipText("Formato alfanumerico");
         txtMatricula.setForeground(new Color(0, 0, 0));
         txtMatricula.setBounds(145, 59, 291, 28);
-        txtMatricula.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        txtMatricula.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         panel.add(txtMatricula);
         txtMatricula.setColumns(10);
         
@@ -96,7 +93,7 @@ public class VentanaRegistroMinivan extends JInternalFrame {
         
         txtMarca = new JTextField();
         txtMarca.setBounds(145, 100, 291, 28);
-        txtMarca.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        txtMarca.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         panel.add(txtMarca);
         txtMarca.setColumns(10);
         
@@ -106,7 +103,7 @@ public class VentanaRegistroMinivan extends JInternalFrame {
         panel.add(lblModelo);
         
         textModelo = new JTextField();
-        textModelo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        textModelo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         textModelo.setColumns(10);
         textModelo.setBounds(145, 138, 291, 28);
         panel.add(textModelo);
@@ -131,37 +128,18 @@ public class VentanaRegistroMinivan extends JInternalFrame {
 
         sleepFormatter.setCommitsOnValidEdit(true);
         formattedTextField = new JFormattedTextField(sleepFormatter);
+        formattedTextField.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         
         formattedTextField.setToolTipText("Formato numero entero de 1 a 19");
         formattedTextField.setBounds(145, 176, 289, 30);
         panel.add(formattedTextField);
          
-//        btnAceptar = new JGradientButton();
         btnAceptar = new JButton ("Aceptar");
         btnAceptar.setText("Aceptar");
-//        btnAceptar.setForeground(new Color(0, 0, 0));
         btnAceptar.setBackground(Color.GREEN);
-		btnAceptar.setBounds(229, 182, 92, 29);
+		btnAceptar.setBounds(352, 228, 84, 23);
 
-       // btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
-        btnAceptar.setBounds(352, 228, 74, 23);
-
-        panel.add(btnAceptar);
-        
-        
-        btnCancelar = new JButton("Cancelar");
-        //btnCancelar.setForeground(new Color(192, 192, 192));
-        btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
-        btnCancelar.setBorder(UIManager.getBorder("Button.border"));
-        btnCancelar.setBackground(Color.RED);
-        btnCancelar.setBounds(268, 228, 74, 23);
-        btnCancelar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-	             fm.setVisible(false);	
-	        }
-        });
-        panel.add(btnCancelar);
-        
+        btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
         btnAceptar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	List<String> errores = validarCampos();
@@ -189,6 +167,22 @@ public class VentanaRegistroMinivan extends JInternalFrame {
 	            	}
             }
         });
+        panel.add(btnAceptar);
+        
+        
+        btnCancelar = new JButton("Cancelar");
+        btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
+        btnCancelar.setBorder(UIManager.getBorder("Button.border"));
+        btnCancelar.setBackground(Color.RED);
+        btnCancelar.setBounds(261, 228, 81, 23);
+        btnCancelar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+	             fm.setVisible(false);	
+	        }
+        });
+        panel.add(btnCancelar);
+        
+        
     }
     
 	private List<String> validarCampos() {
