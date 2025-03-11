@@ -111,7 +111,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		label_4.setBounds(30, 183, 133, 26);
 		getContentPane().add(label_4);
 
-		radioButtonComun = new JRadioButton("Comun");
+		radioButtonComun = wnew JRadioButton("Comun");
 		radioButtonComun.setSelected(true);
 		radioButtonComun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -123,6 +123,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		});
 		radioButtonComun.setBounds(167, 186, 73, 23);
 		radioButtonComun.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		radioButtonComun.setBackground(new Color(255, 200, 145));
 		getContentPane().add(radioButtonComun);
 
 	    radioButtonEspecial = new JRadioButton("Especial");
@@ -136,6 +137,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 			}
 		});
 		radioButtonEspecial.setBounds(253, 185, 81, 23);
+		radioButtonEspecial.setBackground(new Color(255, 200, 145));
 		radioButtonEspecial.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		getContentPane().add(radioButtonEspecial);
 

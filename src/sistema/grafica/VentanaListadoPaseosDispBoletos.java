@@ -33,7 +33,6 @@ public class VentanaListadoPaseosDispBoletos extends JInternalFrame {
 	private JTable table;
 	private ControladorListadoPaseosPorBoletos controlador;
 	private JFrame jframePrinc;
-	private DefaultTableModel modeloTabla;
 
 	
 	
