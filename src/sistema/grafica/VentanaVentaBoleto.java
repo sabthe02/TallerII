@@ -111,7 +111,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		label_4.setBounds(30, 183, 133, 26);
 		getContentPane().add(label_4);
 
-		radioButtonComun = wnew JRadioButton("Comun");
+		radioButtonComun = new JRadioButton("Comun");
 		radioButtonComun.setSelected(true);
 		radioButtonComun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
