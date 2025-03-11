@@ -43,7 +43,7 @@ public class ControladorListadoGeneralPaseos extends ConexionRMI{
 				} catch (RemoteException e) {
 					 ventana.mostrarError("Problemas de conexion al servidor");
 				} catch (MinivanNoExiste e) {
-					ventana.mostrarError("La minivan con el codigo ingresado no existe");
+					ventana.mostrarError("La minivan con la matricula ingresado no existe");
 				} 
 			
 			}else {

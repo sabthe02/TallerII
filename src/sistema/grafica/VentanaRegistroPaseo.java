@@ -42,6 +42,9 @@ public  class VentanaRegistroPaseo extends JInternalFrame {
 	private JButton btnCancelar;
 	private JButton btnAceptar;
 	private JInternalFrame fm;
+	
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
 
 	/**
 	 * Launch the application.
@@ -124,7 +127,6 @@ public  class VentanaRegistroPaseo extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				List<String> errores = validarCampos();
 				if (errores.isEmpty()) {
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 					
 					LocalTime horaPartida = LocalTime.parse(formattedTextHoraPartida.getText(), formatter);
 					LocalTime horaRegreso = LocalTime.parse(formattedTextHoraRegreso.getText(), formatter);
@@ -200,14 +202,17 @@ public  class VentanaRegistroPaseo extends JInternalFrame {
 	}
 
 	private List<String> validarCampos() {
+		Boolean horaValida = true;
 		List<String> resp = new ArrayList<>();
 
 		if (!ValidarHora(formattedTextHoraPartida.getText())) {
 			resp.add("Hora de Partida tiene un formato invalido.");
+			horaValida = false;
 		}
 
 		if (!ValidarHora(formattedTextHoraRegreso.getText())) {
 			resp.add("Hora de Regreso tiene un formato invalido.");
+			horaValida = false;
 		}
 
 		if (txtCodigoPaseo.getText().trim().equals("")) {
@@ -219,6 +224,17 @@ public  class VentanaRegistroPaseo extends JInternalFrame {
 
 		if (txtPrecioBase.getText().trim().equals("")) {
 			resp.add("El precio del paseo no puede estar vacio.");
+		}
+		
+		if(horaValida)
+		{
+			LocalTime horaPartida = LocalTime.parse(formattedTextHoraPartida.getText(), formatter);
+			LocalTime horaRegreso = LocalTime.parse(formattedTextHoraRegreso.getText(), formatter);
+			
+			if(horaRegreso.isBefore(horaPartida))
+			{
+				resp.add("La hora de regreso debe ser mayor a la hora de salida.");
+			}
 		}
 
 		return resp;
