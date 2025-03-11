@@ -100,7 +100,7 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 
 			}
 		});
-		btnVerPaseos.setBounds(680, 14, 94, 20);
+		btnVerPaseos.setBounds(680, 14, 94, 21);
 		btnVerPaseos.setBackground(Color.GREEN);
 		btnVerPaseos.setFont(new Font("Segoe UI", Font.BOLD, 10));
 		btnVerPaseos.setBorder(UIManager.getBorder("Button.border"));
