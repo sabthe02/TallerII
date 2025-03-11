@@ -44,7 +44,7 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
     	
 	 	fm = this;
         setTitle("Listado de Boletos Vendidos para un Paseo");
-        setBounds(100, 100, 800, 291);
+        setBounds(300, 100, 800, 302);
         setResizable(true);
         setClosable(true);
         setMaximizable(true);
@@ -93,14 +93,14 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
         panelCodigo.add(radioPanel);
         
         JButton btnAceptar = new JButton("Aceptar");
-        btnAceptar.setBounds(679, 5, 85, 21);
+        btnAceptar.setBounds(669, 5, 85, 21);
         radioPanel.add(btnAceptar);
         btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10)); 
         btnAceptar.setBackground(Color.GREEN);
         btnAceptar.setBorder(UIManager.getBorder("Button.border"));
         
         btnCancelar = new JButton("Cancelar");
-        btnCancelar.setBounds(584, 5, 85, 21);
+        btnCancelar.setBounds(574, 5, 85, 21);
         radioPanel.add(btnCancelar);
         btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
         btnCancelar.setBorder(UIManager.getBorder("Button.border"));
@@ -163,7 +163,7 @@ public class VentanaListadoBoletosVendidosXPaseo extends JInternalFrame {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         scrollPane.setBackground(new Color(255, 200, 145));
-        scrollPane.setBounds(16, 75, 754, 166);
+        scrollPane.setBounds(16, 75, 754, 187);
         
         PanelPrincipal.add(scrollPane);
         

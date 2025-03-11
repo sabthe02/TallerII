@@ -50,7 +50,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		setResizable(true);
 		setIconifiable(true);
 		setClosable(true);
-		setBounds(50, 80, 468, 317);
+		setBounds(420, 100, 548, 323);
 		setTitle("Venta de Boletos");
 		getContentPane().setLayout(null);
 		setBackground(new Color(255, 200, 145));
@@ -61,7 +61,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		getContentPane().add(label);
 		txtCodigoPaseo = new JTextField();
 		txtCodigoPaseo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		txtCodigoPaseo.setBounds(167, 35, 217, 26); 
+		txtCodigoPaseo.setBounds(167, 35, 256, 26); 
 		getContentPane().add(txtCodigoPaseo);
 
 		JLabel label_1 = new JLabel("Nombre del Turista:");
@@ -70,7 +70,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		getContentPane().add(label_1);
 		txtNombre = new JTextField();
 		txtNombre.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		txtNombre.setBounds(167, 71, 217, 26);
+		txtNombre.setBounds(167, 71, 256, 26);
 		getContentPane().add(txtNombre);
 
 		JLabel label_2 = new JLabel("Edad:");
@@ -94,14 +94,14 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		sleepFormatter.setCommitsOnValidEdit(true);
 		txtEdad = new JFormattedTextField(sleepFormatter);
 		txtEdad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		txtEdad.setBounds(167, 106, 217, 29);
+		txtEdad.setBounds(167, 106, 256, 29);
 		txtEdad.setToolTipText("Formato numero entero entre 1 y 110");
 		getContentPane().add(txtEdad);
 
 		txtCelular = new JFormattedTextField();
 		txtCelular.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		txtCelular.setToolTipText("Formato numero entero mayor a 0");
-		txtCelular.setBounds(167, 145, 217, 28);
+		txtCelular.setBounds(167, 145, 256, 28);
 		getContentPane().add(txtCelular);
 
 		JLabel label_4 = new JLabel("Tipo de Boleto:");
@@ -132,7 +132,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 
 			}
 		});
-		radioButtonEspecial.setBounds(303, 186, 81, 23);
+		radioButtonEspecial.setBounds(253, 185, 81, 23);
 		radioButtonEspecial.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		getContentPane().add(radioButtonEspecial);
 
@@ -146,7 +146,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		getContentPane().add(label_5);
 
 		txtDescuento = new JTextField();
-		txtDescuento.setBounds(167, 219, 217, 24);
+		txtDescuento.setBounds(167, 219, 256, 24);
 		getContentPane().add(txtDescuento);
 		
 		JLabel lblNewLabel = new JLabel("Por favor ingresar datos del boleto a registrar");
@@ -157,7 +157,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		btnAceptar = new JButton("Aceptar");
         btnAceptar.setText("Aceptar");
         btnAceptar.setBackground(Color.GREEN);
-		btnAceptar.setBounds(352, 253, 84, 23);
+		btnAceptar.setBounds(409, 254, 84, 23);
 
         btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
 		btnAceptar.addActionListener(new ActionListener() {
@@ -207,7 +207,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
         btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
         btnCancelar.setBorder(UIManager.getBorder("Button.border"));
         btnCancelar.setBackground(Color.RED);
-        btnCancelar.setBounds(261, 253, 81, 23);
+        btnCancelar.setBounds(318, 254, 81, 23);
         btnCancelar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 	             fm.setVisible(false);	

@@ -58,7 +58,7 @@ public class MainProgram {
 		frame.setForeground(new Color(255, 198, 170));
 		frame.setFont(new Font("Arial", Font.ITALIC, 14));
 		frame.setTitle("Paseos del Sol S.A");
-		frame.setBounds(100, 100, 917, 552);
+		frame.setBounds(50, 100, 1450, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		desktopPane = new JDesktopPane();
@@ -69,13 +69,13 @@ public class MainProgram {
 		labelImagen.setAlignmentY(2.0f);
 		labelImagen.setAlignmentX(2.0f);
 		labelImagen.setBackground(new Color(240, 240, 240));
-		labelImagen.setBounds(10, 44, 867, 405);
+		labelImagen.setBounds(258, 46, 867, 405);
 		desktopPane.add(labelImagen,JDesktopPane.DEFAULT_LAYER);
 		frame.setContentPane(desktopPane);
 		
 		
 		JLabel labelTitulo = new JLabel("Paseos del Sol S.A");
-		labelTitulo.setBounds(339, 11, 173, 22);
+		labelTitulo.setBounds(614, 10, 173, 22);
         labelTitulo.setFont(new Font("Segoe UI", Font.BOLD, 18));
         labelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		frame.getContentPane().add(labelTitulo);
