@@ -182,7 +182,6 @@ public  class VentanaRegistroPaseo extends JInternalFrame {
 			formattedTextHoraPartida.setBounds(195, 73, 143, 26);
 			panel.add(formattedTextHoraPartida);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -191,7 +190,6 @@ public  class VentanaRegistroPaseo extends JInternalFrame {
 			formattedTextHoraRegreso.setBounds(195, 106, 143, 26);
 			panel.add(formattedTextHoraRegreso);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

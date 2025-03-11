@@ -14,7 +14,7 @@ public class Boletos implements Serializable{
 	
 	public Boletos(Boletos boletos) {
 		this.tope = boletos.getTope();
-		this.boletos = boletos.getBoletos();
+		this.boletos = boletos.getBoletos(); 
 	}
 	
 	public Boletos(int largo) {
@@ -108,49 +108,4 @@ public class Boletos implements Serializable{
 		return VOListadoBoletosL;
 	}
 	
-
-	
-	public static void main (String args[]) {
-		Boletos B = new Boletos(13);
-		Boleto b1 = new Boleto(1, "Persona1", 17, "099000000", 15.0);
-		B.insBack(b1);
-		if (!(B.esVacia())) {
-			System.out.println("NO es vacia");
-		}
-		else {
-			System.out.println("Es vacia");
-		}
-		
-		Boleto b2 = new BoletoEsp(2, "Persona2", 34, "099000001", 20.0, 0.8);
-		B.insBack(b2);
-		
-		for (int i =0; i<(B.getTope()); i++) {
-			System.out.println(B.kesimo(i).getNombrePasajero());
-			System.out.println(B.kesimo(i).getEdad());
-			System.out.println(B.kesimo(i).getNumeroBoleto());
-			System.out.println(B.kesimo(i).getNumeroCel());
-			System.out.println(B.kesimo(i).getPrecio());
-			if (B.kesimo(i) instanceof BoletoEsp) {
-				System.out.println(((BoletoEsp)B.kesimo(i)).getDescuentoEsp());
-			}
-			else {
-				System.out.println("No es especial");
-			}
-			
-		}
-		double m = B.montoRecaudado();
-		System.out.println("Monto recaudado: " + m);
-		
-		B.listadoBoleto(true).forEach((VOListadoBoletos)-> { 
-			System.out.println(VOListadoBoletos.getNombre());
-			System.out.println(VOListadoBoletos.getEdad());
-			System.out.println(VOListadoBoletos.getCelular());
-			System.out.println(VOListadoBoletos.isEsEspecial());
-			System.out.println(VOListadoBoletos.getNumeroBoleto());
-			System.out.println(VOListadoBoletos.getDescuento());
-		}
-		);
-		
-
-	}
 }
