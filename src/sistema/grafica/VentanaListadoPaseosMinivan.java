@@ -57,19 +57,21 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 
 		frmListadoPaseosDe = this;
 		frmListadoPaseosDe.setTitle("Listado Paseos de una minivan");
-		frmListadoPaseosDe.setBounds(50, 80, 800, 389);
-//		frmListadoPaseosDe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmListadoPaseosDe.setBounds(50, 80, 830, 300);
 		frmListadoPaseosDe.getContentPane().setLayout(null);
+		frmListadoPaseosDe.getContentPane().setBackground(new Color(255, 200, 145));
 		setResizable(true);
 		setClosable(true);
 		setMaximizable(true);
 		setIconifiable(true);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 111, 764, 186);
+		scrollPane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		scrollPane.setBounds(10, 49, 805, 210);
 		frmListadoPaseosDe.getContentPane().add(scrollPane);
 		
 		table = new JTable();
+		table.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		table.setBorder(UIManager.getBorder("Table.scrollPaneBorder"));
 		scrollPane.setViewportView(table);
 		table.setEnabled(false);
@@ -84,33 +86,7 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 			new String[] {
 				"Codigo", "Destino", "Hora de partida", "Hora de regreso", "Precio base", "Cantidad m\u00E1xima de boletos vendibles", "Cantidad de boletos disponibles"
 			}
-		) {
-			private static final long serialVersionUID = 1L;
-			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, Integer.class, Integer.class, Float.class, Integer.class, Integer.class
-			};
-			@SuppressWarnings({ "rawtypes", "unchecked" })
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		
-		JLabel lblTitulo = new JLabel("Listado de Paseos de una minivan");
-		lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
-		lblTitulo.setBounds(211, 10, 291, 13);
-		getContentPane().add(lblTitulo);
-		
-		 
-		textField = new JTextField();
-		textField.setBounds(323, 33, 85, 19);
-		getContentPane().add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblIngresarCodigo = new JLabel("Ingresar codigo:");
-		lblIngresarCodigo.setFont(new Font("Arial", Font.BOLD, 12));
-		lblIngresarCodigo.setBounds(197, 36, 116, 13);
-		getContentPane().add(lblIngresarCodigo);
+		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(43);
 		table.getColumnModel().getColumn(1).setPreferredWidth(47);
 		table.getColumnModel().getColumn(2).setPreferredWidth(84);
@@ -119,10 +95,23 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 		table.getColumnModel().getColumn(5).setPreferredWidth(185);
 		table.getColumnModel().getColumn(6).setPreferredWidth(159);
 		
+		JLabel lblTitulo = new JLabel("Ingrese la matricula de una minivan para obtener sus paseos");
+		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblTitulo.setBounds(21, 13, 349, 13);
+		getContentPane().add(lblTitulo);
+		
+		 
+		textField = new JTextField();
+		textField.setFont(new Font("Segoe UI", Font.PLAIN, 10));
+		textField.setBounds(375, 11, 85, 19);
+		getContentPane().add(textField);
+		textField.setColumns(10);
+		
 		btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(323, 62, 85, 21);
-		
-		
+		btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
+		btnAceptar.setBounds(565, 10, 85, 21);
+		btnAceptar.setBackground(Color.GREEN);
+		btnAceptar.setBorder(UIManager.getBorder("Button.border"));
 		btnAceptar.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
 				List<String> errores = validarCampos();
@@ -161,6 +150,18 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
             }
 		});
 		getContentPane().add(btnAceptar);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
+		btnCancelar.setBounds(470, 10, 85, 21);
+		btnCancelar.setBackground(Color.RED);
+		btnCancelar.setBorder(UIManager.getBorder("Button.border"));
+		btnCancelar.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	frmListadoPaseosDe.setVisible(false);	
+		        }
+	        });
+		 getContentPane().add(btnCancelar);
 		
 		
 	}
