@@ -24,7 +24,8 @@ public class VentanaVentaBoleto extends JInternalFrame {
 	private static final long serialVersionUID = 2198985395810256235L;
 	private JTextField txtCodigoPaseo;
 	private JTextField txtNombre;
-	private JButton btnRegistrar;
+	private JButton btnAceptar;
+	private JButton btnCancelar;
 	private JInternalFrame fm;
 	private ControladorVentaBoleto controlador;
 	private JFormattedTextField txtCelular;
@@ -52,39 +53,38 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		setResizable(true);
 		setIconifiable(true);
 		setClosable(true);
-		setBounds(50, 80, 572, 331);
+		setBounds(50, 80, 468, 317);
 		setTitle("Venta de Boletos");
 		getContentPane().setLayout(null);
+		setBackground(new Color(255, 200, 145));
 
 		JLabel label = new JLabel("Código de Paseo:");
-		label.setFont(new Font("Tahoma", Font.BOLD, 10));
-		label.setBounds(30, 0, 131, 36);
+		label.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		label.setBounds(30, 35, 133, 26);
 		getContentPane().add(label);
 		txtCodigoPaseo = new JTextField();
-		txtCodigoPaseo.setBounds(197, 6, 187, 26);
+		txtCodigoPaseo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		txtCodigoPaseo.setBounds(167, 35, 217, 26); 
 		getContentPane().add(txtCodigoPaseo);
 
 		JLabel label_1 = new JLabel("Nombre del Turista:");
-		label_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		label_1.setBounds(30, 47, 187, 36);
+		label_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		label_1.setBounds(30, 71, 133, 26);
 		getContentPane().add(label_1);
 		txtNombre = new JTextField();
-		txtNombre.setBounds(197, 46, 187, 26);
+		txtNombre.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		txtNombre.setBounds(167, 71, 217, 26);
 		getContentPane().add(txtNombre);
 
 		JLabel label_2 = new JLabel("Edad:");
-		label_2.setFont(new Font("Tahoma", Font.BOLD, 10));
-		label_2.setBounds(30, 94, 93, 36);
+		label_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		label_2.setBounds(30, 107, 133, 26);
 		getContentPane().add(label_2);
 
 		JLabel label_3 = new JLabel("Número de Celular:");
-		label_3.setFont(new Font("Tahoma", Font.BOLD, 10));
-		label_3.setBounds(30, 138, 167, 36);
+		label_3.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		label_3.setBounds(30, 145, 133, 28);
 		getContentPane().add(label_3);
-
-		btnRegistrar = new JButton("Registrar Compra");
-		btnRegistrar.setBounds(196, 253, 143, 26);
-		getContentPane().add(btnRegistrar);
 
 		NumberFormat format = NumberFormat.getInstance();
 		format.setGroupingUsed(false);
@@ -96,18 +96,20 @@ public class VentanaVentaBoleto extends JInternalFrame {
 
 		sleepFormatter.setCommitsOnValidEdit(true);
 		txtEdad = new JFormattedTextField(sleepFormatter);
-		txtEdad.setBounds(197, 93, 187, 29);
+		txtEdad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		txtEdad.setBounds(167, 106, 217, 29);
 		txtEdad.setToolTipText("Formato numero entero entre 1 y 110");
 		getContentPane().add(txtEdad);
 
 		txtCelular = new JFormattedTextField();
+		txtCelular.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		txtCelular.setToolTipText("Formato numero entero mayor a 0");
-		txtCelular.setBounds(197, 138, 187, 28);
+		txtCelular.setBounds(167, 145, 217, 28);
 		getContentPane().add(txtCelular);
 
 		JLabel label_4 = new JLabel("Tipo de Boleto:");
-		label_4.setFont(new Font("Tahoma", Font.BOLD, 10));
-		label_4.setBounds(30, 173, 115, 36);
+		label_4.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		label_4.setBounds(30, 183, 133, 26);
 		getContentPane().add(label_4);
 
 		JRadioButton radioButtonComun = new JRadioButton("Comun");
@@ -119,8 +121,8 @@ public class VentanaVentaBoleto extends JInternalFrame {
 				}
 			}
 		});
-		radioButtonComun.setBounds(197, 181, 73, 23);
-		radioButtonComun.setFont(new Font("Arial", Font.BOLD, 10));
+		radioButtonComun.setBounds(167, 186, 73, 23);
+		radioButtonComun.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		getContentPane().add(radioButtonComun);
 
 		JRadioButton radioButtonEspecial = new JRadioButton("Especial");
@@ -133,8 +135,8 @@ public class VentanaVentaBoleto extends JInternalFrame {
 
 			}
 		});
-		radioButtonEspecial.setBounds(272, 181, 81, 23);
-		radioButtonEspecial.setFont(new Font("Arial", Font.BOLD, 10));
+		radioButtonEspecial.setBounds(303, 186, 81, 23);
+		radioButtonEspecial.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		getContentPane().add(radioButtonEspecial);
 
 		grupoBoletos = new ButtonGroup();
@@ -142,15 +144,27 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		grupoBoletos.add(radioButtonEspecial);
 
 		label_5 = new JLabel("Valor de Descuento:");
-		label_5.setFont(new Font("Tahoma", Font.BOLD, 10));
-		label_5.setBounds(30, 210, 115, 36);
+		label_5.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		label_5.setBounds(30, 224, 133, 23);
 		getContentPane().add(label_5);
 
 		txtDescuento = new JTextField();
-		txtDescuento.setBounds(197, 214, 187, 28);
+		txtDescuento.setBounds(167, 219, 217, 24);
 		getContentPane().add(txtDescuento);
+		
+		JLabel lblNewLabel = new JLabel("Por favor ingresar datos del boleto a registrar");
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblNewLabel.setBounds(30, 12, 354, 13);
+		getContentPane().add(lblNewLabel);
 
-		btnRegistrar.addActionListener(new ActionListener() {
+		btnAceptar = new JButton("Aceptar");
+		btnAceptar = new JButton ("Aceptar");
+        btnAceptar.setText("Aceptar");
+        btnAceptar.setBackground(Color.GREEN);
+		btnAceptar.setBounds(352, 253, 84, 23);
+
+        btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
+		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				
@@ -191,6 +205,19 @@ public class VentanaVentaBoleto extends JInternalFrame {
 
 			}
 		});
+		getContentPane().add(btnAceptar);
+		
+		btnCancelar = new JButton("Cancelar");
+        btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
+        btnCancelar.setBorder(UIManager.getBorder("Button.border"));
+        btnCancelar.setBackground(Color.RED);
+        btnCancelar.setBounds(261, 253, 81, 23);
+        btnCancelar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+	             fm.setVisible(false);	
+	        }
+        });
+        getContentPane().add(btnCancelar);
 	}
 
 	private List<String> validarCampos() {
@@ -224,21 +251,6 @@ public class VentanaVentaBoleto extends JInternalFrame {
 			return false;
 		}
 	}
-
-	/*
-	 * 
-	 * private List<String> validarCampos() { List<String> resp = new ArrayList<>();
-	 * 
-	 * if (txtCodigoPaseo.getText().trim().equals("")) {
-	 * resp.add("El codigo del Paseo no puede estar vacio."); } if
-	 * ((!(txtCodigoPaseo.getText()).matches("[A-Za-z0-9]+"))) {
-	 * resp.add("El codigo del Paseo tiene que ser alfanumerico"); }
-	 * 
-	 * if (txtPrecioBase.getText().trim().equals("")) {
-	 * resp.add("El precio del paseo no puede estar vacio."); }
-	 * 
-	 * return resp; }
-	 */
 
 	public void mostrarError(String mensaje) {
 		JOptionPane.showMessageDialog(this, "error: " + mensaje);

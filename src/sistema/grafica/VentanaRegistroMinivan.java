@@ -61,7 +61,7 @@ public class VentanaRegistroMinivan extends JInternalFrame {
     public VentanaRegistroMinivan() {
         super("Registro Minivan", true, true, true, true);
         
-        setBounds(100, 100, 488, 307);
+        setBounds(170, 100, 488, 294);
         fm = this;
         
         JPanel panel = new JPanel();
@@ -140,6 +140,7 @@ public class VentanaRegistroMinivan extends JInternalFrame {
 		btnAceptar.setBounds(352, 228, 84, 23);
 
         btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
+        btnAceptar.setBorder(UIManager.getBorder("Button.border"));
         btnAceptar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	List<String> errores = validarCampos();
