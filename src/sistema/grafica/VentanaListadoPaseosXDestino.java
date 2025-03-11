@@ -47,7 +47,7 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
 	public VentanaListadoPaseosXDestino(JFrame jframePadre) {
 		super("Listado de Paseos por Destino", true, true, true, true);
 		fm = this;
-        setBounds(50, 80, 790, 377);
+        setBounds(180, 80, 800, 377);
         setResizable(true);
         setClosable(true);
         setMaximizable(true);
@@ -85,14 +85,14 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
 
             JScrollPane scrollPane = new JScrollPane(table);
             scrollPane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-            scrollPane.setBounds(24, 79, 700, 252); 
+            scrollPane.setBounds(10, 79, 764, 252); 
             contentPane.add(scrollPane);
             
             btnCancelar = new JButton("Cancelar");
             btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
             btnCancelar.setBorder(UIManager.getBorder("Button.border"));
             btnCancelar.setBackground(Color.RED);
-            btnCancelar.setBounds(544, 11, 85, 23);
+            btnCancelar.setBounds(594, 10, 85, 23);
             btnCancelar.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
     	             fm.setVisible(false);	
@@ -101,7 +101,7 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
             contentPane.add(btnCancelar);
             
             txtDestino = new JTextField();
-            txtDestino.setBounds(385, 10, 149, 26);
+            txtDestino.setBounds(385, 10, 166, 26);
             contentPane.add(txtDestino);
             txtDestino.setColumns(10);
             
@@ -135,7 +135,7 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
             		
             	}
             });
-            btnAceptar.setBounds(639, 11, 85, 23);
+            btnAceptar.setBounds(689, 10, 85, 23);
             contentPane.add(btnAceptar);
             
             btnComprarBoleto = new JButton("Comprar Boleto");
@@ -157,7 +157,7 @@ public class VentanaListadoPaseosXDestino extends JInternalFrame {
     				}
             	}
             });
-            btnComprarBoleto.setBounds(597, 44, 127, 23);
+            btnComprarBoleto.setBounds(647, 43, 127, 23);
             contentPane.add(btnComprarBoleto);
             
             lblNewLabel_1 = new JLabel("Ingresar destino para mostrar los paseos que van a ese destino");

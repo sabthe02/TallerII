@@ -57,7 +57,7 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 
 		frmListadoPaseosDe = this;
 		frmListadoPaseosDe.setTitle("Listado Paseos de una minivan");
-		frmListadoPaseosDe.setBounds(50, 80, 830, 300);
+		frmListadoPaseosDe.setBounds(200, 80, 860, 380);
 		frmListadoPaseosDe.getContentPane().setLayout(null);
 		frmListadoPaseosDe.getContentPane().setBackground(new Color(255, 200, 145));
 		setResizable(true);
@@ -67,7 +67,7 @@ public class VentanaListadoPaseosMinivan extends JInternalFrame{
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		scrollPane.setBounds(10, 49, 805, 210);
+		scrollPane.setBounds(10, 49, 830, 279);
 		frmListadoPaseosDe.getContentPane().add(scrollPane);
 		
 		table = new JTable();

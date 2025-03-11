@@ -51,7 +51,7 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public VentanaMontoRecaudadoXPaseo() {
-        setBounds(120, 80, 595, 218);
+        setBounds(420, 100, 602, 301);
         fm = this;
         setTitle("Monto Recaudado para un Paseo");
         setBackground(new Color(255, 200, 145));
@@ -68,7 +68,7 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
         getContentPane().add(labelTitulo);
 
         JPanel panelCodigo = new JPanel();
-        panelCodigo.setBounds(40, 50, 300, 48);
+        panelCodigo.setBounds(40, 63, 300, 48);
         panelCodigo.setLayout(null);
 
         JLabel labelCodigo = new JLabel("Código de Paseo:");
@@ -83,7 +83,7 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
         getContentPane().add(panelCodigo);
         
         panelResultado = new JPanel();
-        panelResultado.setBounds(40, 120, 500, 48);
+        panelResultado.setBounds(40, 134, 500, 48);
         panelResultado.setLayout(null);
         getContentPane().add(panelResultado);
 
@@ -99,7 +99,7 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
         panelResultado.add(labelResultado);
 
         JButton btnAceptar = new JButton("Aceptar");
-        btnAceptar.setBounds(450, 50, 90, 25);
+        btnAceptar.setBounds(450, 73, 90, 25);
         btnAceptar.setBackground(Color.GREEN);
         btnAceptar.setFont(new Font("Segoe UI", Font.BOLD, 10));
         btnAceptar.setBorder(UIManager.getBorder("Button.border"));
@@ -135,7 +135,7 @@ public class VentanaMontoRecaudadoXPaseo extends JInternalFrame {
         btnCancelar.setFont(new Font("Segoe UI", Font.BOLD, 10));
         btnCancelar.setBorder(UIManager.getBorder("Button.border"));
         btnCancelar.setBackground(Color.RED);
-        btnCancelar.setBounds(350, 50, 90, 25);
+        btnCancelar.setBounds(350, 73, 90, 25);
         btnCancelar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 	             fm.setVisible(false);	

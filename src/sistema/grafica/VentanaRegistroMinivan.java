@@ -61,7 +61,7 @@ public class VentanaRegistroMinivan extends JInternalFrame {
     public VentanaRegistroMinivan() {
         super("Registro Minivan", true, true, true, true);
         
-        setBounds(170, 100, 488, 294);
+        setBounds(420, 100, 556, 300);
         fm = this;
         
         JPanel panel = new JPanel();

@@ -37,7 +37,7 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 		setBackground(new Color(255, 200, 145));
 		frmListadoGeneralMinivanes = this;
 		setTitle("Listado general de Minivanes");
-		setBounds(50, 80, 800, 327);
+		setBounds(200, 80, 800, 327);
 		setResizable(true);
 		setClosable(true);
 		setMaximizable(true);
@@ -101,7 +101,6 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 			}
 		});
 		btnVerPaseos.setBounds(680, 14, 94, 21);
-		btnVerPaseos.setBackground(Color.GREEN);
 		btnVerPaseos.setFont(new Font("Segoe UI", Font.BOLD, 10));
 		btnVerPaseos.setBorder(UIManager.getBorder("Button.border"));
 		getContentPane().add(btnVerPaseos);
