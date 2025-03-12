@@ -71,14 +71,14 @@ public class MainProgram {
 		labelImagen.setBackground(new Color(240, 240, 240));
 		labelImagen.setBounds(258, 46, 867, 405);
 		desktopPane.add(labelImagen,JDesktopPane.DEFAULT_LAYER);
-		frame.setContentPane(desktopPane);
+		frame.setContentPane(desktopPane); 
 		
 		
 		JLabel labelTitulo = new JLabel("Paseos del Sol S.A");
 		labelTitulo.setBounds(614, 10, 173, 22);
         labelTitulo.setFont(new Font("Segoe UI", Font.BOLD, 18));
         labelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		frame.getContentPane().add(labelTitulo);
+		frame.getContentPane().add(labelTitulo);  
 		 
 		
 		

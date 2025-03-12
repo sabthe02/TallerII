@@ -35,7 +35,7 @@ public Paseo(String codigo, LocalTime horaPartida, LocalTime horaRegreso, int ca
 			this.cantMaxBoletos = cantMaxBoletos;
 			this.precioBase = precioBase;
 			this.destino = destino;
-			this.boletos = new Boletos (this.getCantMaxBoletos());
+			this.boletos = new Boletos (this.getCantMaxBoletos()); 
 }
 
 public Paseo() {
@@ -141,18 +141,5 @@ public double montoRecaudadoPaseo () {
 	return boletos.montoRecaudado();
 }
 
-
-public static void main (String args[]) {
-	
-	Paseo p1 = new Paseo ("PDP1", LocalTime.now(), LocalTime.now(), 5, 7, 15.0, "Punta del Este");
-	
-	System.out.println(p1.getCodigo());
-	System.out.println(p1.getHoraPartida());
-	System.out.println(p1.getHoraRegreso());
-	System.out.println(p1.getCantVendidos());
-	System.out.println(p1.getCantMaxBoletos());
-	System.out.println(p1.getPrecioBase());
-	System.out.println(p1.getDestino());
-}
 
 }

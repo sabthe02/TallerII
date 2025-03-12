@@ -123,6 +123,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		});
 		radioButtonComun.setBounds(167, 186, 73, 23);
 		radioButtonComun.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		radioButtonComun.setBackground(new Color(255, 200, 145));
 		getContentPane().add(radioButtonComun);
 
 	    radioButtonEspecial = new JRadioButton("Especial");
@@ -136,6 +137,7 @@ public class VentanaVentaBoleto extends JInternalFrame {
 			}
 		});
 		radioButtonEspecial.setBounds(253, 185, 81, 23);
+		radioButtonEspecial.setBackground(new Color(255, 200, 145));
 		radioButtonEspecial.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		getContentPane().add(radioButtonEspecial);
 
@@ -234,6 +236,9 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		}
 		if (!(isNumeric(txtCelular.getText().trim()))) {
 			resp.add("El celular tiene que ser un numero");
+		}
+		if (txtEdad.getText().trim().equals("")) {
+			resp.add("La edad no puede ser vacia");
 		}
 
 		if (radioButtonEspecial.isSelected()) {

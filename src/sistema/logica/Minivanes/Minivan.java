@@ -39,7 +39,7 @@ public String getMatricula() {
 }
 
 public String getMarca() {
-	return this.marca;
+	return this.marca; 
 }
 public void setMarca(String marca) {
 	this.marca = marca;
@@ -66,31 +66,6 @@ public void setPaseos(Paseos pas) {
 public int getCantidadPaseos()
 {
 	return this.paseos.size();
-}
-
-public static void main (String args[]) {
-	
-	/*Paseo p1 = new Paseo ("PDP1", "09:00", "13:00", 5, 7, 15.0, "Punta del Este");
-	Minivan m1 = new Minivan ("A1", "Volvo", "Modelo1", 6);
-	m1.getPaseos().put(p1.getCodigo(), p1);
-	
-	System.out.println(m1.getMatricula());
-	System.out.println(m1.getCantAsientos());
-	System.out.println(m1.getMarca());
-	System.out.println(m1.getModelo());
-	
-	Iterator<Paseo> iter= m1.getPaseos().values().iterator();
-	while(iter.hasNext())
-	{ 
-		Paseo paseo = iter.next();
-		System.out.println(paseo.getCodigo());
-		System.out.println(paseo.getHoraPartida());
-		System.out.println(paseo.getHoraRegreso());
-		System.out.println(paseo.getCantVendidos());
-		System.out.println(paseo.getCantMaxBoletos());
-		System.out.println(paseo.getPrecioBase());
-		System.out.println(paseo.getDestino());
-	}*/
 }
 
 
