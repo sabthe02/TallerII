@@ -63,18 +63,6 @@ public class Boleto implements Serializable {
 			this.precio = precio;
 	}
 
-
-
-		
-	public static void main (String args[]) {
-		Boleto b1 = new Boleto(1, "Persona1", 17, "099000000", 15.0);
-		System.out.println(b1.getNumeroBoleto());
-		System.out.println(b1.getNombrePasajero());
-		System.out.println(b1.getEdad());
-		System.out.println(b1.getNumeroCel());
-		System.out.println(b1.getPrecio());
-	}
-			
 	
 
 }

@@ -9,7 +9,6 @@ public class VOMinivanListado extends VOMinivan implements Serializable{
 	
 	
 	public VOMinivanListado() {
-		// TODO Auto-generated constructor stub
 		super();
 		this.CantidadPaseos = 0;
 	}

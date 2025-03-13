@@ -26,8 +26,9 @@ public class Monitor {
 
 	public synchronized void terminoLectura() {
 		this.cantLectores--;
-		if (cantLectores == 0)
-		notify();
+		if (cantLectores == 0) {
+			notify();
+		}
 	}
 	
 	public synchronized void comienzoEscritura() {
