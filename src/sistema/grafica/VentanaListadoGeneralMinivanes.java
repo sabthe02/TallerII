@@ -1,8 +1,8 @@
 package sistema.grafica;
 
-import java.awt.EventQueue;
+
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -33,7 +33,7 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 		setBackground(new Color(255, 200, 145));
 		frmListadoGeneralMinivanes = this;
 		setTitle("Listado general de Minivanes");
-		setBounds(200, 80, 800, 327);
+		setBounds(200, 80, 870, 327);
 		setResizable(true);
 		setClosable(true);
 		setMaximizable(true);
@@ -62,7 +62,7 @@ public class VentanaListadoGeneralMinivanes extends JInternalFrame {
 		table.setRowHeight(25);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(0, 40, 784, 247);
+		scrollPane.setBounds(5, 45, 850, 247);
 		getContentPane().add(scrollPane);
 
 		JButton btnCerrar = new JButton("Salir");

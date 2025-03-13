@@ -81,7 +81,6 @@ public class MainProgram {
 		frame.getContentPane().add(labelTitulo);  
 		 
 		
-		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setMaximumSize(new Dimension(5, 5));
 		menuBar.setBorder(UIManager.getBorder("MenuBar.border"));

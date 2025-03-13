@@ -237,8 +237,8 @@ public class VentanaVentaBoleto extends JInternalFrame {
 		if (!(isNumeric(txtCelular.getText().trim()))) {
 			resp.add("El celular tiene que ser un numero");
 		}
-		if (txtEdad.getText().trim().equals("")) {
-			resp.add("La edad no puede ser vacia");
+		if (txtCelular.getText().trim().equals("")) {
+			resp.add("El celular no puede estar vacio");
 		}
 
 		if (radioButtonEspecial.isSelected()) {

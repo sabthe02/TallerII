@@ -43,7 +43,7 @@ public class Respaldo {
 		
 		try
 		{ 
-			System.out.println(nombreArchivo);
+//			System.out.println(nombreArchivo);
 			File file = new File (nombreArchivo);
 			if (file.exists()) {
 				FileInputStream f = new FileInputStream(file);

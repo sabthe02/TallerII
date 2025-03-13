@@ -10,7 +10,6 @@ import sistema.logica.ValueObject.VOPaseosListado;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Objects;
 
 
 public class Paseos extends Diccionario <String, Paseo> implements Serializable{
